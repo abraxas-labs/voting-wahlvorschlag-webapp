@@ -1,0 +1,9 @@
+<nav
+  [ngClass]="{
+    'step-navigation-vertical': direction === 'vertical',
+    'step-navigation-horizontal': direction === 'horizontal',
+  }"
+  role="navigation"
+>
+  <ng-content></ng-content>
+</nav>

@@ -1,0 +1,9 @@
+<input
+  #fileInput
+  class="fileInput"
+  type="file"
+  (change)="addFile($event)"
+  [multiple]="multiple"
+  [accept]="accept"
+/>
+<bc-button (buttonClick)="show()" label="{{ addTitle | translate }}" [icon]="'upload'"> </bc-button>

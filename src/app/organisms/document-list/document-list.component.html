@@ -1,0 +1,51 @@
+<bc-table
+  #selection="selection"
+  selection
+  [selectionMultiple]="true"
+  (selectionChange)="onSelectionChange($event)"
+  documentSort="sort"
+  sort
+  [dataSource]="dataSource"
+>
+  <ng-container columnDef="selection">
+    <bc-header-cell *headerCellDef>
+      <bc-checkbox
+        selectAll
+        [checked]="selection.isAllSelected()"
+        [indeterminate]="selection.isPartialSelected()"
+      ></bc-checkbox>
+    </bc-header-cell>
+    <bc-data-cell *dataCellDef="let row">
+      <bc-checkbox
+        [checked]="selection.isSelected(row)"
+        selectionToggle
+        [selectionToggleValue]="row"
+      ></bc-checkbox>
+    </bc-data-cell>
+  </ng-container>
+
+  <ng-container [columnDef]="columns.name">
+    <bc-header-cell sort *headerCellDef>{{ 'DOCUMENT.NAME' | translate }}</bc-header-cell>
+    <bc-data-cell *dataCellDef="let row">
+      {{ row.name }}
+    </bc-data-cell>
+  </ng-container>
+
+  <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+  <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
+</bc-table>
+<div class="documents">
+  <bc-button
+    *ngIf="this.download"
+    [disabled]="selectedDocuments.length === 0"
+    (buttonClick)="downloadDocuments(selectedDocuments)"
+    label="{{ 'DOCUMENT.DOWNLOAD' | translate }}"
+  ></bc-button>
+
+  <app-filepicker
+    *ngIf="writeable"
+    (filePicked)="addDocument($event)"
+    accept="application/pdf"
+    [multiple]="true"
+  ></app-filepicker>
+</div>

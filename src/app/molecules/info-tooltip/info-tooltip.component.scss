@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use '@abraxas/base-components/src/lib/styles/predefined/default.palette' as *;
+@use '@abraxas/base-components/src/lib/styles/settings' as *;
+
+$primary-color: map.get($default-palette, core, primary);
+
+.icon {
+  margin: 0.4rem;
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.tooltip-content {
+  white-space: pre;
+}

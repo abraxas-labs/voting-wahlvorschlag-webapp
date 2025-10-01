@@ -1,0 +1,34 @@
+.content {
+  display: inline-block;
+  min-width: 720px;
+}
+
+main {
+  margin: 3rem;
+}
+
+.apps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+
+.space-after {
+  margin-bottom: 2rem;
+}
+
+.inline-spinner {
+  display: flex;
+
+  bc-spinner {
+    align-self: center;
+    margin-right: 0.5rem;
+  }
+}

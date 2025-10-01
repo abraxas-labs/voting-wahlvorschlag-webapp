@@ -1,0 +1,17 @@
+<bc-dialog>
+  <div header>
+    <bc-icon mat-dialog-close icon="cancel" (click)="close(false)"></bc-icon>
+    {{ this.header }}
+  </div>
+  <div>{{ this.text }}</div>
+  <div buttons>
+    <bc-button
+      mat-dialog-close
+      color="primary"
+      label="Ja"
+      variant="tertiary"
+      (buttonClick)="close(true)"
+    ></bc-button>
+    <bc-button color="warn" label="Nein" variant="tertiary" (buttonClick)="close(false)"></bc-button>
+  </div>
+</bc-dialog>

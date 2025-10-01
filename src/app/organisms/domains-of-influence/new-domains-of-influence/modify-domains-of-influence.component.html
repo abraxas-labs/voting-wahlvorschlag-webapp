@@ -1,0 +1,39 @@
+<main>
+  <h2>Wahlkreis</h2>
+
+  <app-spinner-centered [visible]="loading">
+    <bc-text
+      [(ngModel)]="domain.officialId"
+      [label]="'DOMAIN_OF_INFLUENCE.ID' | translate"
+      [required]="true"
+      subscriptSizing="dynamic"
+    >
+    </bc-text>
+    <bc-text
+      [(ngModel)]="domain.name"
+      [label]="'DOMAIN_OF_INFLUENCE.NAME' | translate"
+      [required]="true"
+      subscriptSizing="dynamic"
+    >
+    </bc-text>
+    <bc-text
+      [(ngModel)]="domain.shortName"
+      [label]="'DOMAIN_OF_INFLUENCE.SHORTNAME' | translate"
+      [required]="true"
+      subscriptSizing="dynamic"
+    >
+    </bc-text>
+    <bc-dropdown [items]="types" [(ngModel)]="domain.domainOfInfluenceType"> </bc-dropdown>
+  </app-spinner-centered>
+
+  <div class="button-wrapper">
+    <bc-button
+      [disabled]="!domain.name"
+      (buttonClick)="this.save()"
+      [variant]="'primary'"
+      label=" {{ 'SAVE' | translate }}"
+    >
+    </bc-button>
+    <bc-spinner *ngIf="this.loading" size="default"></bc-spinner>
+  </div>
+</main>

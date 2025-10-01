@@ -1,0 +1,32 @@
+<main>
+  <div class="form-group">
+    <bc-text
+      [ngModel]="listIndenture"
+      (ngModelChange)="updateListIndenture($event)"
+      [label]="'LIST.INDENTURE.LABEL' | translate"
+      subscriptSizing="dynamic"
+      [error]="hasDuplicateListIndenture"
+    >
+      <bc-error *ngIf="hasDuplicateListIndenture">
+        {{ 'LIST.INDENTURE.DUPLICATE_ERROR' | translate }}
+      </bc-error>
+    </bc-text>
+    <bc-date
+      [label]="'LIST.INDENTURE.SUBMIT_DATE' | translate"
+      [(value)]="this.listSubmitDate"
+      mode="date"
+      [required]="true"
+    >
+    </bc-date>
+  </div>
+
+  <div class="buttons">
+    <bc-button
+      label="{{ 'APPLY' | translate }}"
+      [variant]="'primary'"
+      [disabled]="hasDuplicateListIndenture"
+      (buttonClick)="emitSave()"
+    ></bc-button>
+    <bc-button label="{{ 'CANCEL' | translate }}" (buttonClick)="this.close()"></bc-button>
+  </div>
+</main>

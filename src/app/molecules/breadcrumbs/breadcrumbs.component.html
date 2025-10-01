@@ -1,0 +1,7 @@
+<h4>
+  <span *ngFor="let bc of breadcrumbs; let i = index">
+    <span *ngIf="bc.route" [routerLink]="[bc.route]" class="link">{{ bc.text }}</span>
+    <span *ngIf="!bc.route">{{ bc.text }}</span>
+    <span *ngIf="i !== breadcrumbs.length - 1" class="separator">&#10095;</span>
+  </span>
+</h4>

@@ -1,0 +1,89 @@
+@use 'sass:map';
+@use '@abraxas/base-components/src/lib/styles/predefined/default.palette' as *;
+@use '@abraxas/base-components/src/lib/styles/settings' as *;
+
+$basic-color-20: rgba(map.get($default-palette, core, basic), 20%);
+
+.wrapper {
+  overflow: hidden;
+  border-left: 1px solid $basic-color-20;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  background-color: #f7f7f7;
+  padding: 1rem;
+  padding-top: 1.5rem;
+  flex-shrink: 0;
+
+  bc-button {
+    align-self: flex-end;
+    margin-right: 0.5rem;
+  }
+
+  bc-textarea {
+    display: block;
+    margin-bottom: 0.5rem;
+
+    textarea {
+      resize: vertical;
+    }
+  }
+}
+
+.comments {
+  padding: 1rem;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+
+  .comment {
+    margin: 1.2rem 0;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .content {
+        background-color: #fff;
+        padding: 0.5rem;
+        border: 1px solid gray;
+        border-radius: 3px;
+        margin-bottom: 0.2rem;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      padding-left: 0.5rem;
+      flex-shrink: 0;
+      justify-content: flex-end;
+
+      bc-button {
+        margin-right: 0.5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        bc-icon {
+          padding: 1px 3px 0 4px;
+        }
+      }
+    }
+
+    .footer {
+      align-self: flex-end;
+      font-style: italic;
+      text-align: right;
+      margin-bottom: 0.1rem;
+    }
+  }
+}

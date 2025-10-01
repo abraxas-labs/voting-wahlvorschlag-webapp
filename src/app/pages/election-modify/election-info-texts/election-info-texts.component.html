@@ -1,0 +1,7 @@
+<h2>{{ 'INFO_TEXTS' | translate }}</h2>
+<app-candidacy
+  [infoTexts]="this.election.infoTexts"
+  (infoTextsChange)="infoTextsChanged($event)"
+  [basedata]="false"
+  [electionType]="this.election.electionType"
+></app-candidacy>

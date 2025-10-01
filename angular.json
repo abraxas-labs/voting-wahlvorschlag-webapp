@@ -1,0 +1,121 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "voting-wahlvorschlag-webapp": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "allowedCommonJsDependencies": ["moment/locale/de", "js-sha256", "lodash"],
+            "outputPath": {
+              "base": "dist/voting-wahlvorschlag-webapp"
+            },
+            "index": "src/index.html",
+            "polyfills": ["zone.js"],
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@abraxas/base-components/src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@abraxas/voting-lib/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "./node_modules/@abraxas/base-components/src/lib/styles/predefined/default.theme.scss",
+              "src/styles.scss"
+            ],
+            "sourceMap": true,
+            "namedChunks": true,
+            "optimization": false,
+            "browser": "src/main.ts"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5mb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "voting-wahlvorschlag-webapp:build",
+            "port": 4221
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "voting-wahlvorschlag-webapp:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

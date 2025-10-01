@@ -1,0 +1,114 @@
+<main class="content">
+  <ng-container *ngIf="auth.authenticated">
+    <div>
+      <h1>{{ 'USER-MANAGEMENT' | translate }}</h1>
+      <h2>{{ 'USER_ADMINISTRATION.PARTIES' | translate }}</h2>
+
+      <bc-button
+        class="buttons"
+        routerLink="../parties/new"
+        label="{{ 'USER_ADMINISTRATION.PARTY.NEW' | translate }}"
+      ></bc-button>
+
+      <app-spinner-centered [visible]="loadingTenants">
+        <bc-table #tenantSort="sort" sort #tenantFilter="filter" filter [dataSource]="dataSource">
+          <ng-container [columnDef]="columns.name">
+            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
+              'USER_ADMINISTRATION.PARTY.NAME' | translate
+            }}</bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              {{ row.name }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container columnDef="actions">
+            <bc-header-cell *headerCellDef></bc-header-cell>
+            <bc-data-cell *dataCellDef="let element; let i = index">
+              <div class="row-editing">
+                <bc-icon icon="trash" iconColor="error" (click)="removeParty(element.id)"></bc-icon>
+              </div>
+            </bc-data-cell>
+          </ng-container>
+
+          <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+          <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
+        </bc-table>
+        <bc-paginator
+          #tenantPaginator
+          showFirstLastButtons
+          [pageSize]="20"
+          [pageSizeOptions]="[5, 10, 20]"
+        ></bc-paginator>
+      </app-spinner-centered>
+    </div>
+
+    <div class="users">
+      <h2>{{ 'USER_ADMINISTRATION.USERS' | translate }}</h2>
+      <bc-button
+        routerLink="../users/new"
+        label="{{ 'USER_ADMINISTRATION.USER.NEW' | translate }}"
+        class="buttons"
+      >
+      </bc-button>
+
+      <app-spinner-centered [visible]="loadingUsers">
+        <bc-table #userSort="sort" sort #userFilter="filter" filter [dataSource]="dataSourceUsers">
+          <ng-container [columnDef]="userColumns.firstname">
+            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
+              'USER_ADMINISTRATION.USER.FIRSTNAME' | translate
+            }}</bc-header-cell>
+            <bc-data-cell *dataCellDef="let el">
+              {{ el.firstname }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="userColumns.lastname">
+            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
+              'USER_ADMINISTRATION.USER.LASTNAME' | translate
+            }}</bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              {{ row.lastname }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="userColumns.username">
+            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
+              'USER_ADMINISTRATION.USER.USERNAME' | translate
+            }}</bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              {{ row.username }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="userColumns.tenantDescription">
+            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
+              'USER_ADMINISTRATION.USER.TENANT' | translate
+            }}</bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              {{ row.tenantDescription }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container columnDef="userActions">
+            <bc-header-cell *headerCellDef></bc-header-cell>
+            <bc-data-cell *dataCellDef="let element; let i = index">
+              <div class="row-editing">
+                <bc-icon icon="edit" (click)="editUser(element)"></bc-icon>
+                <bc-icon icon="trash" iconColor="error" (click)="removeUser(element)"></bc-icon>
+              </div>
+            </bc-data-cell>
+          </ng-container>
+
+          <bc-header-row *headerRowDef="let row; columns: userColumnsToDisplay"></bc-header-row>
+          <bc-data-row *dataRowDef="let row; columns: userColumnsToDisplay; let i = index"> </bc-data-row>
+        </bc-table>
+        <bc-paginator
+          #userPaginator
+          showFirstLastButtons
+          [pageSize]="20"
+          [pageSizeOptions]="[5, 10, 20]"
+        ></bc-paginator>
+      </app-spinner-centered>
+    </div>
+  </ng-container>
+</main>

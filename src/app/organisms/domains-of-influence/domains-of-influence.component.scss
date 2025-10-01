@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '@abraxas/base-components/src/lib/styles/predefined/default.palette' as *;
+@use '@abraxas/base-components/src/lib/styles/settings' as *;
+
+$primary-color: map.get($default-palette, core, primary);
+$primary-color-75: rgba($primary-color, 75%);
+
+@mixin button-colors($bgColor: null, $borderColor: null, $color: null) {
+  @if $color {
+    color: $color;
+  }
+
+  @if $bgColor {
+    background-color: $bgColor;
+  }
+
+  @if $borderColor {
+    border-color: $borderColor;
+  } @else {
+    border-color: none;
+  }
+}
+
+.bc-column-actions {
+  width: 5%;
+}
+
+.button {
+  margin-right: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.row-editing {
+  display: flex;
+  justify-content: space-around;
+  bc-icon:last-child {
+    margin: 0 1.5rem 0 0.5rem;
+  }
+}

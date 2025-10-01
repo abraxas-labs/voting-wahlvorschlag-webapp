@@ -1,0 +1,97 @@
+@use '@abraxas/voting-lib/style/color' as *;
+
+:host {
+  flex: 1;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.step-content {
+  color: $color-primary;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.step-toggle {
+  background: $color-primary;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.step-line {
+  flex: 1;
+  border-color: $color-primary;
+  display: inline;
+}
+
+.step-item-selectable:hover {
+  cursor: pointer;
+}
+
+:host-context(.step-navigation-horizontal) .step-item {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+
+  .step-line {
+    min-width: 10px;
+    border-bottom-style: solid;
+  }
+}
+
+:host-context(.step-navigation-vertical) .step-item {
+  display: flex;
+  flex-direction: row;
+
+  .step-indicator {
+    flex-direction: column;
+  }
+
+  .step-line {
+    min-height: 10px;
+    border-right-style: solid;
+  }
+}
+
+:host:first-child .step-up {
+  visibility: hidden;
+}
+
+.step-item-active {
+  .step-content {
+    font-weight: bold;
+  }
+
+  .step-down {
+    border-color: $color-primary-50;
+  }
+}
+
+:host:last-child .step-down {
+  visibility: hidden;
+}
+
+/** inactive handle **/
+
+:host-context(.step-navigation-item.step-item-active) ~ :host {
+  .step-content {
+    color: $color-primary-50;
+  }
+
+  .step-toggle {
+    background: $color-primary-50;
+  }
+
+  .step-line {
+    border-color: $color-primary-50;
+  }
+}

@@ -1,0 +1,325 @@
+<div class="content">
+  <app-spinner-centered [visible]="loadingElection || loadingLists">
+    <div *ngIf="election && dataSourceLists.data">
+      <h2>{{ 'RECORD' | translate }}</h2>
+      <p>
+        <strong>{{ election.name }}</strong>
+      </p>
+      <p>{{ election.description }}</p>
+    </div>
+    <div *ngIf="!election?.isArchived && !isMajorz()" class="form-group buttons align-right">
+      <bc-button
+        *ngIf="isWahlverwalter && selectedLists.length >= 2"
+        (buttonClick)="createOrUpdateListUnion(getListIds())"
+        label="{{ 'LIST.UNION.NEW' | translate }}"
+      >
+      </bc-button>
+      <bc-button
+        *ngIf="isWahlverwalter && selectedLists.length === 1"
+        color="warn"
+        (buttonClick)="removeFromListUnion(getListIds()[0], false)"
+        [disabled]="!isListInUnion(selectedLists[0], false)"
+        label="{{ 'LIST.UNION.DELETE' | translate }}"
+      >
+      </bc-button>
+      <bc-button
+        *ngIf="isWahlverwalter && selectedLists.length >= 2"
+        (buttonClick)="newSubUnion()"
+        label="{{ 'LIST.UNION.NEW_SUB_UNION' | translate }}"
+      >
+      </bc-button>
+      <bc-button
+        *ngIf="isWahlverwalter && selectedLists.length === 1"
+        [color]="'warn'"
+        (buttonClick)="removeFromListUnion(getListIds()[0], true)"
+        [disabled]="!isListInUnion(selectedLists[0], true)"
+        label="{{ 'LIST.UNION.DELETE_SUB_UNION' | translate }}"
+      >
+      </bc-button>
+      <bc-button
+        *ngIf="isWahlverwalter"
+        [disabled]="selectedLists.length !== 1"
+        (buttonClick)="newlistIndenture()"
+        label="{{ 'LIST.INDENTURE.TITLE' | translate }}"
+      ></bc-button>
+    </div>
+
+    <div>
+      <app-spinner-overlay [visible]="updatingListIds.size > 0">
+        <bc-table sort #listSort="sort" filter #listFilter="filter" selection [dataSource]="dataSourceLists">
+          <ng-container columnDef="selection">
+            <bc-header-cell *headerCellDef>
+              <bc-checkbox
+                (checkedChange)="toggleAllRows($event)"
+                [checked]="selection.hasValue() && isAllSelected"
+                [indeterminate]="selection.hasValue() && !isAllSelected"
+              ></bc-checkbox>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              <bc-checkbox
+                [checked]="selection.isSelected(row)"
+                (checkedChange)="toggleRowWithValue(row, $event)"
+              ></bc-checkbox>
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.nr">
+            <bc-header-cell [filter]="!isMajorzElection" sort *headerCellDef class="small-filter">
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.NR' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ row.indenture }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.name">
+            <bc-header-cell [filter]="!isMajorzElection" sort *headerCellDef class="small-filter">
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.NAME' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ row.name }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.description">
+            <bc-header-cell [filter]="!isMajorzElection" sort *headerCellDef class="small-filter">
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.DESCRIPTION' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ row.description }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.version">
+            <bc-header-cell [filter]="!isMajorzElection" sort *headerCellDef class="small-filter">
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.VERSION' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ row.version }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.modifyDate">
+            <bc-header-cell
+              [filter]="!isMajorzElection"
+              filterType="date-extended"
+              sort
+              *headerCellDef
+              class="small-filter"
+            >
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.MODIFY_DATE' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ row.uiModifiedDate | date: 'dd.MM.yyyy' }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.modifyUser">
+            <bc-header-cell [filter]="!isMajorzElection" sort *headerCellDef class="small-filter">
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.MODIFY_USER' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)" class="small-filter">
+              {{ row.uiModifiedByName }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.state">
+            <bc-header-cell
+              [filter]="!isMajorzElection"
+              filterType="list"
+              [filterItems]="listStates"
+              filterDisplayExpr="description"
+              filterValueExpr="value"
+              sort
+              *headerCellDef
+              class="small-filter"
+            >
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.STATE' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              {{ 'LIST.STATE_VALUES.' + row.state | translate }}
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.validated">
+            <bc-header-cell
+              [filter]="!isMajorzElection"
+              filterType="bool"
+              sort
+              *headerCellDef
+              class="small-filter"
+            >
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.VALIDATED' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              <bc-checkbox
+                [disabled]="election?.isArchived || !isWahlverwalter"
+                (click)="$event.stopPropagation()"
+                [(ngModel)]="row.validated"
+                (checkedChange)="row.validated = $event"
+                (ngModelChange)="updateList(row)"
+              ></bc-checkbox>
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.locked">
+            <bc-header-cell
+              [filter]="!isMajorzElection"
+              filterType="bool"
+              sort
+              *headerCellDef
+              class="small-filter"
+            >
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.LOCKED' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row">
+              <bc-checkbox
+                [disabled]="election?.isArchived || !isWahlverwalter"
+                (click)="$event.stopPropagation()"
+                [(ngModel)]="row.locked"
+                (checkedChange)="row.locked = $event"
+                (ngModelChange)="updateList(row)"
+              ></bc-checkbox>
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.listUnion">
+            <bc-header-cell sort *headerCellDef>
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.UNION.UNIONS_TITLE_SHORT' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              <span class="list-union-desc" *ngFor="let union of row.listUnion?.lists">{{
+                getListDescriptionById(union.id)
+              }}</span>
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container [columnDef]="listColumns.listSubUnion">
+            <bc-header-cell sort *headerCellDef>
+              <span truncateWithTooltip tooltip>
+                {{ 'LIST.UNION.SUB_UNIONS_TITLE_SHORT' | translate }}
+              </span>
+            </bc-header-cell>
+            <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
+              <span
+                class="list-union-desc"
+                *ngFor="let union of row.listSubUnion?.lists"
+                [class.bold]="union.id === row.listSubUnion?.rootListId"
+                >{{ getListDescriptionById(union.id) }}</span
+              >
+            </bc-data-cell>
+          </ng-container>
+
+          <ng-container columnDef="actions">
+            <bc-header-cell *headerCellDef></bc-header-cell>
+            <bc-data-cell *dataCellDef="let element; let i = index">
+              <div *ngIf="!election?.isArchived" class="row-editing">
+                <bc-icon
+                  *ngIf="allowUpdating && (!element.locked || this.isWahlverwalter)"
+                  icon="edit"
+                  (click)="editList(element)"
+                ></bc-icon>
+                <bc-icon
+                  *ngIf="allowDeleting && (!element.locked || this.isWahlverwalter)"
+                  icon="trash"
+                  iconColor="error"
+                  (click)="deleteList(element)"
+                ></bc-icon>
+              </div>
+            </bc-data-cell>
+          </ng-container>
+
+          <bc-header-row *headerRowDef="let row; columns: listColumnstoDisplay"></bc-header-row>
+          <bc-data-row
+            *dataRowDef="let row; columns: listColumnstoDisplay; let i = index"
+            selectionToggle
+            [selectionToggleValue]="row"
+            selectionRow
+            [selectionRowValue]="row"
+          >
+          </bc-data-row>
+        </bc-table>
+        <bc-paginator
+          *ngIf="!isMajorzElection"
+          #listPaginator
+          showFirstLastButtons
+          [pageSize]="20"
+          [pageSizeOptions]="[5, 10, 20]"
+        ></bc-paginator>
+      </app-spinner-overlay>
+    </div>
+    <div class="buttons">
+      @if (!election?.isArchived) {
+        <bc-button
+          *ngIf="isUser"
+          [disabled]="isSubmissionDeadlinePassed(election?.submissionDeadlineEnd)"
+          [variant]="'primary'"
+          (buttonClick)="addList()"
+          label="{{ 'LIST.NEW' | translate }}"
+        ></bc-button>
+        <bc-button
+          class="button"
+          [disabled]="buttonsDisabled || !canEditLists(selectedLists)"
+          [color]="'warn'"
+          (buttonClick)="deleteLists(getListIds())"
+          label="{{ 'DELETE' | translate }}"
+        ></bc-button>
+        <bc-button
+          *ngIf="isUser"
+          [disabled]="buttonsDisabled || !canSubmitLists(selectedLists)"
+          (buttonClick)="submitLists(getListIds())"
+          label="{{ 'LIST.SUBMIT' | translate }}"
+        ></bc-button>
+        <bc-button
+          *ngIf="isWahlverwalter"
+          [disabled]="
+            buttonsDisabled || !canValidateLists(selectedLists) || !canUpdateListState(selectedLists)
+          "
+          (buttonClick)="setValid(getListIds())"
+          label="{{ 'LIST.SET_VALID' | translate }}"
+        ></bc-button>
+        <bc-button
+          *ngIf="isWahlverwalter"
+          [disabled]="
+            buttonsDisabled || !canFormallySubmit(selectedLists) || !canUpdateListState(selectedLists)
+          "
+          (buttonClick)="formallySubmit(getListIds())"
+          label="{{ 'LIST.SUBMIT_FORMALLY' | translate }}"
+        ></bc-button>
+      }
+
+      <bc-button (buttonClick)="showExport()" label="{{ 'LIST.EXPORT' | translate }}"></bc-button>
+    </div>
+
+    <div class="documents">
+      <h2>{{ 'DOCUMENT.TITLE' | translate }}</h2>
+      <app-document-list
+        *ngIf="election"
+        [download]="true"
+        [documents]="election.documents"
+        (documentsSelected)="downloadDocuments($event)"
+      >
+      </app-document-list>
+    </div>
+  </app-spinner-centered>
+</div>

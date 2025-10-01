@@ -1,0 +1,149 @@
+<app-spinner-centered [visible]="loading">
+  <div class="form-group">
+    <p
+      *ngIf="hasNrOfMandatesReached"
+      class="error"
+      translate
+      [translateParams]="{ NR_OF_MANDATES: nrOfMandates }"
+    >
+      CANDIDACY.NR_OF_MANDATES_REACHED
+    </p>
+    <p *ngIf="list?.locked" translate>LIST.LOCKED_MSG</p>
+    <app-spinner-inline *ngIf="canEdit" [visible]="saving">
+      <bc-button
+        [variant]="'primary'"
+        [disabled]="!hasChanges || saving || (list?.locked && !this.isWahlverwalter)"
+        (buttonClick)="saveChanges()"
+        label="{{ 'CANDIDACY.SAVE_CHANGES' | translate }}"
+      >
+      </bc-button
+    ></app-spinner-inline>
+    <div class="form-group edit-row">
+      <bc-button
+        *ngIf="canEdit"
+        [disabled]="hasNrOfMandatesReached || (list?.locked && !this.isWahlverwalter)"
+        [variant]="'primary'"
+        (buttonClick)="addCandidacy()"
+        label="{{ 'CANDIDACY.ADD_CANDIDACY' | translate }}"
+      >
+      </bc-button>
+      <div class="right">
+        <bc-button
+          *ngIf="canEdit && isProporz"
+          [variant]="'secondary'"
+          (buttonClick)="preCumulate()"
+          [disabled]="
+            !selected || selected?.cloned || hasNrOfMandatesReached || (list?.locked && !this.isWahlverwalter)
+          "
+          label="{{ 'CANDIDACY.PRE_CUMULATE' | translate }}"
+        >
+        </bc-button>
+        <bc-button
+          *ngIf="canEdit"
+          [variant]="'secondary'"
+          (buttonClick)="remove()"
+          [disabled]="!selected || (list?.locked && !this.isWahlverwalter)"
+          label="{{ 'CANDIDACY.DELETE' | translate }}"
+        >
+        </bc-button>
+      </div>
+    </div>
+    <bc-table
+      selection
+      (selectionChange)="onSelectionChange($event)"
+      #candidateSort="sort"
+      sort
+      [dataSource]="dataSource"
+      cdkDropList
+      [cdkDropListData]="dataSource"
+      (cdkDropListDropped)="moveCandidate($event.previousIndex, $event.currentIndex)"
+    >
+      <ng-container [columnDef]="columns.icons">
+        <bc-header-cell *headerCellDef></bc-header-cell>
+        <bc-data-cell *dataCellDef="let row">
+          <bc-icon *ngIf="row.cloned" icon="double-checkmark"></bc-icon>
+          <bc-icon *ngIf="row.markings.length > 0" icon="eye"></bc-icon>
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.number">
+        <bc-header-cell *headerCellDef>{{ 'CANDIDACY.NUMBER_SHORT' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row">
+          {{ row.index | number: '2.0-0' }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.firstName">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.FIRSTNAME' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'firstName')">
+          {{ row.firstName }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.familyName">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.FAMILYNAME' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'familyName')">
+          {{ row.familyName }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.dateOfBirth">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.DATEOFBIRTH' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'dateOfBirth')">
+          {{ row.dateOfBirth | date: 'dd.MM.yyyy' }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.incumbent">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.INCUMBENT' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'incumbent')">
+          <bc-checkbox [checked]="row.incumbent" [disabled]="true"></bc-checkbox>
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.street">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.ADDRESS' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'street')">
+          {{ row.street }} {{ row.houseNumber }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.locality">
+        <bc-header-cell sort *headerCellDef>{{ 'CANDIDACY.LOCALITY' | translate }}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row" [class.cell-tagged]="isTagged(row, 'locality')">
+          {{ row.locality }}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container columnDef="actions">
+        <bc-header-cell *headerCellDef></bc-header-cell>
+        <bc-data-cell *dataCellDef="let element; let i = index">
+          <div class="row-editing">
+            <div class="edit-icons">
+              <bc-icon icon="search" iconColor="info" (click)="showDetailsModal(element)"></bc-icon>
+              <bc-icon
+                *ngIf="canEdit && (!list?.locked || this.isWahlverwalter)"
+                icon="edit"
+                (click)="modifyCandidacy(element)"
+              ></bc-icon>
+            </div>
+          </div>
+        </bc-data-cell>
+      </ng-container>
+
+      <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+      <bc-data-row
+        #rowSelection="selectionToggle"
+        *dataRowDef="let row; columns: columnsToDisplay; let i = index"
+        selectionToggle
+        [selectionToggleValue]="row"
+        selectionRow
+        [selectionRowValue]="row"
+        (click)="rowSelection.toggle()"
+        cdkDrag
+        [cdkDragData]="row"
+      >
+      </bc-data-row>
+    </bc-table>
+  </div>
+</app-spinner-centered>

@@ -1,0 +1,21 @@
+<main>
+  <div class="form-group">
+    <bc-dropdown
+      [items]="lists"
+      displayExpr="name"
+      [(ngModel)]="selectedList"
+      [multiple]="false"
+    ></bc-dropdown>
+  </div>
+
+  <div class="buttons">
+    <bc-button
+      label="{{ 'APPLY' | translate }}"
+      [variant]="'primary'"
+      [disabled]="!selectedList"
+      (buttonClick)="emitSelect()"
+    >
+    </bc-button>
+    <bc-button label="{{ 'CANCEL' | translate }}" (buttonClick)="this.close()"> </bc-button>
+  </div>
+</main>

@@ -1,0 +1,25 @@
+<main>
+  <h2>
+    {{ 'USER_ADMINISTRATION.PARTY.NEW' | translate }}
+  </h2>
+
+  <bc-text
+    [focusOnLoad]="true"
+    [(ngModel)]="party.name"
+    [label]="'USER_ADMINISTRATION.PARTY.NAME' | translate"
+    [required]="true"
+    subscriptSizing="dynamic"
+  >
+  </bc-text>
+
+  <div class="button-wrapper">
+    <bc-button
+      [disabled]="!party.name || saving"
+      (buttonClick)="save()"
+      [variant]="'primary'"
+      label="{{ 'USER_ADMINISTRATION.PARTY.REQUEST' | translate }}"
+    >
+    </bc-button>
+    <bc-spinner *ngIf="saving" size="default"></bc-spinner>
+  </div>
+</main>

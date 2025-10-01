@@ -1,0 +1,37 @@
+.content {
+  margin: 3rem;
+}
+.users {
+  margin-top: 3rem;
+}
+.buttons {
+  margin-bottom: 1.5rem;
+}
+
+.bc-column-user-actions {
+  width: 6%;
+}
+
+.bc-column-actions {
+  width: 5%;
+}
+
+.bc-column-firstname {
+  width: 15%;
+}
+
+.bc-column-lastname {
+  width: 15%;
+}
+
+.bc-column-username {
+  width: 15%;
+}
+
+.row-editing {
+  display: flex;
+  justify-content: space-around;
+  bc-icon:last-child {
+    margin: 0 1.5rem 0 0.5rem;
+  }
+}

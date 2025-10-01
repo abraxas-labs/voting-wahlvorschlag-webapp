@@ -1,0 +1,70 @@
+<main>
+  <h2>
+    {{ (isNew ? 'USER_ADMINISTRATION.USER.NEW' : 'USER_ADMINISTRATION.USER.MODIFY') | translate }}
+  </h2>
+
+  <app-spinner-centered [visible]="loading">
+    <div class="content">
+      <div class="row">
+        <bc-text
+          [focusOnLoad]="true"
+          [(ngModel)]="user.username"
+          [label]="'USER_ADMINISTRATION.USER.USERNAME' | translate"
+          [readonly]="!isNew"
+          [required]="isNew"
+          subscriptSizing="dynamic"
+        >
+        </bc-text>
+        <bc-text
+          [(ngModel)]="user.email"
+          [label]="'USER_ADMINISTRATION.USER.EMAIL' | translate"
+          [readonly]="!isNew"
+          [required]="isNew"
+          subscriptSizing="dynamic"
+        >
+        </bc-text>
+      </div>
+      <div class="row">
+        <bc-text
+          [(ngModel)]="user.lastname"
+          [label]="'USER_ADMINISTRATION.USER.LASTNAME' | translate"
+          [readonly]="!isNew"
+          [required]="true"
+          subscriptSizing="dynamic"
+        >
+        </bc-text>
+        <bc-text
+          [(ngModel)]="user.firstname"
+          [label]="'USER_ADMINISTRATION.USER.FIRSTNAME' | translate"
+          [readonly]="!isNew"
+          [required]="true"
+          subscriptSizing="dynamic"
+        >
+        </bc-text>
+      </div>
+      <div class="row">
+        <bc-dropdown
+          [label]="'USER_ADMINISTRATION.USER.TENANT' | translate"
+          [items]="this.parties"
+          displayExpr="name"
+          valueExpr="id"
+          [multiple]="true"
+          [preselectedItems]="this.user.tenants"
+          (valueChange)="fillTenants($event)"
+        >
+        </bc-dropdown>
+      </div>
+    </div>
+  </app-spinner-centered>
+
+  <div class="button-wrapper">
+    <bc-button
+      [disabled]="this.loading || this.saving || !isUserFormValid()"
+      (buttonClick)="save()"
+      [variant]="'primary'"
+      label="{{ 'SAVE' | translate }}"
+    >
+    </bc-button>
+    <bc-spinner *ngIf="saving" size="default"></bc-spinner>
+  </div>
+</main>

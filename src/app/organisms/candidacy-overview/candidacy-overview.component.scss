@@ -1,0 +1,62 @@
+.edit-row {
+  margin: 1rem 0 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .right bc-button {
+    margin-left: 0.5rem;
+  }
+}
+
+.error {
+  color: red;
+}
+
+.bc-column-number {
+  width: 5%;
+}
+
+.bc-column-icons {
+  width: 2%;
+}
+
+.bc-column-first-name {
+  width: 10%;
+}
+
+.bc-column-family-name {
+  width: 10%;
+}
+
+.bc-column-date-of-birth {
+  width: 10%;
+}
+
+.bc-column-incumbent {
+  width: 5%;
+}
+
+.bc-column-street {
+  width: 10%;
+}
+
+.bc-column-locality {
+  width: 5%;
+}
+
+.bc-column-actions {
+  width: 13%;
+}
+
+.cell-tagged {
+  background-color: #4cc1ae;
+}
+
+.row-editing {
+  display: flex;
+  justify-content: end;
+}
+.edit-icons bc-icon {
+  margin-left: 0.5rem;
+}

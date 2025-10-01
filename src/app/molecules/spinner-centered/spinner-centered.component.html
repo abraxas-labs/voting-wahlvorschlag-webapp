@@ -1,0 +1,4 @@
+<div class="container">
+  <div class="wrapper" [@enterAnimation] *ngIf="visible"><bc-spinner></bc-spinner></div>
+  <div class="content" [@enterAnimation] *ngIf="!visible"><ng-content></ng-content></div>
+</div>

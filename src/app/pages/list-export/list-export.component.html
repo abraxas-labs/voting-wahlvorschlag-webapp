@@ -1,0 +1,28 @@
+<main>
+  <div>
+    <bc-button
+      id="exp-button"
+      *ngFor="let type of electionExportTypes"
+      [variant]="'primary'"
+      [hidden]="isElectionExportHidden(type)"
+      (buttonClick)="exportElection(type)"
+      label="{{ 'ELECTION_EXPORT_TYPES.' + type | translate }}"
+    ></bc-button>
+  </div>
+  <ng-container *ngIf="lists && lists.length > 0">
+    <div>
+      <bc-button
+        id="exp-button"
+        *ngFor="let type of listExportTypes"
+        [hidden]="isListExportHidden(type)"
+        [variant]="'primary'"
+        (buttonClick)="exportList(type)"
+        label="{{ 'LIST.EXPORT_TYPE.' + type | translate }}"
+      ></bc-button>
+    </div>
+  </ng-container>
+  <div>
+    <bc-button id="exp-button" (buttonClick)="cancelEvent.emit()" label="{{ 'CANCEL' | translate }}">
+    </bc-button>
+  </div>
+</main>

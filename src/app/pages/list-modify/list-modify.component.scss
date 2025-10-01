@@ -1,0 +1,45 @@
+main {
+  margin: 3rem;
+}
+
+.content {
+  display: inline-block;
+  min-width: 600px;
+}
+
+.buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group {
+  display: flex;
+}
+
+.input-group bc-text:nth-child(2) {
+  width: 15%;
+  margin-left: 2rem;
+}
+
+.block {
+  display: block;
+}
+
+bc-dropdown {
+  width: 100%;
+}
+
+.input-group + .input-group {
+  padding-top: 10px;
+}
+
+.form-group {
+  margin-top: 0.5rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

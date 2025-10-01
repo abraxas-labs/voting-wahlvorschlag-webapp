@@ -1,0 +1,28 @@
+@use '@abraxas/voting-lib/style' as *;
+
+#exp-button button {
+  min-width: 500px;
+}
+
+.nav-group-label {
+  font-size: 20px !important;
+}
+
+// This is a workaround. Remove after checkboxes have been fixed in BC.
+bc-checkbox,
+bc-radio-button {
+  height: auto !important;
+}
+
+// This is a workaround, because we want to partially display content overflow.
+bc-table.bc-table {
+  &.bc-table-responsive-all:not(.bc-table-sticky) {
+    padding-bottom: 1px;
+    margin-bottom: -1px;
+  }
+
+  .bc-cell.bc-column-selection,
+  .formfield {
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,38 @@
+.wrapper {
+  .form-group + .form-group {
+    padding-top: -0.5rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+
+    .field {
+      margin-right: 1rem;
+      margin-top: 0.3rem;
+      width: 100%;
+    }
+
+    .checkbox {
+      margin-top: 1.5rem;
+      flex-shrink: 0;
+
+      .bc-checkbox {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .button {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .mt {
+    margin-top: 1.5rem;
+  }
+}
+
+h3 {
+  margin-top: 2rem;
+}

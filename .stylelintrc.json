@@ -1,0 +1,40 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss"],
+  "rules": {
+    "rule-empty-line-before": null,
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": ["/^bc-?/", "/^mat-?/"]
+      }
+    ],
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": ["ng-deep"]
+      }
+    ],
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": ["blockless-after-same-name-blockless", "first-nested"],
+        "ignore": ["after-comment"],
+        "ignoreAtRules": ["else"]
+      }
+    ],
+    "at-rule-no-unknown": null,
+    "no-empty-source": null,
+    "scss/at-else-if-parentheses-space-before": "always",
+    "scss/at-function-parentheses-space-before": "never",
+    "scss/at-if-closing-brace-newline-after": "always-last-in-chain",
+    "scss/load-no-partial-leading-underscore": true,
+    "scss/at-mixin-argumentless-call-parentheses": "always",
+    "scss/at-mixin-parentheses-space-before": "never",
+    "scss/at-rule-no-unknown": true,
+    "scss/dollar-variable-colon-newline-after": "always-multi-line",
+    "scss/dollar-variable-colon-space-after": "always-single-line",
+    "scss/double-slash-comment-whitespace-inside": null,
+    "scss/no-duplicate-dollar-variables": true
+  }
+}

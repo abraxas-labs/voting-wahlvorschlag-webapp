@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <h2>{{ 'TENANT_SETTINGS.TITLE' | translate }}</h2>
+  <app-spinner-centered [visible]="loading">
+    <app-tenant-settings-export
+      *ngIf="settings"
+      [(infotextTenantTitle)]="infotextTenantTitle"
+      [(tenantLogo)]="settings.tenantLogo"
+      [(wabstiExportTenantTitle)]="settings.wabstiExportTenantTitle"
+    ></app-tenant-settings-export>
+    <app-spinner-inline class="button" [visible]="saving">
+      <bc-button
+        [variant]="'primary'"
+        [disabled]="saving"
+        (buttonClick)="saveChanges()"
+        label="{{ 'SAVE' | translate }}"
+      ></bc-button
+    ></app-spinner-inline>
+  </app-spinner-centered>
+</div>

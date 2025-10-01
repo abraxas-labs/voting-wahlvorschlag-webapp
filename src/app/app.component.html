@@ -1,0 +1,92 @@
+<header>
+  <bc-app-header-bar-iam
+    *ngIf="hasTenant; else nonIamHeader"
+    logo="VO"
+    [link]="['/', theme]"
+    [settingsLabel]="'Label'"
+    [showAppDrawer]="true"
+    [signOutLabel]="'Logout'"
+    [title]="appTitle"
+    [customLogoPath]="customLogo ?? ''"
+  >
+    <vo-lib-environment-chip></vo-lib-environment-chip>
+  </bc-app-header-bar-iam>
+
+  <ng-template #nonIamHeader>
+    <bc-app-header-bar [link]="['/', theme]" [title]="appTitle" logo="VO"></bc-app-header-bar>
+  </ng-template>
+
+  <ng-template #notAuthenticated>
+    <div class="p-5">
+      <ng-container *ngIf="!loading; else appLoading">
+        <p translate>APPLICATION.NO_PERMISSIONS</p>
+        <div>
+          <bc-button (buttonClick)="reload()" [label]="'APPLICATION.RELOAD' | translate"></bc-button>
+          <bc-button
+            class="ml-2"
+            (buttonClick)="logout()"
+            [label]="'APPLICATION.LOGOUT' | translate"
+          ></bc-button>
+        </div>
+      </ng-container>
+    </div>
+
+    <ng-template #appLoading>
+      <h1>
+        <bc-spinner class="mr-1"></bc-spinner>
+        {{ 'COMMON.LOADING' | translate }}
+      </h1>
+    </ng-template>
+  </ng-template>
+</header>
+<main style="display: flex" *ngIf="!loading && hasTenant; else notAuthenticated">
+  <bc-snackbar
+    #snackbar
+    action="{{ 'COMMENTS.DISCARD' | translate }}"
+    horizontalPosition="right"
+    message=""
+    variant="info"
+    verticalPosition="top"
+  >
+  </bc-snackbar>
+  <div>
+    <bc-nav-layout #drawer>
+      <bc-nav-drawer [mode]="'side'" [opened]="true">
+        <bc-nav-group label="{{ 'ELECTION' | translate }}">
+          <bc-nav-item
+            label="{{ 'OVERVIEW' | translate }}"
+            link="/{{ theme }}/elections/overview"
+            target="self"
+            (click)="this.activateOverview()"
+            [active]="!this.isArchive && this.isOverview && !this.isBaseData && !this.isUserManagement"
+          ></bc-nav-item>
+          <bc-nav-item
+            label="{{ 'ARCHIVE' | translate }}"
+            link="/{{ theme }}/elections/archive"
+            target="self"
+            (click)="this.activateArchive()"
+            [active]="this.isArchive && !this.isOverview && !this.isBaseData && !this.isUserManagement"
+          ></bc-nav-item>
+        </bc-nav-group>
+        <bc-nav-group *ngIf="this.isWahlverwalter" label="{{ 'ADMINISTRATION' | translate }}">
+          <bc-nav-item
+            label="{{ 'BASE-DATA' | translate }}"
+            link="/{{ theme }}/administration/base-data"
+            target="self"
+            (click)="this.activateBaseData()"
+            [active]="!this.isArchive && !this.isOverview && this.isBaseData && !this.isUserManagement"
+          ></bc-nav-item>
+          <bc-nav-item
+            label="{{ 'USER-MANAGEMENT' | translate }}"
+            link="/{{ theme }}/administration/permissions"
+            target="self"
+            (click)="this.activateUserManagement()"
+            [active]="!this.isArchive && !this.isOverview && !this.isBaseData && this.isUserManagement"
+          ></bc-nav-item>
+        </bc-nav-group>
+      </bc-nav-drawer>
+      <div style="height: 400px"></div>
+    </bc-nav-layout>
+  </div>
+  <router-outlet></router-outlet>
+</main>

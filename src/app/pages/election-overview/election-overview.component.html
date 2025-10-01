@@ -1,0 +1,25 @@
+<div class="content">
+  <h1>{{ 'OVERVIEW' | translate }} {{ 'ELECTION' | translate }}</h1>
+  <div class="form-group" *ngIf="isWahlverwalter">
+    <bc-button
+      label="{{ 'NEW_ELECTION' | translate }}"
+      variant="secondary"
+      (buttonClick)="modfiyOrCreateElection()"
+    >
+    </bc-button>
+  </div>
+  <app-spinner-centered [visible]="loadingElections">
+    <app-election-list
+      *ngIf="!loadingElections"
+      [elections]="elections"
+      [showDaysRemaining]="true"
+      [showAvailableFrom]="isWahlverwalter"
+      [allowUpdating]="isWahlverwalter"
+      [allowDeleting]="isWahlverwalter"
+      (clickEvent)="selectElection($event.data)"
+      (editEvent)="editElection($event)"
+      (deleteEvent)="deleteElection($event)"
+    >
+    </app-election-list>
+  </app-spinner-centered>
+</div>

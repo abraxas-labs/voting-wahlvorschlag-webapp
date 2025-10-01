@@ -1,0 +1,54 @@
+<div class="wrapper">
+  <app-tenant-settings-export
+    [tenantLogo]="tenantLogo"
+    (tenantLogoChange)="tenantLogoChange.emit($event)"
+    [infotextTenantTitle]="infotextTenantTitle"
+    (infotextTenantTitleChange)="infotextTenantTitle = $event; updateInfoTexts()"
+    [hideWabstiExportTenantTitle]="true"
+  ></app-tenant-settings-export>
+  <div>
+    <bc-textarea
+      label="{{ 'ELECTION_EXTRAS.LABEL_INFOTEXT_FORM_CANDIDACIES' | translate }}"
+      class="block"
+      [maxlength]="10000"
+      [rows]="5"
+      [(ngModel)]="infotextCandidacies"
+      (ngModelChange)="updateInfoTexts()"
+      subscriptSizing="dynamic"
+    >
+    </bc-textarea>
+  </div>
+  <div>
+    <bc-textarea
+      label="{{ 'ELECTION_EXTRAS.LABEL_INFOTEXT_FORM_SIGNATORIES' | translate }}"
+      class="block"
+      [maxlength]="10000"
+      [rows]="5"
+      [(ngModel)]="infotextSignatories"
+      (ngModelChange)="updateInfoTexts()"
+      subscriptSizing="dynamic"
+    >
+    </bc-textarea>
+  </div>
+  <bc-number
+    [ngModel]="quorumSignaturesCount !== 0 ? quorumSignaturesCount : ''"
+    (ngModelChange)="
+      quorumSignaturesCount = parseInt($event); quorumSignaturesCountChange.emit(quorumSignaturesCount)
+    "
+    label="{{ 'ELECTION_EXTRAS.LABEL_NUMBER_SIGNATURES' | translate }}"
+    subscriptSizing="dynamic"
+  >
+  </bc-number>
+  <div *ngIf="!isMajorz">
+    <bc-textarea
+      label="{{ 'ELECTION_EXTRAS.LABEL_INFOTEXT_FORM_LISTUNION' | translate }}"
+      class="block"
+      [maxlength]="10000"
+      [rows]="5"
+      [(ngModel)]="infotextListUnion"
+      (ngModelChange)="updateInfoTexts()"
+      subscriptSizing="dynamic"
+    >
+    </bc-textarea>
+  </div>
+</div>

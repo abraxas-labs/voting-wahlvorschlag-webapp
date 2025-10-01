@@ -1,0 +1,46 @@
+@use 'sass:map';
+@use '@abraxas/base-components/src/lib/styles/predefined/default.palette' as *;
+@use '@abraxas/base-components/src/lib/styles/settings' as *;
+
+$primary-color: map.get($default-palette, core, primary);
+$basic-color: map.get($default-palette, core, basic);
+$basic-color-50: rgba(map.get($default-palette, core, basic), 50%);
+
+.district {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  border-bottom: solid 1px $basic-color;
+  text-align: left;
+}
+
+td {
+  border-bottom: solid 1px $basic-color-50;
+  padding: 10px 0;
+}
+
+bc-dropdown {
+  display: block;
+}
+
+bc-button + bc-button {
+  margin-left: 5px;
+}
+
+.delete {
+  width: 50px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

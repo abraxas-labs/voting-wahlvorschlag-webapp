@@ -1,0 +1,92 @@
+<h2>{{ 'GENERAL_INFORMATION' | translate }}</h2>
+
+<div class="form-group">
+  <div class="button-group">
+    <bc-button
+      id="majorz"
+      [variant]="this.majorzButton"
+      (buttonClick)="setTyoeOfElection(electionTypes.Majorz)"
+      label="{{ 'MAJORZWAHL' | translate }}"
+    >
+    </bc-button>
+    <bc-button
+      id="proporz"
+      [variant]="this.proporzButton"
+      (buttonClick)="setTyoeOfElection(electionTypes.Proporz)"
+      label="{{ 'PROPORZWAHL' | translate }}"
+    >
+    </bc-button>
+  </div>
+</div>
+
+<div class="form-group">
+  <bc-label label="{{ 'ELECTION_TITLE' | translate }}"></bc-label>
+  <bc-textarea
+    [(ngModel)]="election.name"
+    [maxlength]="255"
+    [rows]="2"
+    (ngModelChange)="checkValidation()"
+    [required]="true"
+    class="form-group block"
+    subscriptSizing="dynamic"
+  >
+  </bc-textarea>
+</div>
+<div class="form-group">
+  <bc-label label="{{ 'DESCRIPTION' | translate }}"></bc-label>
+  <bc-textarea
+    [(ngModel)]="election.description"
+    [maxlength]="2000"
+    [rows]="3"
+    class="form-group block"
+    subscriptSizing="dynamic"
+  >
+  </bc-textarea>
+</div>
+<div class="form-group input-group">
+  <app-date-picker
+    class="date-picker"
+    [(value)]="election.submissionDeadlineBegin"
+    (valueChange)="checkValidation()"
+    [label]="'START_SUBMISSION_DEADLINE' | translate"
+    [required]="true"
+  >
+  </app-date-picker>
+  <app-date-picker
+    class="date-picker"
+    [(value)]="this.election.submissionDeadlineEnd"
+    (valueChange)="checkValidation()"
+    [label]="'END_SUBMISSION_DEADLINE' | translate"
+    [required]="true"
+  >
+  </app-date-picker>
+  <app-date-picker
+    class="date-picker"
+    [(value)]="election.contestDate"
+    (valueChange)="checkValidation()"
+    [label]="'CONTEST' | translate"
+    [required]="true"
+  >
+  </app-date-picker>
+  <app-date-picker
+    class="date-picker"
+    [(value)]="election.availableFrom"
+    [label]="'AVAILABLE_FROM' | translate"
+  >
+  </app-date-picker>
+</div>
+
+<div>
+  <app-multi-select
+    [items]="electoralDistricts"
+    [(selectedItems)]="election.domainsOfInfluence"
+    (selectedItemsChange)="checkValidation()"
+    displayExpr="name"
+    idExpr="id"
+    [maxItems]="1"
+    (deleted)="deleteDomainOfInfluence($event)"
+    (added)="addDomainOfInfluence($event)"
+    [title]="'ELECTORAL_DISTRICT' | translate"
+  >
+  </app-multi-select>
+</div>

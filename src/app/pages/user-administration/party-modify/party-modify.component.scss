@@ -1,0 +1,12 @@
+main {
+  margin: 3rem;
+}
+.button-wrapper {
+  margin-top: 1.5rem;
+  height: 2rem;
+  display: flex;
+
+  bc-spinner {
+    margin-left: 1rem;
+  }
+}

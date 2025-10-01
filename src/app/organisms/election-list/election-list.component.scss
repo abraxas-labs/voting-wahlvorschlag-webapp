@@ -1,0 +1,47 @@
+@use '@abraxas/voting-lib/style/table' as table;
+
+.highlight {
+  color: red;
+}
+
+::ng-deep .bc-column-name {
+  @include table.truncate-long-sortable-table-header();
+
+  width: 50%;
+}
+
+::ng-deep .bc-column-submission-deadline-begin {
+  @include table.truncate-long-sortable-table-header();
+
+  width: 12%;
+}
+
+::ng-deep .bc-column-submission-deadline-end {
+  @include table.truncate-long-sortable-table-header();
+
+  width: 16%;
+}
+
+::ng-deep .bc-column-available-from {
+  @include table.truncate-long-sortable-table-header();
+
+  width: 16%;
+}
+
+::ng-deep .bc-column-submission-deadline-diff {
+  @include table.truncate-long-sortable-table-header();
+
+  width: 12%;
+}
+
+.bc-column-actions {
+  width: 5%;
+}
+
+.row-editing {
+  display: flex;
+  justify-content: space-around;
+  bc-icon:last-child {
+    margin: 0 1.5rem 0 0.5rem;
+  }
+}

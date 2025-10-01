@@ -1,0 +1,15 @@
+.input-group {
+  display: flex;
+
+  bc-formfield + bc-formfield {
+    margin-left: 10px;
+  }
+}
+
+.date-picker:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.form-group {
+  margin-top: 0.5rem;
+}

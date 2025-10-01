@@ -1,0 +1,101 @@
+<div>
+  <bc-table
+    selection
+    sort
+    filter
+    [sortMultiple]="true"
+    [sortActive]="[
+      { id: columns.submissionDeadlineEnd, direction: isArchive ? 'desc' : 'asc' },
+      { id: columns.name, direction: 'asc' },
+    ]"
+    [dataSource]="dataSource"
+  >
+    <ng-container columnDef="name">
+      <bc-header-cell sort filter *headerCellDef>{{ 'ELECTION_TITLE' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+        {{ row.name }}
+      </bc-data-cell>
+    </ng-container>
+
+    <ng-container columnDef="submissionDeadlineBegin">
+      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+        <span truncateWithTooltip tooltip>
+          {{ 'START_SUBMISSION_DEADLINE' | translate }}
+        </span>
+      </bc-header-cell>
+      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+        {{ row.submissionDeadlineBegin | date: 'dd.MM.yyyy' }}
+      </bc-data-cell>
+    </ng-container>
+
+    <ng-container columnDef="submissionDeadlineEnd">
+      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+        <span truncateWithTooltip tooltip>
+          {{ 'END_SUBMISSION_DEADLINE' | translate }}
+        </span>
+      </bc-header-cell>
+      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+        {{ row.submissionDeadlineEnd | date: 'dd.MM.yyyy' }}
+      </bc-data-cell>
+    </ng-container>
+
+    <ng-container columnDef="availableFrom">
+      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+        <span truncateWithTooltip tooltip>
+          {{ 'AVAILABLE_FROM' | translate }}
+        </span>
+      </bc-header-cell>
+      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+        {{ row.availableFrom | date: 'dd.MM.yyyy' }}
+      </bc-data-cell>
+    </ng-container>
+
+    <ng-container columnDef="submissionDeadlineDiff">
+      <bc-header-cell sort *headerCellDef>
+        <span truncateWithTooltip tooltip>
+          {{ 'DAYS_REMAINING' | translate }}
+        </span>
+      </bc-header-cell>
+      <bc-data-cell
+        *dataCellDef="let row"
+        (click)="onOpenDetail(row.id)"
+        [ngClass]="{ highlight: row.value <= 14 }"
+      >
+        {{ row.submissionDeadlineDiff }} {{ 'DAYS' | translate }}
+      </bc-data-cell>
+    </ng-container>
+
+    <ng-container columnDef="actions">
+      <bc-header-cell *headerCellDef></bc-header-cell>
+      <bc-data-cell *dataCellDef="let element; let i = index">
+        <div class="row-editing">
+          <bc-icon *ngIf="allowUpdating" icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
+          <bc-icon
+            *ngIf="allowDeleting"
+            icon="trash"
+            iconColor="error"
+            (click)="onDelete(element.id)"
+          ></bc-icon>
+        </div>
+      </bc-data-cell>
+    </ng-container>
+
+    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+    <bc-data-row
+      #rowSelection="selectionToggle"
+      *dataRowDef="let row; columns: columnsToDisplay; let i = index"
+      selectionToggle
+      [selectionToggleValue]="row"
+      selectionRow
+      [selectionRowValue]="row"
+      (click)="rowSelection.toggle()"
+    >
+    </bc-data-row>
+  </bc-table>
+  <bc-paginator
+    *ngIf="showPaginator"
+    showFirstLastButtons
+    [pageSize]="20"
+    [pageSizeOptions]="[5, 10, 20]"
+  ></bc-paginator>
+</div>

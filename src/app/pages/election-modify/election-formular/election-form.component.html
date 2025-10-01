@@ -1,0 +1,24 @@
+<div class="form-group extra-space">
+  <h2>{{ 'ATTACHMENTS' | translate }}</h2>
+  <div class="container">
+    <app-filepicker (filePicked)="addFile($event)" accept="application/pdf"></app-filepicker>
+    <div *ngFor="let document of election.documents; let i = index" class="file-list">
+      <div class="file-name">{{ document.name }}</div>
+      <div class="remove-file">
+        <bc-icon size="2rem" (click)="removeFileAtIndex(i)">x</bc-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <h2>{{ 'FORMS' | translate }}</h2>
+  <app-election-form-extras
+    [(infoTexts)]="infoTexts"
+    [electionType]="election.electionType"
+    (infoTextsChange)="infoTextsChanged($event)"
+    [(quorumSignaturesCount)]="quorumSignaturesCount"
+    [(tenantLogo)]="election.tenantLogo"
+  >
+  </app-election-form-extras>
+</div>

@@ -1,0 +1,9 @@
+<bc-dialog>
+  <h2>{{ 'LIST.EXPORT' | translate }}</h2>
+  <bc-divider [orientation]="'horizontal'"></bc-divider>
+  <app-list-export
+    [election]="this.election"
+    [lists]="this.lists"
+    (cancelEvent)="close(false)"
+  ></app-list-export>
+</bc-dialog>

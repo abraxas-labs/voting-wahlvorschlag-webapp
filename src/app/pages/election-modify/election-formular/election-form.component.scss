@@ -1,0 +1,33 @@
+.remove-file {
+  visibility: hidden;
+}
+
+.file-list {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  &:hover {
+    background: #e0e0e0;
+
+    .remove-file {
+      visibility: visible;
+
+      &:hover {
+        color: #c60000;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.file-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.extra-space {
+  margin-bottom: 2rem;
+}

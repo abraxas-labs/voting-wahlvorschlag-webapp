@@ -1,0 +1,13 @@
+<div
+  class="step-item"
+  [ngClass]="{ 'step-item-active': activeValue && !disabled, 'step-item-disabled': disabled }"
+>
+  <div class="step-indicator">
+    <div class="step-up step-line"></div>
+    <div class="step-toggle" (click)="selectStep()" [class.step-item-selectable]="stepSelectable"></div>
+    <div class="step-down step-line"></div>
+  </div>
+  <div class="step-content" [class.step-item-selectable]="stepSelectable" (click)="selectStep()">
+    <ng-content></ng-content>
+  </div>
+</div>
