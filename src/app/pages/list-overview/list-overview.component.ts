@@ -215,7 +215,8 @@ export class ListOverviewComponent implements OnInit, AfterViewInit {
       .getAll(this.electionId)
       .pipe(finalize(() => (this.loadingLists = false)))
       .subscribe((l) => {
-        (this.dataSourceLists.data = this.mapToUiLists(l)), this.selection.clear(true);
+        this.dataSourceLists.data = this.mapToUiLists(l);
+        this.selection.clear(true);
         this.buttonsDisabled = true;
         this.updateAllowedLists();
       });
