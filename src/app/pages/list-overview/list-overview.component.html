@@ -1,48 +1,54 @@
 <div class="content">
   <app-spinner-centered [visible]="loadingElection || loadingLists">
-    <div *ngIf="election && dataSourceLists.data">
-      <h2>{{ 'RECORD' | translate }}</h2>
-      <p>
-        <strong>{{ election.name }}</strong>
-      </p>
-      <p>{{ election.description }}</p>
-    </div>
-    <div *ngIf="!election?.isArchived && !isMajorz()" class="form-group buttons align-right">
-      <bc-button
-        *ngIf="isWahlverwalter && selectedLists.length >= 2"
-        (buttonClick)="createOrUpdateListUnion(getListIds())"
-        label="{{ 'LIST.UNION.NEW' | translate }}"
-      >
-      </bc-button>
-      <bc-button
-        *ngIf="isWahlverwalter && selectedLists.length === 1"
-        color="warn"
-        (buttonClick)="removeFromListUnion(getListIds()[0], false)"
-        [disabled]="!isListInUnion(selectedLists[0], false)"
-        label="{{ 'LIST.UNION.DELETE' | translate }}"
-      >
-      </bc-button>
-      <bc-button
-        *ngIf="isWahlverwalter && selectedLists.length >= 2"
-        (buttonClick)="newSubUnion()"
-        label="{{ 'LIST.UNION.NEW_SUB_UNION' | translate }}"
-      >
-      </bc-button>
-      <bc-button
-        *ngIf="isWahlverwalter && selectedLists.length === 1"
-        [color]="'warn'"
-        (buttonClick)="removeFromListUnion(getListIds()[0], true)"
-        [disabled]="!isListInUnion(selectedLists[0], true)"
-        label="{{ 'LIST.UNION.DELETE_SUB_UNION' | translate }}"
-      >
-      </bc-button>
-      <bc-button
-        *ngIf="isWahlverwalter"
-        [disabled]="selectedLists.length !== 1"
-        (buttonClick)="newlistIndenture()"
-        label="{{ 'LIST.INDENTURE.TITLE' | translate }}"
-      ></bc-button>
-    </div>
+    @if (election && dataSourceLists.data) {
+      <div>
+        <h2>{{ 'RECORD' | translate }}</h2>
+        <p>
+          <strong>{{ election.name }}</strong>
+        </p>
+        <p>{{ election.description }}</p>
+      </div>
+    }
+    @if (!election?.isArchived && !isMajorz()) {
+      <div class="form-group buttons align-right">
+        @if (isWahlverwalter && selectedLists.length >= 2) {
+          <bc-button
+            (buttonClick)="createOrUpdateListUnion(getListIds())"
+            label="{{ 'LIST.UNION.NEW' | translate }}"
+          >
+          </bc-button>
+        }
+        @if (isWahlverwalter && selectedLists.length === 1) {
+          <bc-button
+            color="warn"
+            (buttonClick)="removeFromListUnion(getListIds()[0], false)"
+            [disabled]="!isListInUnion(selectedLists[0], false)"
+            label="{{ 'LIST.UNION.DELETE' | translate }}"
+          >
+          </bc-button>
+        }
+        @if (isWahlverwalter && selectedLists.length >= 2) {
+          <bc-button (buttonClick)="newSubUnion()" label="{{ 'LIST.UNION.NEW_SUB_UNION' | translate }}">
+          </bc-button>
+        }
+        @if (isWahlverwalter && selectedLists.length === 1) {
+          <bc-button
+            [color]="'warn'"
+            (buttonClick)="removeFromListUnion(getListIds()[0], true)"
+            [disabled]="!isListInUnion(selectedLists[0], true)"
+            label="{{ 'LIST.UNION.DELETE_SUB_UNION' | translate }}"
+          >
+          </bc-button>
+        }
+        @if (isWahlverwalter) {
+          <bc-button
+            [disabled]="selectedLists.length !== 1"
+            (buttonClick)="newlistIndenture()"
+            label="{{ 'LIST.INDENTURE.TITLE' | translate }}"
+          ></bc-button>
+        }
+      </div>
+    }
 
     <div>
       <app-spinner-overlay [visible]="updatingListIds.size > 0">
@@ -208,9 +214,9 @@
               </span>
             </bc-header-cell>
             <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
-              <span class="list-union-desc" *ngFor="let union of row.listUnion?.lists">{{
-                getListDescriptionById(union.id)
-              }}</span>
+              @for (union of row.listUnion?.lists; track union) {
+                <span class="list-union-desc">{{ getListDescriptionById(union.id) }}</span>
+              }
             </bc-data-cell>
           </ng-container>
 
@@ -221,31 +227,27 @@
               </span>
             </bc-header-cell>
             <bc-data-cell *dataCellDef="let row" (click)="detail(row.id)">
-              <span
-                class="list-union-desc"
-                *ngFor="let union of row.listSubUnion?.lists"
-                [class.bold]="union.id === row.listSubUnion?.rootListId"
-                >{{ getListDescriptionById(union.id) }}</span
-              >
+              @for (union of row.listSubUnion?.lists; track union) {
+                <span class="list-union-desc" [class.bold]="union.id === row.listSubUnion?.rootListId">{{
+                  getListDescriptionById(union.id)
+                }}</span>
+              }
             </bc-data-cell>
           </ng-container>
 
           <ng-container columnDef="actions">
             <bc-header-cell *headerCellDef></bc-header-cell>
             <bc-data-cell *dataCellDef="let element; let i = index">
-              <div *ngIf="!election?.isArchived" class="row-editing">
-                <bc-icon
-                  *ngIf="allowUpdating && (!element.locked || this.isWahlverwalter)"
-                  icon="edit"
-                  (click)="editList(element)"
-                ></bc-icon>
-                <bc-icon
-                  *ngIf="allowDeleting && (!element.locked || this.isWahlverwalter)"
-                  icon="trash"
-                  iconColor="error"
-                  (click)="deleteList(element)"
-                ></bc-icon>
-              </div>
+              @if (!election?.isArchived) {
+                <div class="row-editing">
+                  @if (allowUpdating && (!element.locked || this.isWahlverwalter)) {
+                    <bc-icon icon="edit" (click)="editList(element)"></bc-icon>
+                  }
+                  @if (allowDeleting && (!element.locked || this.isWahlverwalter)) {
+                    <bc-icon icon="trash" iconColor="error" (click)="deleteList(element)"></bc-icon>
+                  }
+                </div>
+              }
             </bc-data-cell>
           </ng-container>
 
@@ -259,24 +261,26 @@
           >
           </bc-data-row>
         </bc-table>
-        <bc-paginator
-          *ngIf="!isMajorzElection"
-          #listPaginator
-          showFirstLastButtons
-          [pageSize]="20"
-          [pageSizeOptions]="[5, 10, 20]"
-        ></bc-paginator>
+        @if (!isMajorzElection) {
+          <bc-paginator
+            #listPaginator
+            showFirstLastButtons
+            [pageSize]="20"
+            [pageSizeOptions]="[5, 10, 20]"
+          ></bc-paginator>
+        }
       </app-spinner-overlay>
     </div>
     <div class="buttons">
       @if (!election?.isArchived) {
-        <bc-button
-          *ngIf="isUser"
-          [disabled]="isSubmissionDeadlinePassed(election?.submissionDeadlineEnd)"
-          [variant]="'primary'"
-          (buttonClick)="addList()"
-          label="{{ 'LIST.NEW' | translate }}"
-        ></bc-button>
+        @if (isUser) {
+          <bc-button
+            [disabled]="isOutsideSubmissionPeriod(election?.submissionDeadlineBegin, election?.submissionDeadlineEnd)"
+            [variant]="'primary'"
+            (buttonClick)="addList()"
+            label="{{ 'LIST.NEW' | translate }}"
+          ></bc-button>
+        }
         <bc-button
           class="button"
           [disabled]="buttonsDisabled || !canEditLists(selectedLists)"
@@ -284,28 +288,31 @@
           (buttonClick)="deleteLists(getListIds())"
           label="{{ 'DELETE' | translate }}"
         ></bc-button>
-        <bc-button
-          *ngIf="isUser"
-          [disabled]="buttonsDisabled || !canSubmitLists(selectedLists)"
-          (buttonClick)="submitLists(getListIds())"
-          label="{{ 'LIST.SUBMIT' | translate }}"
-        ></bc-button>
-        <bc-button
-          *ngIf="isWahlverwalter"
-          [disabled]="
-            buttonsDisabled || !canValidateLists(selectedLists) || !canUpdateListState(selectedLists)
-          "
-          (buttonClick)="setValid(getListIds())"
-          label="{{ 'LIST.SET_VALID' | translate }}"
-        ></bc-button>
-        <bc-button
-          *ngIf="isWahlverwalter"
-          [disabled]="
-            buttonsDisabled || !canFormallySubmit(selectedLists) || !canUpdateListState(selectedLists)
-          "
-          (buttonClick)="formallySubmit(getListIds())"
-          label="{{ 'LIST.SUBMIT_FORMALLY' | translate }}"
-        ></bc-button>
+        @if (isUser) {
+          <bc-button
+            [disabled]="buttonsDisabled || !canSubmitLists(selectedLists)"
+            (buttonClick)="submitLists(getListIds())"
+            label="{{ 'LIST.SUBMIT' | translate }}"
+          ></bc-button>
+        }
+        @if (isWahlverwalter) {
+          <bc-button
+            [disabled]="
+              buttonsDisabled || !canValidateLists(selectedLists) || !canUpdateListState(selectedLists)
+            "
+            (buttonClick)="setValid(getListIds())"
+            label="{{ 'LIST.SET_VALID' | translate }}"
+          ></bc-button>
+        }
+        @if (isWahlverwalter) {
+          <bc-button
+            [disabled]="
+              buttonsDisabled || !canFormallySubmit(selectedLists) || !canUpdateListState(selectedLists)
+            "
+            (buttonClick)="formallySubmit(getListIds())"
+            label="{{ 'LIST.SUBMIT_FORMALLY' | translate }}"
+          ></bc-button>
+        }
       }
 
       <bc-button (buttonClick)="showExport()" label="{{ 'LIST.EXPORT' | translate }}"></bc-button>
@@ -313,13 +320,14 @@
 
     <div class="documents">
       <h2>{{ 'DOCUMENT.TITLE' | translate }}</h2>
-      <app-document-list
-        *ngIf="election"
-        [download]="true"
-        [documents]="election.documents"
-        (documentsSelected)="downloadDocuments($event)"
-      >
-      </app-document-list>
+      @if (election) {
+        <app-document-list
+          [download]="true"
+          [documents]="election.documents"
+          (documentsSelected)="downloadDocuments($event)"
+        >
+        </app-document-list>
+      }
     </div>
   </app-spinner-centered>
 </div>

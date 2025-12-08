@@ -1,20 +1,22 @@
 <h2>{{ 'NUMBER_OF_SEATS' | translate }}</h2>
 <form #numberOfSeat="ngForm">
-  <ng-container *ngIf="election.domainsOfInfluence">
-    <div class="district-list" *ngFor="let district of election.domainsOfInfluence">
-      <div class="district-bez">{{ district.name }}</div>
-      <div>
-        <bc-number
-          [value]="district.numberOfMandates"
-          [required]="true"
-          [align]="'right'"
-          name="numberOfSeats"
-          [(ngModel)]="district.numberOfMandates"
-          (ngModelChange)="modelChanged(district)"
-          subscriptSizing="dynamic"
-        >
-        </bc-number>
+  @if (election.domainsOfInfluence) {
+    @for (district of election.domainsOfInfluence; track district) {
+      <div class="district-list">
+        <div class="district-bez">{{ district.name }}</div>
+        <div>
+          <bc-number
+            [value]="district.numberOfMandates"
+            [required]="true"
+            [align]="'right'"
+            name="numberOfSeats"
+            [(ngModel)]="district.numberOfMandates"
+            (ngModelChange)="modelChanged(district)"
+            subscriptSizing="dynamic"
+          >
+          </bc-number>
+        </div>
       </div>
-    </div>
-  </ng-container>
+    }
+  }
 </form>

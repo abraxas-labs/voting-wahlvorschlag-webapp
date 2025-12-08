@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from './shared/services/snackbar.service';
 import { ThemeService, LanguageService } from '@abraxas/voting-lib';
 import { GuardService } from './shared/guard.service';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LocationStrategy } from '@angular/common';
 import moment from 'moment';
@@ -28,6 +28,15 @@ import 'moment/locale/de';
   standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private readonly authentication = inject(AuthenticationService);
+  private readonly authorization = inject(AuthorizationService);
+  private readonly translations = inject(TranslateService);
+  private readonly router = inject(Router);
+  private readonly snackbarService = inject(SnackbarService);
+  private readonly guardService = inject(GuardService);
+  private readonly languageService = inject(LanguageService);
+  private readonly locationStrategy = inject(LocationStrategy);
+
   @ViewChild('snackbar') private snackbar!: SnackbarComponent;
   public loggedIn: boolean = false;
   private authSubscription: Subscription | undefined;
@@ -47,17 +56,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private readonly subscriptions: Subscription[] = [];
 
-  constructor(
-    themeService: ThemeService,
-    private readonly authentication: AuthenticationService,
-    private readonly authorization: AuthorizationService,
-    private readonly translations: TranslateService,
-    private readonly router: Router,
-    private readonly snackbarService: SnackbarService,
-    private readonly guardService: GuardService,
-    private readonly languageService: LanguageService,
-    private readonly locationStrategy: LocationStrategy
-  ) {
+  constructor() {
+    const themeService = inject(ThemeService);
+
     this.authorization.getActiveTenant();
     moment.locale(this.languageService.currentLanguage);
     this.translations.setDefaultLang(this.languageService.currentLanguage);

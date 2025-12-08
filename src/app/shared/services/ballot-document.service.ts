@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DocumentModel } from '../models/document.model';
@@ -15,10 +15,8 @@ import { DownloadService } from './download.service';
   providedIn: 'root',
 })
 export class BallotDocumentService {
-  constructor(
-    private httpClient: HttpClient,
-    private downloader: DownloadService
-  ) {}
+  private httpClient = inject(HttpClient);
+  private downloader = inject(DownloadService);
 
   public create(electionId: string, document: DocumentModel): Observable<DocumentModel> {
     return this.httpClient.post<DocumentModel>(this.url(electionId), document);

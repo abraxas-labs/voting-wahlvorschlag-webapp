@@ -60,13 +60,11 @@
       }}</bc-readonly>
     </div>
 
-    <div
-      *ngIf="isMajorz || settings.showPartyOnProporzElection"
-      class="entry"
-      [class.tagged]="isTagged('party')"
-    >
-      <bc-readonly label="{{ 'CANDIDACY.PARTY' | translate }}">{{ candidacy.party }}</bc-readonly>
-    </div>
+    @if (isMajorz || settings.showPartyOnProporzElection) {
+      <div class="entry" [class.tagged]="isTagged('party')">
+        <bc-readonly label="{{ 'CANDIDACY.PARTY' | translate }}">{{ candidacy.party }}</bc-readonly>
+      </div>
+    }
 
     <div class="entry" [class.tagged]="isTagged('incumbent')">
       <bc-readonly label="{{ 'CANDIDACY.INCUMBENT' | translate }}">{{
@@ -74,19 +72,20 @@
       }}</bc-readonly>
     </div>
 
-    <div *ngIf="settings?.showBallotPaperInfos" class="ballot-data-container">
-      <h2>{{ 'CANDIDACY.BALLOT_DATA' | translate }}</h2>
-
-      <div class="entry" [class.tagged]="isTagged('ballotOccupationalTitle')">
-        <bc-readonly label="{{ 'CANDIDACY.BALLOT_OCCUPATION_TITLE' | translate }}">{{
-          candidacy.ballotOccupationalTitle || '-'
-        }}</bc-readonly>
+    @if (settings?.showBallotPaperInfos) {
+      <div class="ballot-data-container">
+        <h2>{{ 'CANDIDACY.BALLOT_DATA' | translate }}</h2>
+        <div class="entry" [class.tagged]="isTagged('ballotOccupationalTitle')">
+          <bc-readonly label="{{ 'CANDIDACY.BALLOT_OCCUPATION_TITLE' | translate }}">{{
+            candidacy.ballotOccupationalTitle || '-'
+          }}</bc-readonly>
+        </div>
+        <div class="entry" [class.tagged]="isTagged('ballotLocality')">
+          <bc-readonly label="{{ 'CANDIDACY.BALLOT_LOCALITY' | translate }}">{{
+            candidacy.ballotLocality || '-'
+          }}</bc-readonly>
+        </div>
       </div>
-      <div class="entry" [class.tagged]="isTagged('ballotLocality')">
-        <bc-readonly label="{{ 'CANDIDACY.BALLOT_LOCALITY' | translate }}">{{
-          candidacy.ballotLocality || '-'
-        }}</bc-readonly>
-      </div>
-    </div>
+    }
   </div>
 </main>

@@ -20,6 +20,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Subscription } from 'rxjs';
@@ -45,6 +46,14 @@ import { CandidacyModifyComponent } from '../candidacy-modify/candidacy-modify.c
   standalone: false,
 })
 export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewInit {
+  private roleService = inject(GuardService);
+  private candidateService = inject(CandidateService);
+  private snackbarService = inject(SnackbarService);
+  private rxUtils = inject(RxJsUtilsService);
+  private settingsService = inject(SettingsService);
+  private dialogService = inject(DialogService);
+  private translateService = inject(TranslateService);
+
   @ViewChild('candidateSort') public candidateSort: SortDirective;
 
   public candidates: ListCandidateModel[] = [];
@@ -76,16 +85,6 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
     'actions',
   ];
   private roleSubscription: Subscription | undefined;
-
-  constructor(
-    private roleService: GuardService,
-    private candidateService: CandidateService,
-    private snackbarService: SnackbarService,
-    private rxUtils: RxJsUtilsService,
-    private settingsService: SettingsService,
-    private dialogService: DialogService,
-    private translateService: TranslateService
-  ) {}
 
   public ngAfterViewInit(): void {
     this.dataSource.sort = this.candidateSort;

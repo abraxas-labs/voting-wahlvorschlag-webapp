@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { InfoTextModel } from 'src/app/shared/models/info-text.model';
 import { InfoTextService } from 'src/app/shared/services/info-text.service';
 import { finalize } from 'rxjs/operators';
@@ -31,6 +31,12 @@ interface InfoTextItem {
   standalone: false,
 })
 export class CandidacyComponent implements OnInit {
+  private infoTextService = inject(InfoTextService);
+  private snackbarService = inject(SnackbarService);
+  private rxUtils = inject(RxJsUtilsService);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   public loadingCount: number = 0;
   public saving: boolean = false;
   @Input() public basedata: boolean = true;
@@ -156,14 +162,6 @@ export class CandidacyComponent implements OnInit {
   public get ballotPaperInfoTexts(): InfoTextItem[] {
     return this.items.filter((i) => this.ballotPaperInfoKeys.indexOf(i.key) > -1);
   }
-
-  constructor(
-    private infoTextService: InfoTextService,
-    private snackbarService: SnackbarService,
-    private rxUtils: RxJsUtilsService,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {}
 
   public ngOnInit(): void {
     this.loadingCount = 2;

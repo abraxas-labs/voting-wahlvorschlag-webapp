@@ -8,29 +8,32 @@
     ]"
     subscriptSizing="dynamic"
   ></bc-radio-button-group>
-  <bc-text
-    *ngIf="tenantIdentifierType === 'text'; else tenantLogoContainer"
-    [(ngModel)]="infotextTenantTitle.value"
-    (ngModelChange)="updateInfotexts()"
-    [label]="'ELECTION_EXTRAS.LABEL_INFOTEXT_TENANT_TITLE' | translate"
-    [maxlength]="10000"
-    subscriptSizing="dynamic"
-  ></bc-text>
-  <ng-template #tenantLogoContainer>
+  @if (tenantIdentifierType === 'text') {
+    <bc-text
+      [(ngModel)]="infotextTenantTitle.value"
+      (ngModelChange)="updateInfotexts()"
+      [label]="'ELECTION_EXTRAS.LABEL_INFOTEXT_TENANT_TITLE' | translate"
+      [maxlength]="10000"
+      subscriptSizing="dynamic"
+    ></bc-text>
+  } @else {
     <app-filepicker
       (filePicked)="setTenantLogo($event)"
       [multiple]="false"
       addTitle="ELECTION_EXTRAS.LABEL_TENANT_LOGO_CHOOSE"
       accept="image/jpeg,image/png"
     ></app-filepicker>
-    <img *ngIf="tenantLogo" [src]="'data:image/png;base64,' + tenantLogo" class="tenant-logo" />
-  </ng-template>
-  <bc-text
-    [ngModel]="wabstiExportTenantTitle"
-    (ngModelChange)="wabstiExportTenantTitleChange.emit($event)"
-    [label]="'ELECTION_EXTRAS.LABEL_WABSTI_TENANT_TITLE' | translate"
-    [maxlength]="1000"
-    subscriptSizing="dynamic"
-    *ngIf="!hideWabstiExportTenantTitle"
-  ></bc-text>
+    @if (tenantLogo) {
+      <img [src]="'data:image/png;base64,' + tenantLogo" class="tenant-logo" alt="logo" />
+    }
+  }
+  @if (!hideWabstiExportTenantTitle) {
+    <bc-text
+      [ngModel]="wabstiExportTenantTitle"
+      (ngModelChange)="wabstiExportTenantTitleChange.emit($event)"
+      [label]="'ELECTION_EXTRAS.LABEL_WABSTI_TENANT_TITLE' | translate"
+      [maxlength]="1000"
+      subscriptSizing="dynamic"
+    ></bc-text>
+  }
 </div>

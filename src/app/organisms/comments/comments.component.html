@@ -1,67 +1,82 @@
 <div class="wrapper">
   <app-spinner-centered [visible]="loading">
-    <div class="editor" *ngIf="!election?.isArchived">
-      <bc-textarea
-        [(ngModel)]="editingComment.content"
-        [maxlength]="1000"
-        subscriptSizing="dynamic"
-      ></bc-textarea>
-      <div>
-        <app-spinner-inline [visible]="saving">
-          <bc-button
-            [variant]="'primary'"
-            [disabled]="!editingComment.content"
-            (buttonClick)="saveComment()"
-            label="{{ (editingComment.id ? 'COMMENTS.SAVE_CHANGES' : 'COMMENTS.ADD') | translate }}"
-          ></bc-button
-          ><bc-button
-            *ngIf="editingComment.content"
-            (buttonClick)="editComment(null)"
-            color="warn"
-            label="{{ 'COMMENTS.DISCARD' | translate }}"
-          ></bc-button>
-        </app-spinner-inline>
-      </div>
-    </div>
-    <div class="comments">
-      <h2>{{ 'COMMENTS.TITLE' | translate }}</h2>
-      <div class="comment" *ngFor="let comment of comments">
-        <div class="content-wrapper">
-          <div class="content">
-            <p *ngFor="let line of comment.content.split('\n')">{{ line }}</p>
-          </div>
-        </div>
-        <div class="footer">
-          {{ comment.creatorFirstName }}
-          {{ comment.creatorLastName }},
-          <span class="date">{{ comment.creationDate | date: 'dd.MM.yyyy - HH:mm' }}</span>
-          <div *ngIf="comment.modifiedDate">
-            {{ 'COMMENTS.MODIFIED_ON' | translate }}
-            <span class="date">{{ comment.modifiedDate | date: 'dd.MM.yyyy - HH:mm' }}</span>
-          </div>
-        </div>
-        <div class="buttons" *ngIf="!election?.isArchived && canEditOrDeleteComments && comment.createdBy === activeUser?.loginid">
-          <bc-button
-            [color]="'primary'"
-            [variant]="'secondary'"
-            [icon]="'edit'"
-            [type]="'button'"
-            (buttonClick)="editComment(comment)"
-          ></bc-button>
-          <app-spinner-inline [visible]="removingId === comment.id">
+    @if (!election?.isArchived) {
+      <div class="editor">
+        <bc-textarea
+          [(ngModel)]="editingComment.content"
+          [maxlength]="1000"
+          subscriptSizing="dynamic"
+        ></bc-textarea>
+        <div>
+          <app-spinner-inline [visible]="saving">
             <bc-button
-              [color]="'warn'"
-              [variant]="'secondary'"
-              [icon]="'trash'"
-              [type]="'button'"
-              (buttonClick)="deleteComment(comment.id)"
+              [variant]="'primary'"
+              [disabled]="!editingComment.content"
+              (buttonClick)="saveComment()"
+              label="{{ (editingComment.id ? 'COMMENTS.SAVE_CHANGES' : 'COMMENTS.ADD') | translate }}"
             ></bc-button>
+            @if (editingComment.content) {
+              <bc-button
+                (buttonClick)="editComment(null)"
+                color="warn"
+                label="{{ 'COMMENTS.DISCARD' | translate }}"
+              ></bc-button>
+            }
           </app-spinner-inline>
         </div>
       </div>
-      <p *ngIf="comments.length === 0">
-        {{ 'COMMENTS.NO_COMMENTS' | translate }}
-      </p>
+    }
+    <div class="comments">
+      <h2>{{ 'COMMENTS.TITLE' | translate }}</h2>
+      @for (comment of comments; track comment) {
+        <div class="comment">
+          <div class="content-wrapper">
+            <div class="content">
+              @for (line of comment.content.split('\n'); track line) {
+                <p>{{ line }}</p>
+              }
+            </div>
+          </div>
+          <div class="footer">
+            {{ comment.creatorFirstName }}
+            {{ comment.creatorLastName }},
+            <span class="date">{{ comment.creationDate | date: 'dd.MM.yyyy - HH:mm' }}</span>
+            @if (comment.modifiedDate) {
+              <div>
+                {{ 'COMMENTS.MODIFIED_ON' | translate }}
+                <span class="date">{{ comment.modifiedDate | date: 'dd.MM.yyyy - HH:mm' }}</span>
+              </div>
+            }
+          </div>
+          @if (
+            !election?.isArchived && canEditOrDeleteComments && comment.createdBy === activeUser?.loginid
+          ) {
+            <div class="buttons">
+              <bc-button
+                [color]="'primary'"
+                [variant]="'secondary'"
+                [icon]="'edit'"
+                [type]="'button'"
+                (buttonClick)="editComment(comment)"
+              ></bc-button>
+              <app-spinner-inline [visible]="removingId === comment.id">
+                <bc-button
+                  [color]="'warn'"
+                  [variant]="'secondary'"
+                  [icon]="'trash'"
+                  [type]="'button'"
+                  (buttonClick)="deleteComment(comment.id)"
+                ></bc-button>
+              </app-spinner-inline>
+            </div>
+          }
+        </div>
+      }
+      @if (comments.length === 0) {
+        <p>
+          {{ 'COMMENTS.NO_COMMENTS' | translate }}
+        </p>
+      }
     </div>
   </app-spinner-centered>
 </div>

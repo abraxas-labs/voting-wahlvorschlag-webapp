@@ -5,7 +5,7 @@
  */
 
 import { DialogService } from '@abraxas/base-components';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalDialogComponent } from 'src/app/shared/components/dialogs/modal-dialog/modal-dialog.component';
 
@@ -16,6 +16,9 @@ import { ModalDialogComponent } from 'src/app/shared/components/dialogs/modal-di
   standalone: false,
 })
 export class MultiSelectComponent {
+  private translateService = inject(TranslateService);
+  private dialogService = inject(DialogService);
+
   @Input()
   public set items(value: any[]) {
     this.itemValue = value;
@@ -71,11 +74,6 @@ export class MultiSelectComponent {
   private itemValue: any[] = [];
   private selectedIdsValue?: any[];
   private idExprValue: string = '';
-
-  constructor(
-    private translateService: TranslateService,
-    private dialogService: DialogService
-  ) {}
 
   public addSelection(item: any): void {
     if (!item) {

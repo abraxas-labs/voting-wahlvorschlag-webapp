@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ElectionExportType, ElectionModel, ElectionOverviewModel } from '../models/election.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -18,10 +18,8 @@ import { ListModel } from '../models/list.model';
   providedIn: 'root',
 })
 export class ElectionService {
-  constructor(
-    private httpClient: HttpClient,
-    private download: DownloadService
-  ) {}
+  private httpClient = inject(HttpClient);
+  private download = inject(DownloadService);
 
   public getAll(): Observable<ElectionOverviewModel[]> {
     return this.httpClient

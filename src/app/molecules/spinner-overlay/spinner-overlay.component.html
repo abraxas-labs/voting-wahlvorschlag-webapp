@@ -1,4 +1,6 @@
 <div class="container">
   <ng-content></ng-content>
-  <div class="spinner" [@enterAnimation] *ngIf="visible"><bc-spinner></bc-spinner></div>
+  @if (visible) {
+    <div class="spinner" [@enterAnimation]><bc-spinner></bc-spinner></div>
+  }
 </div>

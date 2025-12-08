@@ -1,8 +1,8 @@
 <div class="content">
-  <ng-container *ngIf="auth.authenticated">
+  @if (auth.authenticated) {
     <h1>{{ 'BASE-DATA' | translate }}</h1>
     <app-domains-of-influence [allowUpdating]="true" [allowDeleting]="true"></app-domains-of-influence>
     <app-candidacy></app-candidacy>
     <app-tenant-settings></app-tenant-settings>
-  </ng-container>
+  }
 </div>

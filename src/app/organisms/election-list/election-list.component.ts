@@ -11,7 +11,16 @@ import {
   SortDirective,
   TableDataSource,
 } from '@abraxas/base-components';
-import { Component, Input, Output, EventEmitter, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDialogComponent } from 'src/app/shared/components/dialogs/modal-dialog/modal-dialog.component';
 import { ElectionOverviewModel } from '../../shared/models/election.model';
@@ -24,6 +33,11 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class ElectionListComponent implements OnInit, AfterViewInit {
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly dialogService = inject(DialogService);
+  private readonly translateService = inject(TranslateService);
+
   @Input() public elections: ElectionOverviewModel[] = [];
   @Input() public allowUpdating: boolean = false;
   @Input() public allowDeleting: boolean = false;
@@ -50,13 +64,6 @@ export class ElectionListComponent implements OnInit, AfterViewInit {
     TableColumn.submissionDeadlineDiff,
     'actions',
   ];
-
-  constructor(
-    private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly dialogService: DialogService,
-    private readonly translateService: TranslateService
-  ) {}
 
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

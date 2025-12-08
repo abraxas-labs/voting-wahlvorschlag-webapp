@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PartyModel } from '../models/party.model';
@@ -14,7 +14,7 @@ import { PartyModel } from '../models/party.model';
   providedIn: 'root',
 })
 export class PartiesService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public getAll(): Observable<PartyModel[]> {
     return this.httpClient.get<PartyModel[]>(this.url());

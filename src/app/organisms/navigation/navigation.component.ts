@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GuardService } from '../../shared/guard.service';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,9 @@ import { Observable } from 'rxjs';
 export class NavigationComponent {
   public isWahlverwalter$: Observable<boolean>;
 
-  constructor(roleService: GuardService) {
+  constructor() {
+    const roleService = inject(GuardService);
+
     this.isWahlverwalter$ = roleService.isWahlverwalter();
   }
 }

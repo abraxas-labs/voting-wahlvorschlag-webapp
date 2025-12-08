@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -16,10 +16,8 @@ import { DownloadService } from './download.service';
   providedIn: 'root',
 })
 export class ListService {
-  constructor(
-    private httpClient: HttpClient,
-    private download: DownloadService
-  ) {}
+  private httpClient = inject(HttpClient);
+  private download = inject(DownloadService);
 
   public static mapLists(lists: ListModel[]): ListModel[] {
     return lists.map((l) => ListService.mapList(l));

@@ -5,7 +5,7 @@
  */
 
 import { AuthenticationService } from '@abraxas/base-components';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-base-data',
@@ -14,5 +14,5 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class BaseDataComponent {
-  constructor(public auth: AuthenticationService) {}
+  auth = inject(AuthenticationService);
 }

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CandidateModel } from 'src/app/shared/models/candidate.model';
 import { SettingsModel } from '../../shared/models/settings.model';
 import { ElectionModel, ElectionType } from '../../shared/models/election.model';
@@ -17,16 +17,18 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   standalone: false,
 })
 export class CandidacyDetailsComponent {
+  public readonly data = inject(MAT_DIALOG_DATA);
+
   public candidacy: CandidateModel;
   public election: ElectionModel;
   public listId: string;
   public settings: SettingsModel;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.election = data.data.election;
-    this.settings = data.data.settings;
-    this.candidacy = data.data.candidacy;
-    this.listId = data.data.listId;
+  constructor() {
+    this.election = this.data.data.election;
+    this.settings = this.data.data.settings;
+    this.candidacy = this.data.data.candidacy;
+    this.listId = this.data.data.listId;
   }
 
   public get isMajorz(): boolean {

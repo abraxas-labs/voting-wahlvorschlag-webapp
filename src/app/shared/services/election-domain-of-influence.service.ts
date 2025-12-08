@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { ElectionDomainOfInfluenceModel } from '../models/election-domain-of-inf
   providedIn: 'root',
 })
 export class ElectionDomainOfInfluenceService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public create(
     electionId: string,

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,7 +14,7 @@ import { InfoTextModel } from '../models/info-text.model';
   providedIn: 'root',
 })
 export class InfoTextService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public getAll(electionId?: string): Observable<InfoTextModel[]> {
     let params = new HttpParams();

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ElectionModel } from '../../../shared/models/election.model';
 import { DocumentModel } from '../../../shared/models/document.model';
 import { BallotDocumentService } from '../../../shared/services/ballot-document.service';
@@ -18,17 +18,15 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   standalone: false,
 })
 export class ElectionFormComponent implements OnInit {
+  private documentService = inject(BallotDocumentService);
+  private snackbarService = inject(SnackbarService);
+
   @Input() public election!: ElectionModel;
   @Output() public isValidChange: EventEmitter<boolean> = new EventEmitter(true);
   @Output() public infoTextsChange: EventEmitter<Partial<InfoTextModel>[]> = new EventEmitter<
     Partial<InfoTextModel>[]
   >();
   @Output() public electionChange: EventEmitter<ElectionModel> = new EventEmitter();
-
-  constructor(
-    private documentService: BallotDocumentService,
-    private snackbarService: SnackbarService
-  ) {}
 
   public ngOnInit(): void {
     this.isValidChange.emit(true);

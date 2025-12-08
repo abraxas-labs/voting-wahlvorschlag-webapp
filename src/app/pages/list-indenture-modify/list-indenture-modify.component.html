@@ -7,9 +7,11 @@
       subscriptSizing="dynamic"
       [error]="hasDuplicateListIndenture"
     >
-      <bc-error *ngIf="hasDuplicateListIndenture">
-        {{ 'LIST.INDENTURE.DUPLICATE_ERROR' | translate }}
-      </bc-error>
+      @if (hasDuplicateListIndenture) {
+        <bc-error>
+          {{ 'LIST.INDENTURE.DUPLICATE_ERROR' | translate }}
+        </bc-error>
+      }
     </bc-text>
     <bc-date
       [label]="'LIST.INDENTURE.SUBMIT_DATE' | translate"

@@ -9,11 +9,11 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Inject,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from '@angular/core';
 import { Sex } from 'src/app/shared/models/candidate.model';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +39,14 @@ interface SexDropdownItem {
   standalone: false,
 })
 export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewInit {
+  public readonly data = inject(MAT_DIALOG_DATA);
+  private translateService = inject(TranslateService);
+  private infoTextService = inject(InfoTextService);
+  private guardService = inject(GuardService);
+  private rxUtils = inject(RxJsUtilsService);
+  private ref = inject(ChangeDetectorRef);
+  private readonly dialogRef = inject<MatDialogRef<CandidacyModifyComponent>>(MatDialogRef);
+
   @Output() public formSubmit: EventEmitter<{
     candidacy: ListCandidateModel;
     nextRequested: boolean;
@@ -61,21 +69,13 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
   public maxCandidateCount: number;
   public isNewCandidate: boolean;
 
-  constructor(
-    private translateService: TranslateService,
-    private infoTextService: InfoTextService,
-    private guardService: GuardService,
-    private rxUtils: RxJsUtilsService,
-    private ref: ChangeDetectorRef,
-    private readonly dialogRef: MatDialogRef<CandidacyModifyComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.candidacy = data.data.candidacy;
-    this.Candidacy = data.data.candidacy;
-    this.election = data.data.election;
-    this.settings = data.data.settings;
-    this.candidateCount = data.data.candidateCount;
-    this.maxCandidateCount = data.data.maxCandidateCount;
+  constructor() {
+    this.candidacy = this.data.data.candidacy;
+    this.Candidacy = this.data.data.candidacy;
+    this.election = this.data.data.election;
+    this.settings = this.data.data.settings;
+    this.candidateCount = this.data.data.candidateCount;
+    this.maxCandidateCount = this.data.data.maxCandidateCount;
     this.isNewCandidate = !this.candidacy.id;
     if (this.isNewCandidate) {
       this.candidateCount++;

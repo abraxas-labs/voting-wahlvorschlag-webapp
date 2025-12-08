@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CommentModel } from '../models/comment.model';
@@ -14,7 +14,7 @@ import { CommentModel } from '../models/comment.model';
   providedIn: 'root',
 })
 export class ListCommentService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public getAll(electionId: string, listId: string): Observable<CommentModel[]> {
     return this.httpClient.get<CommentModel[]>(this.url(electionId, listId));

@@ -10,6 +10,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   Output,
   ViewChild,
@@ -17,7 +18,6 @@ import {
 import { DocumentModel } from '../../shared/models/document.model';
 import { v4 as uuid } from 'uuid';
 import {
-  FilterDirective,
   PaginatorComponent,
   SelectionChange,
   SortDirective,
@@ -32,6 +32,8 @@ import { TableColumn } from '../domains-of-influence/domains-of-influence.compon
   standalone: false,
 })
 export class DocumentListComponent implements AfterViewInit {
+  private changeDetect = inject(ChangeDetectorRef);
+
   @Input() public documents: DocumentModel[] = [];
   @Input() public download: boolean = false;
   @Input() public writeable: boolean = false;
@@ -48,7 +50,6 @@ export class DocumentListComponent implements AfterViewInit {
   public dataSource = new TableDataSource<DocumentModel>(this.documents);
   public columns = TableColumn;
   public columnsToDisplay: string[] = ['selection', TableColumn.name];
-  constructor(private changeDetect: ChangeDetectorRef) {}
 
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

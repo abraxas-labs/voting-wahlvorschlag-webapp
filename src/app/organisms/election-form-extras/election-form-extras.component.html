@@ -39,16 +39,18 @@
     subscriptSizing="dynamic"
   >
   </bc-number>
-  <div *ngIf="!isMajorz">
-    <bc-textarea
-      label="{{ 'ELECTION_EXTRAS.LABEL_INFOTEXT_FORM_LISTUNION' | translate }}"
-      class="block"
-      [maxlength]="10000"
-      [rows]="5"
-      [(ngModel)]="infotextListUnion"
-      (ngModelChange)="updateInfoTexts()"
-      subscriptSizing="dynamic"
-    >
-    </bc-textarea>
-  </div>
+  @if (!isMajorz) {
+    <div>
+      <bc-textarea
+        label="{{ 'ELECTION_EXTRAS.LABEL_INFOTEXT_FORM_LISTUNION' | translate }}"
+        class="block"
+        [maxlength]="10000"
+        [rows]="5"
+        [(ngModel)]="infotextListUnion"
+        (ngModelChange)="updateInfoTexts()"
+        subscriptSizing="dynamic"
+      >
+      </bc-textarea>
+    </div>
+  }
 </div>

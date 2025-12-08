@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, of, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
@@ -21,18 +21,16 @@ import { SettingsService } from '../../shared/services/settings.service';
   standalone: false,
 })
 export class TenantSettingsComponent implements OnInit {
+  private infoTextService = inject(InfoTextService);
+  private settingsService = inject(SettingsService);
+  private rxUtils = inject(RxJsUtilsService);
+  private translateService = inject(TranslateService);
+
   public settings: SettingsModel;
   public infotextTenantTitle: InfoTextModel;
 
   public loading: boolean = true;
   public saving: boolean = false;
-
-  constructor(
-    private infoTextService: InfoTextService,
-    private settingsService: SettingsService,
-    private rxUtils: RxJsUtilsService,
-    private translateService: TranslateService
-  ) {}
 
   public ngOnInit(): void {
     const infoText$ = this.infoTextService.get(InfoTextKeys.TENANT_TITLE).pipe(

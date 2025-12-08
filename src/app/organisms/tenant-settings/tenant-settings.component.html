@@ -1,12 +1,13 @@
 <div class="wrapper">
   <h2>{{ 'TENANT_SETTINGS.TITLE' | translate }}</h2>
   <app-spinner-centered [visible]="loading">
-    <app-tenant-settings-export
-      *ngIf="settings"
-      [(infotextTenantTitle)]="infotextTenantTitle"
-      [(tenantLogo)]="settings.tenantLogo"
-      [(wabstiExportTenantTitle)]="settings.wabstiExportTenantTitle"
-    ></app-tenant-settings-export>
+    @if (settings) {
+      <app-tenant-settings-export
+        [(infotextTenantTitle)]="infotextTenantTitle"
+        [(tenantLogo)]="settings.tenantLogo"
+        [(wabstiExportTenantTitle)]="settings.wabstiExportTenantTitle"
+      ></app-tenant-settings-export>
+    }
     <app-spinner-inline class="button" [visible]="saving">
       <bc-button
         [variant]="'primary'"

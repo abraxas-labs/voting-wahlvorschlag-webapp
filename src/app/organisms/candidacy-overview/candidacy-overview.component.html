@@ -1,51 +1,58 @@
 <app-spinner-centered [visible]="loading">
   <div class="form-group">
-    <p
-      *ngIf="hasNrOfMandatesReached"
-      class="error"
-      translate
-      [translateParams]="{ NR_OF_MANDATES: nrOfMandates }"
-    >
-      CANDIDACY.NR_OF_MANDATES_REACHED
-    </p>
-    <p *ngIf="list?.locked" translate>LIST.LOCKED_MSG</p>
-    <app-spinner-inline *ngIf="canEdit" [visible]="saving">
-      <bc-button
-        [variant]="'primary'"
-        [disabled]="!hasChanges || saving || (list?.locked && !this.isWahlverwalter)"
-        (buttonClick)="saveChanges()"
-        label="{{ 'CANDIDACY.SAVE_CHANGES' | translate }}"
-      >
-      </bc-button
-    ></app-spinner-inline>
+    @if (hasNrOfMandatesReached) {
+      <p class="error" translate [translateParams]="{ NR_OF_MANDATES: nrOfMandates }">
+        CANDIDACY.NR_OF_MANDATES_REACHED
+      </p>
+    }
+    @if (list?.locked) {
+      <p translate>LIST.LOCKED_MSG</p>
+    }
+    @if (canEdit) {
+      <app-spinner-inline [visible]="saving">
+        <bc-button
+          [variant]="'primary'"
+          [disabled]="!hasChanges || saving || (list?.locked && !this.isWahlverwalter)"
+          (buttonClick)="saveChanges()"
+          label="{{ 'CANDIDACY.SAVE_CHANGES' | translate }}"
+        >
+        </bc-button
+      ></app-spinner-inline>
+    }
     <div class="form-group edit-row">
-      <bc-button
-        *ngIf="canEdit"
-        [disabled]="hasNrOfMandatesReached || (list?.locked && !this.isWahlverwalter)"
-        [variant]="'primary'"
-        (buttonClick)="addCandidacy()"
-        label="{{ 'CANDIDACY.ADD_CANDIDACY' | translate }}"
-      >
-      </bc-button>
+      @if (canEdit) {
+        <bc-button
+          [disabled]="hasNrOfMandatesReached || (list?.locked && !this.isWahlverwalter)"
+          [variant]="'primary'"
+          (buttonClick)="addCandidacy()"
+          label="{{ 'CANDIDACY.ADD_CANDIDACY' | translate }}"
+        >
+        </bc-button>
+      }
       <div class="right">
-        <bc-button
-          *ngIf="canEdit && isProporz"
-          [variant]="'secondary'"
-          (buttonClick)="preCumulate()"
-          [disabled]="
-            !selected || selected?.cloned || hasNrOfMandatesReached || (list?.locked && !this.isWahlverwalter)
-          "
-          label="{{ 'CANDIDACY.PRE_CUMULATE' | translate }}"
-        >
-        </bc-button>
-        <bc-button
-          *ngIf="canEdit"
-          [variant]="'secondary'"
-          (buttonClick)="remove()"
-          [disabled]="!selected || (list?.locked && !this.isWahlverwalter)"
-          label="{{ 'CANDIDACY.DELETE' | translate }}"
-        >
-        </bc-button>
+        @if (canEdit && isProporz) {
+          <bc-button
+            [variant]="'secondary'"
+            (buttonClick)="preCumulate()"
+            [disabled]="
+              !selected ||
+              selected?.cloned ||
+              hasNrOfMandatesReached ||
+              (list?.locked && !this.isWahlverwalter)
+            "
+            label="{{ 'CANDIDACY.PRE_CUMULATE' | translate }}"
+          >
+          </bc-button>
+        }
+        @if (canEdit) {
+          <bc-button
+            [variant]="'secondary'"
+            (buttonClick)="remove()"
+            [disabled]="!selected || (list?.locked && !this.isWahlverwalter)"
+            label="{{ 'CANDIDACY.DELETE' | translate }}"
+          >
+          </bc-button>
+        }
       </div>
     </div>
     <bc-table
@@ -61,8 +68,12 @@
       <ng-container [columnDef]="columns.icons">
         <bc-header-cell *headerCellDef></bc-header-cell>
         <bc-data-cell *dataCellDef="let row">
-          <bc-icon *ngIf="row.cloned" icon="double-checkmark"></bc-icon>
-          <bc-icon *ngIf="row.markings.length > 0" icon="eye"></bc-icon>
+          @if (row.cloned) {
+            <bc-icon icon="double-checkmark"></bc-icon>
+          }
+          @if (row.markings.length > 0) {
+            <bc-icon icon="eye"></bc-icon>
+          }
         </bc-data-cell>
       </ng-container>
 
@@ -121,11 +132,9 @@
           <div class="row-editing">
             <div class="edit-icons">
               <bc-icon icon="search" iconColor="info" (click)="showDetailsModal(element)"></bc-icon>
-              <bc-icon
-                *ngIf="canEdit && (!list?.locked || this.isWahlverwalter)"
-                icon="edit"
-                (click)="modifyCandidacy(element)"
-              ></bc-icon>
+              @if (canEdit && (!list?.locked || this.isWahlverwalter)) {
+                <bc-icon icon="edit" (click)="modifyCandidacy(element)"></bc-icon>
+              }
             </div>
           </div>
         </bc-data-cell>

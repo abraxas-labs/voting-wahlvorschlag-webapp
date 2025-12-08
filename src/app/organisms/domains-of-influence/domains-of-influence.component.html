@@ -56,8 +56,12 @@
         <bc-header-cell *headerCellDef></bc-header-cell>
         <bc-data-cell *dataCellDef="let element; let i = index">
           <div class="row-editing">
-            <bc-icon *ngIf="allowUpdating" icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
-            <bc-icon *ngIf="allowDeleting" icon="trash" (click)="onDelete(element.id)"></bc-icon>
+            @if (allowUpdating) {
+              <bc-icon icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
+            }
+            @if (allowDeleting) {
+              <bc-icon icon="trash" (click)="onDelete(element.id)"></bc-icon>
+            }
           </div>
         </bc-data-cell>
       </ng-container>

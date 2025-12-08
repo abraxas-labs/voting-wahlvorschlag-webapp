@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { forkJoin, from, Observable, Subscription } from 'rxjs';
 import { flatMap, map, shareReplay } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
@@ -16,15 +16,15 @@ import { AuthorizationService, Tenant, User, UserService } from '@abraxas/base-c
   providedIn: 'root',
 })
 export class CachedUserService implements OnDestroy {
+  private userService = inject(UserService);
+  private partyUserService = inject(PartyUserService);
+  private auth = inject(AuthorizationService);
+
   private tenantUsersCache: { [id: string]: Observable<UserModel[]> } = {};
 
   private readonly tenantSub: Subscription;
 
-  constructor(
-    private userService: UserService,
-    private partyUserService: PartyUserService,
-    private auth: AuthorizationService
-  ) {
+  constructor() {
     this.tenantSub = this.auth.activeTenantChanged.subscribe(() => (this.tenantUsersCache = {}));
   }
 

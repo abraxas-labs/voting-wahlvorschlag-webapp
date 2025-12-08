@@ -2,12 +2,14 @@
   <h2>{{ 'ATTACHMENTS' | translate }}</h2>
   <div class="container">
     <app-filepicker (filePicked)="addFile($event)" accept="application/pdf"></app-filepicker>
-    <div *ngFor="let document of election.documents; let i = index" class="file-list">
-      <div class="file-name">{{ document.name }}</div>
-      <div class="remove-file">
-        <bc-icon size="2rem" (click)="removeFileAtIndex(i)">x</bc-icon>
+    @for (document of election.documents; track document; let i = $index) {
+      <div class="file-list">
+        <div class="file-name">{{ document.name }}</div>
+        <div class="remove-file">
+          <bc-icon size="xl" (click)="removeFileAtIndex(i)">x</bc-icon>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>
 

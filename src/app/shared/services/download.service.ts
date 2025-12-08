@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { saveAs } from 'file-saver';
 import { RxJsUtilsService } from './rx-js-utils.service';
@@ -17,14 +17,12 @@ import { SnackbarService } from './snackbar.service';
   providedIn: 'root',
 })
 export class DownloadService {
-  private filenameRegex: RegExp = /filename\*=UTF-8''?([^;]*)/;
+  private httpClient = inject(HttpClient);
+  private translateService = inject(TranslateService);
+  private rx = inject(RxJsUtilsService);
+  private snackbar = inject(SnackbarService);
 
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService,
-    private rx: RxJsUtilsService,
-    private snackbar: SnackbarService
-  ) {}
+  private filenameRegex: RegExp = /filename\*=UTF-8''?([^;]*)/;
 
   public download(url: string): Observable<void> {
     return this.httpClient

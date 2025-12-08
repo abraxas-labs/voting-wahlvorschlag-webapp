@@ -22,9 +22,11 @@
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('firstName')"
           subscriptSizing="dynamic"
         >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.firstName)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.firstName) }}
-          </bc-error>
+          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.firstName)) {
+            <bc-error>
+              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.firstName) }}
+            </bc-error>
+          }
         </bc-text>
         <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('firstName')"></app-info-tooltip>
       </div>
@@ -46,9 +48,11 @@
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('familyName')"
           subscriptSizing="dynamic"
         >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.familyName)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.familyName) }}
-          </bc-error>
+          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.familyName)) {
+            <bc-error>
+              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.familyName) }}
+            </bc-error>
+          }
         </bc-text>
         <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('familyName')"></app-info-tooltip>
       </div>
@@ -70,9 +74,11 @@
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotFirstName')"
           subscriptSizing="dynamic"
         >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFirstName)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFirstName) }}
-          </bc-error>
+          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFirstName)) {
+            <bc-error>
+              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFirstName) }}
+            </bc-error>
+          }
         </bc-text>
         <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('ballotFirstName')"></app-info-tooltip>
       </div>
@@ -94,9 +100,11 @@
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotFamilyName')"
           subscriptSizing="dynamic"
         >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFamilyName)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFamilyName) }}
-          </bc-error>
+          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFamilyName)) {
+            <bc-error>
+              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFamilyName) }}
+            </bc-error>
+          }
         </bc-text>
         <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('ballotFamilyName')"></app-info-tooltip>
       </div>
@@ -161,9 +169,11 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('title')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.title)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.title) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.title)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.title) }}
+              </bc-error>
+            }
           </bc-text>
           <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('title')"></app-info-tooltip>
         </div>
@@ -185,9 +195,11 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('occupationalTitle')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.occupationalTitle)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.occupationalTitle) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.occupationalTitle)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.occupationalTitle) }}
+              </bc-error>
+            }
           </bc-text>
           <app-info-tooltip
             class="info-tooltip"
@@ -213,9 +225,11 @@
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('origin')"
           subscriptSizing="dynamic"
         >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.origin)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.origin) }}
-          </bc-error>
+          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.origin)) {
+            <bc-error>
+              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.origin) }}
+            </bc-error>
+          }
         </bc-text>
         <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('origin')"></app-info-tooltip>
       </div>
@@ -238,9 +252,11 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('street')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.street)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.street) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.street)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.street) }}
+              </bc-error>
+            }
           </bc-text>
         </div>
       </app-tag-formfield>
@@ -261,9 +277,11 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('houseNumber')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.houseNumber)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.houseNumber) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.houseNumber)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.houseNumber) }}
+              </bc-error>
+            }
           </bc-text>
           <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('houseNumber')"></app-info-tooltip>
         </div>
@@ -288,9 +306,11 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('zipCode')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.zipCode)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.zipCode) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.zipCode)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.zipCode) }}
+              </bc-error>
+            }
           </bc-text>
           <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('swissZipCode')"></app-info-tooltip>
         </div>
@@ -312,39 +332,44 @@
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('locality')"
             subscriptSizing="dynamic"
           >
-            <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.locality)">
-              {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.locality) }}
-            </bc-error>
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.locality)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.locality) }}
+              </bc-error>
+            }
           </bc-text>
           <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('locality')"></app-info-tooltip>
         </div>
       </app-tag-formfield>
     </div>
-    <app-tag-formfield
-      *ngIf="isMajorz || settings.showPartyOnProporzElection"
-      [visible]="isWahlverwalter"
-      [tagged]="isTagged('party')"
-      (taggedChange)="setTag('party', $event)"
-    >
-      <div class="row">
-        <bc-text
-          [type]="'text'"
-          [label]="'CANDIDACY.PARTY' | translate"
-          name="party"
-          [(ngModel)]="candidacy.party"
-          [maxlength]="12"
-          [required]="true"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)"
-          (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('party')"
-          subscriptSizing="dynamic"
-        >
-          <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)">
-            {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.party) }}
-          </bc-error>
-        </bc-text>
-        <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('party')"></app-info-tooltip>
-      </div>
-    </app-tag-formfield>
+    @if (isMajorz || settings.showPartyOnProporzElection) {
+      <app-tag-formfield
+        [visible]="isWahlverwalter"
+        [tagged]="isTagged('party')"
+        (taggedChange)="setTag('party', $event)"
+      >
+        <div class="row">
+          <bc-text
+            [type]="'text'"
+            [label]="'CANDIDACY.PARTY' | translate"
+            name="party"
+            [(ngModel)]="candidacy.party"
+            [maxlength]="12"
+            [required]="true"
+            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)"
+            (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('party')"
+            subscriptSizing="dynamic"
+          >
+            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)) {
+              <bc-error>
+                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.party) }}
+              </bc-error>
+            }
+          </bc-text>
+          <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('party')"></app-info-tooltip>
+        </div>
+      </app-tag-formfield>
+    }
     <app-tag-formfield
       [visible]="isWahlverwalter"
       [tagged]="isTagged('incumbent')"
@@ -362,72 +387,78 @@
       </div>
     </app-tag-formfield>
 
-    <div *ngIf="settings?.showBallotPaperInfos" class="more-dropdown">
-      <div class="header" [ngClass]="{ open: moreVisible }" (click)="moreVisible = !moreVisible">
-        {{ 'CANDIDACY.BALLOT_DATA' | translate }}
-        <div class="icon-row">
-          <div class="bar"></div>
-          <div class="icon-container"><span class="icon">&#10093;</span></div>
-          <div class="bar"></div>
+    @if (settings?.showBallotPaperInfos) {
+      <div class="more-dropdown">
+        <div class="header" [ngClass]="{ open: moreVisible }" (click)="moreVisible = !moreVisible">
+          {{ 'CANDIDACY.BALLOT_DATA' | translate }}
+          <div class="icon-row">
+            <div class="bar"></div>
+            <div class="icon-container"><span class="icon">&#10093;</span></div>
+            <div class="bar"></div>
+          </div>
+        </div>
+        <div class="body" [ngClass]="{ visible: moreVisible }">
+          <app-tag-formfield
+            [visible]="isWahlverwalter"
+            [tagged]="isTagged('ballotOccupationalTitle')"
+            (taggedChange)="setTag('ballotOccupationalTitle', $event)"
+          >
+            <div class="row">
+              <bc-text
+                [type]="'text'"
+                [placeholder]="candidacy.occupationalTitle"
+                [label]="'CANDIDACY.BALLOT_OCCUPATION_TITLE' | translate"
+                name="ballotOccupationalTitle"
+                [maxlength]="100"
+                [(ngModel)]="candidacy.ballotOccupationalTitle"
+                [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)"
+                (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotOccupationalTitle')"
+                subscriptSizing="dynamic"
+              >
+                @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)) {
+                  <bc-error>
+                    {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotOccupationalTitle) }}
+                  </bc-error>
+                }
+              </bc-text>
+              <app-info-tooltip
+                class="info-tooltip"
+                [text]="infoTexts.get('ballotOccupationalTitle')"
+              ></app-info-tooltip>
+            </div>
+          </app-tag-formfield>
+          <app-tag-formfield
+            [visible]="isWahlverwalter"
+            [tagged]="isTagged('ballotLocality')"
+            (taggedChange)="setTag('ballotLocality', $event)"
+          >
+            <div class="row">
+              <bc-text
+                [type]="'text'"
+                [placeholder]="candidacy.locality"
+                [label]="'CANDIDACY.BALLOT_LOCALITY' | translate"
+                name="ballotLocality"
+                [maxlength]="200"
+                [(ngModel)]="candidacy.ballotLocality"
+                [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)"
+                (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotLocality')"
+                subscriptSizing="dynamic"
+              >
+                @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)) {
+                  <bc-error>
+                    {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotLocality) }}
+                  </bc-error>
+                }
+              </bc-text>
+              <app-info-tooltip
+                class="info-tooltip"
+                [text]="infoTexts.get('ballotLocality')"
+              ></app-info-tooltip>
+            </div>
+          </app-tag-formfield>
         </div>
       </div>
-      <div class="body" [ngClass]="{ visible: moreVisible }">
-        <app-tag-formfield
-          [visible]="isWahlverwalter"
-          [tagged]="isTagged('ballotOccupationalTitle')"
-          (taggedChange)="setTag('ballotOccupationalTitle', $event)"
-        >
-          <div class="row">
-            <bc-text
-              [type]="'text'"
-              [placeholder]="candidacy.occupationalTitle"
-              [label]="'CANDIDACY.BALLOT_OCCUPATION_TITLE' | translate"
-              name="ballotOccupationalTitle"
-              [maxlength]="100"
-              [(ngModel)]="candidacy.ballotOccupationalTitle"
-              [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)"
-              (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotOccupationalTitle')"
-              subscriptSizing="dynamic"
-            >
-              <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)">
-                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotOccupationalTitle) }}
-              </bc-error>
-            </bc-text>
-            <app-info-tooltip
-              class="info-tooltip"
-              [text]="infoTexts.get('ballotOccupationalTitle')"
-            ></app-info-tooltip>
-          </div>
-        </app-tag-formfield>
-        <app-tag-formfield
-          [visible]="isWahlverwalter"
-          [tagged]="isTagged('ballotLocality')"
-          (taggedChange)="setTag('ballotLocality', $event)"
-        >
-          <div class="row">
-            <bc-text
-              [type]="'text'"
-              [placeholder]="candidacy.locality"
-              [label]="'CANDIDACY.BALLOT_LOCALITY' | translate"
-              name="ballotLocality"
-              [maxlength]="200"
-              [(ngModel)]="candidacy.ballotLocality"
-              [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)"
-              (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotLocality')"
-              subscriptSizing="dynamic"
-            >
-              <bc-error *ngIf="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)">
-                {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotLocality) }}
-              </bc-error>
-            </bc-text>
-            <app-info-tooltip
-              class="info-tooltip"
-              [text]="infoTexts.get('ballotLocality')"
-            ></app-info-tooltip>
-          </div>
-        </app-tag-formfield>
-      </div>
-    </div>
+    }
     <div class="buttons">
       <bc-button
         label="{{ 'APPLY' | translate }}"

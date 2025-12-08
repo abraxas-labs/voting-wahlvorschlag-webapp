@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ListUnionModel } from '../models/list-union-model';
@@ -14,7 +14,7 @@ import { ListUnionModel } from '../models/list-union-model';
   providedIn: 'root',
 })
 export class ListUnionService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public createOrUpdateUnion(
     electionId: string,

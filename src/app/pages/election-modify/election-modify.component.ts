@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ElectionModel, newElectionModel } from '../../shared/models/election.model';
 import { ElectionService } from '../../shared/services/election.service';
@@ -28,6 +28,17 @@ import { InfoTextModel } from 'src/app/shared/models/info-text.model';
   standalone: false,
 })
 export class ElectionModifyComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private electionService = inject(ElectionService);
+  private snackbarService = inject(SnackbarService);
+  private electionDoiService = inject(ElectionDomainOfInfluenceService);
+  private infoTextService = inject(InfoTextService);
+  private settingsService = inject(SettingsService);
+  private rxUtils = inject(RxJsUtilsService);
+  private location = inject(Location);
+  private translateService = inject(TranslateService);
+
   public activeStep: number = 1;
   public maxStep: number = 4;
   public electionId: number | undefined;
@@ -53,18 +64,7 @@ export class ElectionModifyComponent implements OnInit {
 
   public newInfoTexts: InfoTextModel[];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private electionService: ElectionService,
-    private snackbarService: SnackbarService,
-    private electionDoiService: ElectionDomainOfInfluenceService,
-    private infoTextService: InfoTextService,
-    private settingsService: SettingsService,
-    private rxUtils: RxJsUtilsService,
-    private location: Location,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.election = newElectionModel();
     this.updateDirtyCheck();
   }

@@ -65,6 +65,8 @@
       label="{{ 'SAVE' | translate }}"
     >
     </bc-button>
-    <bc-spinner *ngIf="saving" size="default"></bc-spinner>
+    @if (saving) {
+      <bc-spinner size="default"></bc-spinner>
+    }
   </div>
 </main>

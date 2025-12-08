@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -14,11 +14,11 @@ import { SettingsModel } from '../models/settings.model';
   providedIn: 'root',
 })
 export class SettingsService {
+  private httpClient = inject(HttpClient);
+
   private get url(): string {
     return environment.eawv + '/settings/';
   }
-
-  constructor(private httpClient: HttpClient) {}
 
   public get(): Observable<SettingsModel> {
     return this.httpClient.get<SettingsModel>(this.url);

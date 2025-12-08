@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { ListModel } from '../../shared/models/list.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DateUtils } from 'src/app/shared/utils/date-utils';
@@ -16,6 +16,10 @@ import { DateUtils } from 'src/app/shared/utils/date-utils';
   standalone: false,
 })
 export class ListIndentureModifyComponent implements OnInit {
+  public readonly data = inject<ListIndentureModifyData>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject<MatDialogRef<ListIndentureModifyComponent>>(MatDialogRef);
+  private readonly detectChanges = inject(ChangeDetectorRef);
+
   @Output()
   public save: EventEmitter<ListModel> = new EventEmitter<ListModel>();
 
@@ -41,13 +45,9 @@ export class ListIndentureModifyComponent implements OnInit {
     return this._list;
   }
 
-  constructor(
-    private readonly dialogRef: MatDialogRef<ListIndentureModifyComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ListIndentureModifyData,
-    private readonly detectChanges: ChangeDetectorRef
-  ) {
-    this.list = data.list;
-    this.otherListIndentures = data.otherListIndentures;
+  constructor() {
+    this.list = this.data.list;
+    this.otherListIndentures = this.data.otherListIndentures;
   }
 
   public ngOnInit(): void {

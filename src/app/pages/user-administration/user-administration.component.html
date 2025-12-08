@@ -1,15 +1,13 @@
 <main class="content">
-  <ng-container *ngIf="auth.authenticated">
+  @if (auth.authenticated) {
     <div>
       <h1>{{ 'USER-MANAGEMENT' | translate }}</h1>
       <h2>{{ 'USER_ADMINISTRATION.PARTIES' | translate }}</h2>
-
       <bc-button
         class="buttons"
         routerLink="../parties/new"
         label="{{ 'USER_ADMINISTRATION.PARTY.NEW' | translate }}"
       ></bc-button>
-
       <app-spinner-centered [visible]="loadingTenants">
         <bc-table #tenantSort="sort" sort #tenantFilter="filter" filter [dataSource]="dataSource">
           <ng-container [columnDef]="columns.name">
@@ -20,7 +18,6 @@
               {{ row.name }}
             </bc-data-cell>
           </ng-container>
-
           <ng-container columnDef="actions">
             <bc-header-cell *headerCellDef></bc-header-cell>
             <bc-data-cell *dataCellDef="let element; let i = index">
@@ -29,7 +26,6 @@
               </div>
             </bc-data-cell>
           </ng-container>
-
           <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
           <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
         </bc-table>
@@ -41,7 +37,6 @@
         ></bc-paginator>
       </app-spinner-centered>
     </div>
-
     <div class="users">
       <h2>{{ 'USER_ADMINISTRATION.USERS' | translate }}</h2>
       <bc-button
@@ -50,7 +45,6 @@
         class="buttons"
       >
       </bc-button>
-
       <app-spinner-centered [visible]="loadingUsers">
         <bc-table #userSort="sort" sort #userFilter="filter" filter [dataSource]="dataSourceUsers">
           <ng-container [columnDef]="userColumns.firstname">
@@ -61,7 +55,6 @@
               {{ el.firstname }}
             </bc-data-cell>
           </ng-container>
-
           <ng-container [columnDef]="userColumns.lastname">
             <bc-header-cell sort filter filterType="text" *headerCellDef>{{
               'USER_ADMINISTRATION.USER.LASTNAME' | translate
@@ -70,7 +63,6 @@
               {{ row.lastname }}
             </bc-data-cell>
           </ng-container>
-
           <ng-container [columnDef]="userColumns.username">
             <bc-header-cell sort filter filterType="text" *headerCellDef>{{
               'USER_ADMINISTRATION.USER.USERNAME' | translate
@@ -79,7 +71,6 @@
               {{ row.username }}
             </bc-data-cell>
           </ng-container>
-
           <ng-container [columnDef]="userColumns.tenantDescription">
             <bc-header-cell sort filter filterType="text" *headerCellDef>{{
               'USER_ADMINISTRATION.USER.TENANT' | translate
@@ -88,7 +79,6 @@
               {{ row.tenantDescription }}
             </bc-data-cell>
           </ng-container>
-
           <ng-container columnDef="userActions">
             <bc-header-cell *headerCellDef></bc-header-cell>
             <bc-data-cell *dataCellDef="let element; let i = index">
@@ -98,7 +88,6 @@
               </div>
             </bc-data-cell>
           </ng-container>
-
           <bc-header-row *headerRowDef="let row; columns: userColumnsToDisplay"></bc-header-row>
           <bc-data-row *dataRowDef="let row; columns: userColumnsToDisplay; let i = index"> </bc-data-row>
         </bc-table>
@@ -110,5 +99,5 @@
         ></bc-paginator>
       </app-spinner-centered>
     </div>
-  </ng-container>
+  }
 </main>

@@ -1,88 +1,99 @@
 <div class="wrapper">
-  <h2 *ngIf="basedata">{{ 'CANDIDACY.INFO_FIELDS' | translate }}</h2>
+  @if (basedata) {
+    <h2>{{ 'CANDIDACY.INFO_FIELDS' | translate }}</h2>
+  }
   <app-spinner-centered [visible]="loadingCount !== 0">
-    <ng-container *ngFor="let item of standardInfoTexts">
-      <div
-        *ngIf="
-          basedata ||
-          !item.electionType ||
-          item.electionType === electionType ||
-          (item.key === 'party' && settings?.showPartyOnProporzElection)
-        "
-        class="row"
-      >
-        <bc-text
-          class="field"
-          [(ngModel)]="item.text"
-          [label]="item.translationToken | translate"
-          [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
-          [type]="'text'"
-          (blur)="updateInfoTexts()"
-          subscriptSizing="dynamic"
-        >
-        </bc-text>
-        <bc-checkbox
-          class="checkbox"
-          [(checked)]="item.visible"
-          (checkedChange)="updateInfoTexts()"
-          label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
-          subscriptSizing="dynamic"
-        >
-        </bc-checkbox>
+    @for (item of standardInfoTexts; track item) {
+      @if (
+        basedata ||
+        !item.electionType ||
+        item.electionType === electionType ||
+        (item.key === 'party' && settings?.showPartyOnProporzElection)
+      ) {
+        <div class="row">
+          <bc-text
+            class="field"
+            [(ngModel)]="item.text"
+            [label]="item.translationToken | translate"
+            [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
+            [type]="'text'"
+            (blur)="updateInfoTexts()"
+            subscriptSizing="dynamic"
+          >
+          </bc-text>
+          <bc-checkbox
+            class="checkbox"
+            [(checked)]="item.visible"
+            (checkedChange)="updateInfoTexts()"
+            label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
+            subscriptSizing="dynamic"
+          >
+          </bc-checkbox>
+        </div>
+      }
+    }
+
+    @if ((basedata && loadingCount === 0) || settings?.showBallotPaperInfos) {
+      <div class="mt">
+        <h2>{{ 'CANDIDACY.BALLOT_PAPER_INFOS' | translate }}</h2>
+        @if (basedata) {
+          <bc-checkbox
+            class="checkbox"
+            [(checked)]="settings.showBallotPaperInfos"
+            label="{{ 'CANDIDACY.SHOW_BALLOT_PAPER_INFOS' | translate }}"
+            subscriptSizing="dynamic"
+          >
+          </bc-checkbox>
+        }
+        @for (item of ballotPaperInfoTexts; track item) {
+          <div class="row">
+            <bc-text
+              class="field"
+              [(ngModel)]="item.text"
+              (blur)="updateInfoTexts()"
+              [label]="item.translationToken | translate"
+              [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
+              [type]="'text'"
+              subscriptSizing="dynamic"
+            >
+            </bc-text>
+            <bc-checkbox
+              class="checkbox"
+              [(checked)]="item.visible"
+              (checkedChange)="updateInfoTexts()"
+              label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
+              subscriptSizing="dynamic"
+            >
+            </bc-checkbox>
+          </div>
+        }
       </div>
-    </ng-container>
+    }
 
-    <div *ngIf="(basedata && loadingCount === 0) || settings?.showBallotPaperInfos" class="mt">
-      <h2>{{ 'CANDIDACY.BALLOT_PAPER_INFOS' | translate }}</h2>
-      <bc-checkbox
-        *ngIf="basedata"
-        class="checkbox"
-        [(checked)]="settings.showBallotPaperInfos"
-        label="{{ 'CANDIDACY.SHOW_BALLOT_PAPER_INFOS' | translate }}"
-        subscriptSizing="dynamic"
-      >
-      </bc-checkbox>
-      <div *ngFor="let item of ballotPaperInfoTexts" class="row">
-        <bc-text
-          class="field"
-          [(ngModel)]="item.text"
-          (blur)="updateInfoTexts()"
-          [label]="item.translationToken | translate"
-          [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
-          [type]="'text'"
-          subscriptSizing="dynamic"
-        >
-        </bc-text>
-        <bc-checkbox
-          class="checkbox"
-          [(checked)]="item.visible"
-          (checkedChange)="updateInfoTexts()"
-          label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
-          subscriptSizing="dynamic"
-        >
-        </bc-checkbox>
+    @if ((basedata && loadingCount === 0) || settings?.showPartyOnProporzElection) {
+      <div class="mt">
+        <h2>{{ 'CANDIDACY.MORE_SETTINGS_TITLE' | translate }}</h2>
+        @if (basedata || settings?.showPartyOnProporzElection) {
+          <bc-checkbox
+            class="checkbox"
+            [(checked)]="settings.showPartyOnProporzElection"
+            label="{{ 'CANDIDACY.SHOW_PARTY_ON_PROPORZ_ELECTION_CHECKBOX_TEXT' | translate }}"
+            subscriptSizing="dynamic"
+          >
+          </bc-checkbox>
+        }
       </div>
-    </div>
+    }
 
-    <div *ngIf="(basedata && loadingCount === 0) || settings?.showPartyOnProporzElection" class="mt">
-      <h2>{{ 'CANDIDACY.MORE_SETTINGS_TITLE' | translate }}</h2>
-      <bc-checkbox
-        *ngIf="basedata || settings?.showPartyOnProporzElection"
-        class="checkbox"
-        [(checked)]="settings.showPartyOnProporzElection"
-        label="{{ 'CANDIDACY.SHOW_PARTY_ON_PROPORZ_ELECTION_CHECKBOX_TEXT' | translate }}"
-        subscriptSizing="dynamic"
-      >
-      </bc-checkbox>
-    </div>
-
-    <app-spinner-inline *ngIf="basedata" class="button" [visible]="saving"
-      ><bc-button
-        [variant]="'primary'"
-        [disabled]="saving"
-        (buttonClick)="saveChanges()"
-        label="{{ 'SAVE' | translate }}"
-      ></bc-button
-    ></app-spinner-inline>
+    @if (basedata) {
+      <app-spinner-inline class="button" [visible]="saving"
+        ><bc-button
+          [variant]="'primary'"
+          [disabled]="saving"
+          (buttonClick)="saveChanges()"
+          label="{{ 'SAVE' | translate }}"
+        ></bc-button
+      ></app-spinner-inline>
+    }
   </app-spinner-centered>
 </div>

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PartiesService } from '../../../shared/services/parties.service';
 import { RxJsUtilsService } from '../../../shared/services/rx-js-utils.service';
 import { Router } from '@angular/router';
@@ -19,15 +19,13 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class PartyModifyComponent {
+  private partiesService = inject(PartiesService);
+  private rxUtils = inject(RxJsUtilsService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   public party: PartyModel = newParty();
   public saving: boolean = false;
-
-  constructor(
-    private partiesService: PartiesService,
-    private rxUtils: RxJsUtilsService,
-    private router: Router,
-    private translateService: TranslateService
-  ) {}
 
   public save(): void {
     this.saving = true;

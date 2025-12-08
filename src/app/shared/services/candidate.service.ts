@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CandidateModel } from '../models/candidate.model';
@@ -16,7 +16,7 @@ import { DateUtils } from '../utils/date-utils';
   providedIn: 'root',
 })
 export class CandidateService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public getAll(electionId: string, listId: string): Observable<CandidateModel[]> {
     return this.httpClient

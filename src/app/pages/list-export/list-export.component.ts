@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { GuardService } from '../../shared/guard.service';
@@ -21,6 +21,9 @@ import { EnumValues } from '../../shared/utils/enum-utils';
   standalone: false,
 })
 export class ListExportComponent {
+  private listService = inject(ListService);
+  private electionService = inject(ElectionService);
+
   @Input()
   public election: ElectionModel;
 
@@ -43,11 +46,9 @@ export class ListExportComponent {
   public exportingList: boolean = false;
   private isWahlverwalter: boolean = false;
 
-  constructor(
-    private listService: ListService,
-    private electionService: ElectionService,
-    roleService: GuardService
-  ) {
+  constructor() {
+    const roleService = inject(GuardService);
+
     roleService.isWahlverwalter().subscribe((isW) => (this.isWahlverwalter = isW));
   }
 

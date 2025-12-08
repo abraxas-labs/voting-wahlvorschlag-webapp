@@ -3,92 +3,94 @@
     {{ (list ? (list.id ? 'LIST.EDIT.TITLE' : 'LIST.NEW') : '') | translate }}
   </h2>
   <app-spinner-centered class="content" [visible]="loading">
-    <div *ngIf="list">
-      <div class="form-group">
-        <div class="input-group" [class.row]="isMajorz">
-          <bc-text
-            [(ngModel)]="list.name"
-            [maxlength]="100"
-            [label]="(isMajorz ? 'LIST.EDIT.NAME_MAJORZ' : 'LIST.EDIT.NAME') | translate"
-            [required]="true"
-            subscriptSizing="dynamic"
-          >
-          </bc-text>
-          <app-info-tooltip
-            *ngIf="isMajorz"
-            class="info-tooltip"
-            [text]="'LIST.EDIT.NAME_MAJORZ_HINT' | translate"
-          ></app-info-tooltip>
-          <bc-text
-            *ngIf="!isMajorz"
-            [ngModel]="list.indenture"
-            [maxlength]="10"
-            [label]="'LIST.EDIT.NR' | translate"
-            [readonly]="true"
-            [disabled]="true"
-            subscriptSizing="dynamic"
-          >
-          </bc-text>
+    @if (list) {
+      <div>
+        <div class="form-group">
+          <div class="input-group" [class.row]="isMajorz">
+            <bc-text
+              [(ngModel)]="list.name"
+              [maxlength]="100"
+              [label]="(isMajorz ? 'LIST.EDIT.NAME_MAJORZ' : 'LIST.EDIT.NAME') | translate"
+              [required]="true"
+              subscriptSizing="dynamic"
+            >
+            </bc-text>
+            @if (isMajorz) {
+              <app-info-tooltip
+                class="info-tooltip"
+                [text]="'LIST.EDIT.NAME_MAJORZ_HINT' | translate"
+              ></app-info-tooltip>
+            }
+            @if (!isMajorz) {
+              <bc-text
+                [ngModel]="list.indenture"
+                [maxlength]="10"
+                [label]="'LIST.EDIT.NR' | translate"
+                [readonly]="true"
+                [disabled]="true"
+                subscriptSizing="dynamic"
+              >
+              </bc-text>
+            }
+          </div>
+          @if (!isMajorz) {
+            <div class="input-group">
+              <bc-text
+                [(ngModel)]="list.description"
+                [maxlength]="100"
+                [label]="'LIST.EDIT.DESCRIPTION' | translate"
+                subscriptSizing="dynamic"
+              ></bc-text>
+            </div>
+          }
         </div>
-        <div *ngIf="!isMajorz" class="input-group">
-          <bc-text
-            [(ngModel)]="list.description"
-            [maxlength]="100"
-            [label]="'LIST.EDIT.DESCRIPTION' | translate"
+        <div class="form-group">
+          <bc-label class="block" label="{{ 'LIST.REPRESENTATIVE' | translate }}"></bc-label>
+          <bc-dropdown
+            [items]="users"
+            valueExpr="loginid"
+            displayExpr="fullName"
+            [(ngModel)]="list.representative"
+            [multiple]="false"
             subscriptSizing="dynamic"
-          ></bc-text>
+          ></bc-dropdown>
+        </div>
+        <div class="form-group">
+          <bc-label class="block" label="{{ 'LIST.DEPUTY_USERS' | translate }}"></bc-label>
+          <bc-dropdown
+            [items]="users"
+            valueExpr="loginid"
+            displayExpr="fullName"
+            [ngModel]="list.deputyUsers.length > 0 ? list.deputyUsers[0] : null"
+            (ngModelChange)="list.deputyUsers = [$event]"
+            [multiple]="false"
+            subscriptSizing="dynamic"
+          ></bc-dropdown>
+        </div>
+        <div class="form-group">
+          <app-multi-select
+            [items]="users"
+            displayExpr="fullName"
+            idExpr="loginid"
+            [maxItems]="2"
+            [(selectedIds)]="list.memberUsers"
+            [title]="'LIST.MEMBER_USERS' | translate"
+          >
+          </app-multi-select>
+        </div>
+        <div class="form-group buttons">
+          <bc-button (buttonClick)="showListOverview()" label="{{ 'BACK' | translate }}"></bc-button>
+          <app-spinner-inline [visible]="saving">
+            <bc-button
+              [variant]="'primary'"
+              (buttonClick)="save()"
+              [disabled]="!isValid || saving"
+              label="{{ (list.id ? 'APPLY' : 'ADD') | translate }}"
+            >
+            </bc-button>
+          </app-spinner-inline>
         </div>
       </div>
-
-      <div class="form-group">
-        <bc-label class="block" label="{{ 'LIST.REPRESENTATIVE' | translate }}"></bc-label>
-        <bc-dropdown
-          [items]="users"
-          valueExpr="loginid"
-          displayExpr="fullName"
-          [(ngModel)]="list.representative"
-          [multiple]="false"
-          subscriptSizing="dynamic"
-        ></bc-dropdown>
-      </div>
-
-      <div class="form-group">
-        <bc-label class="block" label="{{ 'LIST.DEPUTY_USERS' | translate }}"></bc-label>
-        <bc-dropdown
-          [items]="users"
-          valueExpr="loginid"
-          displayExpr="fullName"
-          [ngModel]="list.deputyUsers.length > 0 ? list.deputyUsers[0] : null"
-          (ngModelChange)="list.deputyUsers = [$event]"
-          [multiple]="false"
-          subscriptSizing="dynamic"
-        ></bc-dropdown>
-      </div>
-
-      <div class="form-group">
-        <app-multi-select
-          [items]="users"
-          displayExpr="fullName"
-          idExpr="loginid"
-          [maxItems]="2"
-          [(selectedIds)]="list.memberUsers"
-          [title]="'LIST.MEMBER_USERS' | translate"
-        >
-        </app-multi-select>
-      </div>
-
-      <div class="form-group buttons">
-        <bc-button (buttonClick)="showListOverview()" label="{{ 'BACK' | translate }}"></bc-button>
-        <app-spinner-inline [visible]="saving">
-          <bc-button
-            [variant]="'primary'"
-            (buttonClick)="save()"
-            [disabled]="!isValid || saving"
-            label="{{ (list.id ? 'APPLY' : 'ADD') | translate }}"
-          >
-          </bc-button>
-        </app-spinner-inline>
-      </div>
-    </div>
+    }
   </app-spinner-centered>
 </main>

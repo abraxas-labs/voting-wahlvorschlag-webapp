@@ -11,7 +11,7 @@ import {
   SortDirective,
   TableDataSource,
 } from '@abraxas/base-components';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
@@ -27,6 +27,13 @@ import { ElectoralDistrictService } from '../../shared/services/electoral-distri
   standalone: false,
 })
 export class DomainsOfInfluenceComponent implements OnInit {
+  private electoralDistrictService = inject(ElectoralDistrictService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(TranslateService);
+  private dialogService = inject(DialogService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
   @ViewChild(PaginatorComponent)
   public paginator!: PaginatorComponent;
 
@@ -52,15 +59,6 @@ export class DomainsOfInfluenceComponent implements OnInit {
     TableColumn.domainOfInfluenceType,
     'actions',
   ];
-
-  constructor(
-    private electoralDistrictService: ElectoralDistrictService,
-    private snackbarService: SnackbarService,
-    private translateService: TranslateService,
-    private dialogService: DialogService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
 
   public ngOnInit(): void {
     this.loadDistricts();

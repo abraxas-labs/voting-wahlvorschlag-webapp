@@ -11,7 +11,7 @@ import {
   SortDirective,
   TableDataSource,
 } from '@abraxas/base-components';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
@@ -47,6 +47,21 @@ import { EnumItemDescription, EnumUtil, ThemeService } from '@abraxas/voting-lib
   standalone: false,
 })
 export class ListOverviewComponent implements OnInit, AfterViewInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private rxUtils = inject(RxJsUtilsService);
+  private roleService = inject(GuardService);
+  private router = inject(Router);
+  private cachedUserService = inject(CachedUserService);
+  private electionService = inject(ElectionService);
+  private listService = inject(ListService);
+  private dialogService = inject(DialogService);
+  private translateService = inject(TranslateService);
+  private listUnionService = inject(ListUnionService);
+  private ballotDocService = inject(BallotDocumentService);
+  private changeDetect = inject(ChangeDetectorRef);
+  private themeService = inject(ThemeService);
+  private enumUtil = inject(EnumUtil);
+
   @ViewChild('listPaginator') public listPaginator!: PaginatorComponent;
   @ViewChild('listSort') public listSort!: SortDirective;
   @ViewChild('listFilter') public listFilter!: FilterDirective;
@@ -94,25 +109,6 @@ export class ListOverviewComponent implements OnInit, AfterViewInit {
     ListTableColumn.listSubUnion,
     'actions',
   ];
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private rxUtils: RxJsUtilsService,
-    private roleService: GuardService,
-    private router: Router,
-    private cachedUserService: CachedUserService,
-    private electionService: ElectionService,
-    private listService: ListService,
-    private dialogService: DialogService,
-    private translateService: TranslateService,
-    private snackbarService: SnackbarService,
-    private listUnionService: ListUnionService,
-    private ballotDocService: BallotDocumentService,
-    private candidateService: CandidateService,
-    private changeDetect: ChangeDetectorRef,
-    private themeService: ThemeService,
-    private enumUtil: EnumUtil
-  ) {}
 
   public ngAfterViewInit(): void {
     this.dataSourceLists.paginator = this.listPaginator;
@@ -505,11 +501,22 @@ export class ListOverviewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public isSubmissionDeadlinePassed(submissionDeadlineDate: Date): boolean {
-    let todayDateForCompare: Date = new Date();
-    todayDateForCompare.setHours(0, 0, 0, 0);
-    submissionDeadlineDate?.setHours(0, 0, 0, 0);
-    return submissionDeadlineDate < todayDateForCompare;
+  public isOutsideSubmissionPeriod(deadlineStart: Date, deadlineEnd: Date): boolean {
+    if (!deadlineStart || !deadlineEnd) {
+      return false;
+    }
+
+    const today = new Date();
+    const start = new Date(deadlineStart);
+    const end = new Date(deadlineEnd);
+
+    // normalize to midnight for date-only comparison
+    for (const d of [today, start, end]) {
+      d.setHours(0, 0, 0, 0);
+    }
+
+    // outside if before start or after end
+    return today < start || today > end;
   }
 
   private updateAllowedLists(): void {

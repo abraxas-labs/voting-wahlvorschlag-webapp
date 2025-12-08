@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { GuardService } from './guard.service';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class WahlverwalterGuard {
-  constructor(private roleService: GuardService) {}
+  private roleService = inject(GuardService);
 
   public canActivate(
     next: ActivatedRouteSnapshot,

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { CanDeactivateComponent } from './components/can-deactivate.component';
 import { Observable, of } from 'rxjs';
@@ -16,10 +16,8 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class CanDeactivateGuard {
-  constructor(
-    private dialogService: DialogService,
-    private translateService: TranslateService
-  ) {}
+  private dialogService = inject(DialogService);
+  private translateService = inject(TranslateService);
 
   public canDeactivate(component: CanDeactivateComponent): Observable<boolean> {
     if (!component.canDeactivate()) {

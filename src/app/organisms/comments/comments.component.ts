@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommentModel } from 'src/app/shared/models/comment.model';
 import { ListCommentService } from 'src/app/shared/services/list-comment.service';
 import { RxJsUtilsService } from 'src/app/shared/services/rx-js-utils.service';
@@ -22,6 +22,11 @@ import { ListModel, ListState } from '../../shared/models/list.model';
   standalone: false,
 })
 export class CommentsComponent implements OnInit {
+  public readonly cachedUserService = inject(CachedUserService);
+  private commentService = inject(ListCommentService);
+  private rxUtils = inject(RxJsUtilsService);
+  private readonly themeService = inject(ThemeService);
+
   @Input()
   public election: ElectionModel;
   @Input()
@@ -36,19 +41,13 @@ export class CommentsComponent implements OnInit {
   public canEditOrDeleteComments: boolean = false;
   private theme: string;
 
-  constructor(
-    public cachedUserService: CachedUserService,
-    private commentService: ListCommentService,
-    private rxUtils: RxJsUtilsService,
-    private readonly themeService: ThemeService
-  ) {}
-
   public async ngOnInit(): Promise<void> {
     this.cachedUserService
       .getActiveTenant()
       .pipe(this.rxUtils.toastDefault())
       .subscribe(() => {
-        this.canEditOrDeleteComments = this.list.state === ListState.Draft || this.list.state === ListState.Submitted;
+        this.canEditOrDeleteComments =
+          this.list.state === ListState.Draft || this.list.state === ListState.Submitted;
         this.loadComments();
         this.cachedUserService.getCurrentUser().subscribe((u) => (this.activeUser = u));
       });

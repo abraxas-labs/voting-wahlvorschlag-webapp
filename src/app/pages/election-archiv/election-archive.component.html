@@ -1,11 +1,12 @@
 <main>
   <h1>{{ 'ARCHIVE' | translate }}</h1>
   <app-spinner-centered [visible]="loadingElections">
-    <app-election-list
-      *ngIf="!loadingElections"
-      [elections]="elections"
-      [isArchive]="true"
-      [showPaginator]="true"
-    ></app-election-list>
+    @if (!loadingElections) {
+      <app-election-list
+        [elections]="elections"
+        [isArchive]="true"
+        [showPaginator]="true"
+      ></app-election-list>
+    }
   </app-spinner-centered>
 </main>

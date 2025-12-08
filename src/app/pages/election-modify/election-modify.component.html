@@ -3,78 +3,82 @@
   <div class="content">
     <div class="form-group space-after">
       <app-step-navigation [direction]="'horizontal'">
-        <app-step-navigation-item
-          class="step-navigation-item"
-          *ngFor="let title of steps; let i = index"
-          [active]="this.activeStep === i + 1"
-          [stepSelectable]="!isNew && isActiveStepValid"
-          (stepSelected)="this.activeStep = i + 1"
-          >{{ title | translate }}</app-step-navigation-item
-        >
+        @for (title of steps; track title; let i = $index) {
+          <app-step-navigation-item
+            class="step-navigation-item"
+            [active]="this.activeStep === i + 1"
+            [stepSelectable]="!isNew && isActiveStepValid"
+            (stepSelected)="this.activeStep = i + 1"
+            >{{ title | translate }}</app-step-navigation-item
+          >
+        }
       </app-step-navigation>
     </div>
     <app-spinner-centered [visible]="loading">
       <div class="apps">
-        <app-election-general
-          *ngIf="this.activeStep === 1"
-          [(election)]="this.election"
-          (isValidChange)="validSteps[0] = $event"
-        >
-        </app-election-general>
-        <app-election-number-of-seats
-          *ngIf="this.activeStep === 2"
-          [(election)]="this.election"
-          (seatsChanged)="numberOfSeatsChanged($event)"
-          (isValidChange)="validSteps[1] = $event"
-        >
-        </app-election-number-of-seats>
-        <app-election-form
-          *ngIf="this.activeStep === 3"
-          [(election)]="this.election"
-          (isValidChange)="validSteps[2] = $event"
-          (infoTextsChange)="infoTextsChanged($event)"
-        >
-        </app-election-form>
-        <app-election-info-texts
-          *ngIf="this.activeStep === 4"
-          [election]="this.election"
-          (infoTextsChange)="infoTextsChanged($event)"
-        >
-        </app-election-info-texts>
+        @if (this.activeStep === 1) {
+          <app-election-general [(election)]="this.election" (isValidChange)="validSteps[0] = $event">
+          </app-election-general>
+        }
+        @if (this.activeStep === 2) {
+          <app-election-number-of-seats
+            [(election)]="this.election"
+            (seatsChanged)="numberOfSeatsChanged($event)"
+            (isValidChange)="validSteps[1] = $event"
+          >
+          </app-election-number-of-seats>
+        }
+        @if (this.activeStep === 3) {
+          <app-election-form
+            [(election)]="this.election"
+            (isValidChange)="validSteps[2] = $event"
+            (infoTextsChange)="infoTextsChanged($event)"
+          >
+          </app-election-form>
+        }
+        @if (this.activeStep === 4) {
+          <app-election-info-texts [election]="this.election" (infoTextsChange)="infoTextsChanged($event)">
+          </app-election-info-texts>
+        }
       </div>
       <div class="buttons">
         <bc-button (buttonClick)="previousStep()" label="{{ 'BACK' | translate }}"></bc-button>
 
-        <app-spinner-inline *ngIf="!isNew" [visible]="savingElection">
-          <bc-button
-            [disabled]="!isActiveStepValid || savingElection"
-            (buttonClick)="save()"
-            [variant]="'primary'"
-            label="{{ 'SAVE' | translate }}"
-          >
-          </bc-button>
-        </app-spinner-inline>
+        @if (!isNew) {
+          <app-spinner-inline [visible]="savingElection">
+            <bc-button
+              [disabled]="!isActiveStepValid || savingElection"
+              (buttonClick)="save()"
+              [variant]="'primary'"
+              label="{{ 'SAVE' | translate }}"
+            >
+            </bc-button>
+          </app-spinner-inline>
+        }
 
-        <bc-button
-          *ngIf="activeStep !== maxStep"
-          [disabled]="!isActiveStepValid"
-          [variant]="'primary'"
-          class="next-button"
-          (buttonClick)="nextStep()"
-          label="{{ 'NEXT' | translate }}"
-        >
-        </bc-button>
-
-        <app-spinner-inline *ngIf="activeStep === maxStep && isNew" [visible]="savingElection">
+        @if (activeStep !== maxStep) {
           <bc-button
-            [disabled]="savingElection"
+            [disabled]="!isActiveStepValid"
             [variant]="'primary'"
             class="next-button"
-            (buttonClick)="createElection()"
-            label="{{ 'CREATE_ELECTION' | translate }}"
+            (buttonClick)="nextStep()"
+            label="{{ 'NEXT' | translate }}"
           >
           </bc-button>
-        </app-spinner-inline>
+        }
+
+        @if (activeStep === maxStep && isNew) {
+          <app-spinner-inline [visible]="savingElection">
+            <bc-button
+              [disabled]="savingElection"
+              [variant]="'primary'"
+              class="next-button"
+              (buttonClick)="createElection()"
+              label="{{ 'CREATE_ELECTION' | translate }}"
+            >
+            </bc-button>
+          </app-spinner-inline>
+        }
       </div>
     </app-spinner-centered>
   </div>

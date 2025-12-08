@@ -5,7 +5,7 @@
  */
 
 import { AuthorizationService, UserService } from '@abraxas/base-components';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ListModel } from './models/list.model';
@@ -15,10 +15,8 @@ import { RxJsUtilsService } from './services/rx-js-utils.service';
   providedIn: 'root',
 })
 export class GuardService {
-  constructor(
-    private userService: UserService,
-    private auth: AuthorizationService
-  ) {}
+  private userService = inject(UserService);
+  private auth = inject(AuthorizationService);
 
   public isWahlverwalter(): Observable<boolean> {
     return from(this.auth.hasRoleAwaitAuth('Wahlverwalter'));

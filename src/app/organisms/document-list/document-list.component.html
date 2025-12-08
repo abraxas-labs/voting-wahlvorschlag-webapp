@@ -35,17 +35,19 @@
   <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
 </bc-table>
 <div class="documents">
-  <bc-button
-    *ngIf="this.download"
-    [disabled]="selectedDocuments.length === 0"
-    (buttonClick)="downloadDocuments(selectedDocuments)"
-    label="{{ 'DOCUMENT.DOWNLOAD' | translate }}"
-  ></bc-button>
+  @if (this.download) {
+    <bc-button
+      [disabled]="selectedDocuments.length === 0"
+      (buttonClick)="downloadDocuments(selectedDocuments)"
+      label="{{ 'DOCUMENT.DOWNLOAD' | translate }}"
+    ></bc-button>
+  }
 
-  <app-filepicker
-    *ngIf="writeable"
-    (filePicked)="addDocument($event)"
-    accept="application/pdf"
-    [multiple]="true"
-  ></app-filepicker>
+  @if (writeable) {
+    <app-filepicker
+      (filePicked)="addDocument($event)"
+      accept="application/pdf"
+      [multiple]="true"
+    ></app-filepicker>
+  }
 </div>

@@ -12,7 +12,7 @@ import {
   SortDirective,
   TableDataSource,
 } from '@abraxas/base-components';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { PartiesService } from '../../shared/services/parties.service';
 import { PartyModel } from '../../shared/models/party.model';
 import { PartyUserService } from '../../shared/services/party-user.service';
@@ -29,6 +29,14 @@ import { ModalDialogComponent } from 'src/app/shared/components/dialogs/modal-di
   standalone: false,
 })
 export class UserAdministrationComponent implements OnInit, AfterViewInit {
+  public readonly auth = inject(AuthenticationService);
+  private partiesService = inject(PartiesService);
+  private partyUserService = inject(PartyUserService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private dialogService = inject(DialogService);
+  private snackBarService = inject(SnackbarService);
+
   @ViewChild('tenantFilter') public tenantFilter: FilterDirective;
   @ViewChild('userFilter') public userFilter: FilterDirective;
 
@@ -57,16 +65,6 @@ export class UserAdministrationComponent implements OnInit, AfterViewInit {
     UserTableColumn.tenantDescription,
     'userActions',
   ];
-
-  constructor(
-    public auth: AuthenticationService,
-    private partiesService: PartiesService,
-    private partyUserService: PartyUserService,
-    private router: Router,
-    private translateService: TranslateService,
-    private dialogService: DialogService,
-    private snackBarService: SnackbarService
-  ) {}
 
   public ngAfterViewInit(): void {
     this.dataSource.paginator = this.tenantPaginator;

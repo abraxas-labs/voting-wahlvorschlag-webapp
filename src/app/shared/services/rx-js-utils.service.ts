@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, map, tap, toArray } from 'rxjs/operators';
@@ -15,10 +15,8 @@ const DEFAULT_ERROR_MSG = 'MSG_ERROR';
   providedIn: 'root',
 })
 export class RxJsUtilsService {
-  constructor(
-    private translateService: TranslateService,
-    private snackbar: SnackbarService
-  ) {}
+  private translateService = inject(TranslateService);
+  private snackbar = inject(SnackbarService);
 
   public static and(ov: Observable<boolean[]>): Observable<boolean> {
     return ov.pipe(

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -23,6 +23,12 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   standalone: false,
 })
 export class ModifyDomainsOfInfluenceComponent implements OnDestroy {
+  private electoralDistrictService = inject(ElectoralDistrictService);
+  private snackBarService = inject(SnackbarService);
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
   private isNew: boolean;
 
   public loading: boolean = false;
@@ -30,13 +36,7 @@ export class ModifyDomainsOfInfluenceComponent implements OnDestroy {
   public types: any[] = Object.keys(DomainOfInfluenceType);
   public routeSubscription: Subscription;
 
-  constructor(
-    private electoralDistrictService: ElectoralDistrictService,
-    private snackBarService: SnackbarService,
-    private translateService: TranslateService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {
+  constructor() {
     this.routeSubscription = this.activatedRoute.params.subscribe((p) => this.loadData(p.doiId));
   }
 

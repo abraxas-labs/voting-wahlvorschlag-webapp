@@ -4,11 +4,11 @@
  * For license information see LICENSE file.
  */
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { forkJoin, of } from 'rxjs';
-import { catchError, finalize, map, switchMap } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
+import { finalize, map, switchMap } from 'rxjs/operators';
 import { GuardService } from '../../shared/guard.service';
 import { ElectionModel, ElectionType } from '../../shared/models/election.model';
 import { ListModel, newListModel } from '../../shared/models/list.model';
@@ -26,6 +26,15 @@ import { ThemeService } from '@abraxas/voting-lib';
   standalone: false,
 })
 export class ListModifyComponent {
+  private rxUtils = inject(RxJsUtilsService);
+  private cachedUserService = inject(CachedUserService);
+  private roleService = inject(GuardService);
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private listService = inject(ListService);
+  private electionService = inject(ElectionService);
+  private readonly themeService = inject(ThemeService);
+
   public election!: ElectionModel;
   public list!: ListModel;
   public users: UserModel[] = [];
@@ -35,17 +44,9 @@ export class ListModifyComponent {
 
   private theme: string;
 
-  constructor(
-    activatedRoute: ActivatedRoute,
-    private rxUtils: RxJsUtilsService,
-    private cachedUserService: CachedUserService,
-    private roleService: GuardService,
-    private translateService: TranslateService,
-    private router: Router,
-    private listService: ListService,
-    private electionService: ElectionService,
-    private readonly themeService: ThemeService
-  ) {
+  constructor() {
+    const activatedRoute = inject(ActivatedRoute);
+
     this.themeService.theme$.subscribe((theme) => {
       this.theme = theme;
     });

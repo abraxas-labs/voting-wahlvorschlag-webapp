@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ElectionService } from '../../shared/services/election.service';
 import { ElectionModel, ElectionOverviewModel } from '../../shared/models/election.model';
 import { Router } from '@angular/router';
@@ -21,18 +21,16 @@ import { SnackbarService } from 'src/app/shared/services/snackbar.service';
   standalone: false,
 })
 export class ElectionOverviewComponent implements OnInit {
+  private readonly cachedUserService = inject(CachedUserService);
+  private readonly electionService = inject(ElectionService);
+  private readonly router = inject(Router);
+  private readonly snackbarService = inject(SnackbarService);
+  private readonly roleService = inject(GuardService);
+  private readonly translateService = inject(TranslateService);
+
   public elections: ElectionOverviewModel[] = [];
   public isWahlverwalter: boolean = false;
   public loadingElections: boolean = false;
-
-  constructor(
-    private readonly cachedUserService: CachedUserService,
-    private readonly electionService: ElectionService,
-    private readonly router: Router,
-    private readonly snackbarService: SnackbarService,
-    private readonly roleService: GuardService,
-    private readonly translateService: TranslateService
-  ) {}
 
   public ngOnInit(): void {
     this.loadElections();

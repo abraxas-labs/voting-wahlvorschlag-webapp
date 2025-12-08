@@ -6,12 +6,13 @@
   } @else {
     <div class="main-content">
       <app-breadcrumbs class="breadcrumbs" [breadcrumbs]="breadcrumbs"></app-breadcrumbs>
-      <app-candidacy-overview
-        *ngIf="hasActiveTenant"
-        [election]="election"
-        [list]="list"
-        (hasChangesChange)="hasChanges = $event"
-      ></app-candidacy-overview>
+      @if (hasActiveTenant) {
+        <app-candidacy-overview
+          [election]="election"
+          [list]="list"
+          (hasChangesChange)="hasChanges = $event"
+        ></app-candidacy-overview>
+      }
     </div>
     <div class="comment-section">
       <app-comments [election]="election" [list]="list"></app-comments>

@@ -1,5 +1,6 @@
 <div class="wrapper" [class.tagged]="tagged">
-  <bc-button *ngIf="visible" color="primary" variant="secondary" (buttonClick)="tagClick()" icon="eye">
-  </bc-button>
+  @if (visible) {
+    <bc-button color="primary" variant="secondary" (buttonClick)="tagClick()" icon="eye"> </bc-button>
+  }
   <div class="content-wrapper"><ng-content></ng-content></div>
 </div>

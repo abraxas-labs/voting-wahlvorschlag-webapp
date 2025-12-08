@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -13,16 +13,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   standalone: false,
 })
 export class ModalDialogComponent {
+  public readonly dialogRef = inject<MatDialogRef<ModalDialogComponent>>(MatDialogRef);
+  public readonly data = inject(MAT_DIALOG_DATA);
+
   public header: string;
   public text: string;
 
-  constructor(
-    public readonly dialogRef: MatDialogRef<ModalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  constructor() {
     this.dialogRef.disableClose = true;
-    this.header = data.data.header;
-    this.text = data.data.text;
+    this.header = this.data.data.header;
+    this.text = this.data.data.text;
   }
 
   public close(result: boolean): void {

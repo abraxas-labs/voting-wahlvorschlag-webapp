@@ -47,12 +47,6 @@ p {
   width: 3%;
 }
 
-::ng-deep .bc-column-selection {
-  @include table.truncate-long-sortable-table-header();
-
-  width: 3%;
-}
-
 ::ng-deep .bc-column-nr {
   @include table.truncate-long-sortable-table-header();
 

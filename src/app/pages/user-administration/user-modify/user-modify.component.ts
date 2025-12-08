@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PartiesService } from '../../../shared/services/parties.service';
 import { RxJsUtilsService } from '../../../shared/services/rx-js-utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,20 +21,20 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class UserModifyComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private partiesService = inject(PartiesService);
+  private partyUserService = inject(PartyUserService);
+  private rxUtils = inject(RxJsUtilsService);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+
   public saving: boolean = false;
   public loading: boolean = false;
   public user: PartyUserModel = newUser();
   public parties: PartyModel[] = [];
   private newTenants: PartyModel[] = [];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private partiesService: PartiesService,
-    private partyUserService: PartyUserService,
-    private rxUtils: RxJsUtilsService,
-    private router: Router,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.partiesService
       .getAll()
       .pipe(this.rxUtils.toastDefault())

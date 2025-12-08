@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -16,10 +16,8 @@ import { AuthorizationService } from '@abraxas/base-components';
   providedIn: 'root',
 })
 export class ElectoralDistrictService {
-  constructor(
-    private httpClient: HttpClient,
-    private auth: AuthorizationService
-  ) {}
+  private httpClient = inject(HttpClient);
+  private auth = inject(AuthorizationService);
 
   public getAll(): Observable<DomainOfInfluenceModel[]> {
     return this.httpClient.get<DomainOfInfluenceModel[]>(this.url());

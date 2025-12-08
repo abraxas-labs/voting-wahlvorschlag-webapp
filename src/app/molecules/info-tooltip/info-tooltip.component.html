@@ -1,11 +1,12 @@
-<bc-icon
-  *ngIf="this.text"
-  class="icon"
-  [id]="id"
-  size="small"
-  (click)="toggleTooltip()"
-  (mouseenter)="setTooltip(true)"
-  (mouseleave)="setTooltip(false)"
-  tooltip="{{ this.text }}"
-  icon="info-circle-o"
-></bc-icon>
+@if (this.text) {
+  <bc-icon
+    class="icon"
+    [id]="id"
+    size="s"
+    (click)="toggleTooltip()"
+    (mouseenter)="setTooltip(true)"
+    (mouseleave)="setTooltip(false)"
+    tooltip="{{ this.text }}"
+    icon="info-circle-o"
+  ></bc-icon>
+}

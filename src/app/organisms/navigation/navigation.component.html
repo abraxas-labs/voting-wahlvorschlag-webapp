@@ -2,7 +2,9 @@
   <bc-nav-item link="/elections/overview">{{ 'OVERVIEW' | translate }}</bc-nav-item>
   <bc-nav-item link="/elections/archive">{{ 'ARCHIVE' | translate }}</bc-nav-item>
 </bc-nav-group>
-<bc-nav-group *ngIf="isWahlverwalter$ | async" [title]="'ADMINISTRATION' | translate">
-  <bc-nav-item link="/administration/base-data">{{ 'BASE-DATA' | translate }}</bc-nav-item>
-  <bc-nav-item link="/administration/permissions">{{ 'USER-MANAGEMENT' | translate }}</bc-nav-item>
-</bc-nav-group>
+@if (isWahlverwalter$ | async) {
+  <bc-nav-group [title]="'ADMINISTRATION' | translate">
+    <bc-nav-item link="/administration/base-data">{{ 'BASE-DATA' | translate }}</bc-nav-item>
+    <bc-nav-item link="/administration/permissions">{{ 'USER-MANAGEMENT' | translate }}</bc-nav-item>
+  </bc-nav-group>
+}

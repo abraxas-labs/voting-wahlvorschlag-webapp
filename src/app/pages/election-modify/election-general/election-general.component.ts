@@ -4,7 +4,16 @@
  * For license information see LICENSE file.
  */
 
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { ElectionModel, ElectionType } from '../../../shared/models/election.model';
 import { ElectoralDistrictService } from '../../../shared/services/electoral-district.service';
 import { DomainOfInfluenceModel } from '../../../shared/models/domainOfInfluence.model';
@@ -20,6 +29,12 @@ import { TranslateService } from '@ngx-translate/core';
   standalone: false,
 })
 export class ElectionGeneralComponent implements OnInit, OnChanges {
+  private electoralDistrictService = inject(ElectoralDistrictService);
+  private electionDomainOfInfluenceService = inject(ElectionDomainOfInfluenceService);
+  private snackbarService = inject(SnackbarService);
+  private translateService = inject(TranslateService);
+  private changeDetect = inject(ChangeDetectorRef);
+
   @Input() public election: ElectionModel;
   @Output() public electionChange: EventEmitter<ElectionModel> = new EventEmitter();
   @Output() public isValidChange: EventEmitter<boolean> = new EventEmitter(true);
@@ -29,14 +44,6 @@ export class ElectionGeneralComponent implements OnInit, OnChanges {
   public electoralDistricts: DomainOfInfluenceModel[] = [];
   public majorzButton: 'primary' | 'secondary' | 'tertiary' | 'tertiary-tonal';
   public proporzButton: 'primary' | 'secondary' | 'tertiary' | 'tertiary-tonal';
-
-  constructor(
-    private electoralDistrictService: ElectoralDistrictService,
-    private electionDomainOfInfluenceService: ElectionDomainOfInfluenceService,
-    private snackbarService: SnackbarService,
-    private translateService: TranslateService,
-    private changeDetect: ChangeDetectorRef
-  ) {}
 
   public ngOnInit(): void {
     this.checkValidation();

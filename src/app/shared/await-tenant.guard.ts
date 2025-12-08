@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { AuthenticationService, AuthorizationService } from '@abraxas/base-components';
@@ -14,10 +14,8 @@ import { filter, map, switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AwaitTenantGuard {
-  constructor(
-    private authentication: AuthenticationService,
-    private authorization: AuthorizationService
-  ) {}
+  private authentication = inject(AuthenticationService);
+  private authorization = inject(AuthorizationService);
 
   public canActivate(
     next: ActivatedRouteSnapshot,

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { ListModel } from '../../shared/models/list.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -15,6 +15,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   standalone: false,
 })
 export class ListSubunionRootComponent {
+  public readonly data = inject(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject<MatDialogRef<ListSubunionRootComponent>>(MatDialogRef);
+
   public lists: ListModel[];
 
   @Output()
@@ -22,11 +25,8 @@ export class ListSubunionRootComponent {
 
   public selectedList: ListModel;
 
-  constructor(
-    private readonly dialogRef: MatDialogRef<ListSubunionRootComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.lists = data.data.lists;
+  constructor() {
+    this.lists = this.data.data.lists;
   }
 
   public emitSelect(): void {

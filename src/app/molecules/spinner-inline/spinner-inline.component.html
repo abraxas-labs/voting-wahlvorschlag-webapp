@@ -1,4 +1,6 @@
 <div class="wrapper">
-  <bc-spinner [@enterAnimation] size="default" *ngIf="visible"></bc-spinner>
+  @if (visible) {
+    <bc-spinner [@enterAnimation] size="default"></bc-spinner>
+  }
   <ng-content></ng-content>
 </div>

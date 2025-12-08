@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CanDeactivateComponent } from 'src/app/shared/components/can-deactivate.component';
 import { Breadcrumb } from 'src/app/molecules/breadcrumbs/breadcrumbs.component';
 import { ActivatedRoute } from '@angular/router';
@@ -23,6 +23,12 @@ import { ListModel } from 'src/app/shared/models/list.model';
   standalone: false,
 })
 export class CandidaciesComponent extends CanDeactivateComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private electionService = inject(ElectionService);
+  private listService = inject(ListService);
+  private cachedUserService = inject(CachedUserService);
+  private rxUtils = inject(RxJsUtilsService);
+
   public breadcrumbs: Breadcrumb[] = [];
   public hasChanges: boolean = false;
   public electionId: string = '';
@@ -31,16 +37,6 @@ export class CandidaciesComponent extends CanDeactivateComponent implements OnIn
   public election: ElectionModel;
   public list: ListModel;
   public loading: boolean = true;
-
-  constructor(
-    private route: ActivatedRoute,
-    private electionService: ElectionService,
-    private listService: ListService,
-    private cachedUserService: CachedUserService,
-    private rxUtils: RxJsUtilsService
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     this.electionId = this.route.snapshot.params.electionId;

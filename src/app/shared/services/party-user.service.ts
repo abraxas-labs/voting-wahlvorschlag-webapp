@@ -5,7 +5,7 @@
  */
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PartyUserModel } from '../models/party-user.model';
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class PartyUserService {
-  constructor(private httpClient: HttpClient) {}
+  private httpClient = inject(HttpClient);
 
   public get(loginId: string): Observable<PartyUserModel> {
     return this.httpClient.get<PartyUserModel>(this.url(loginId)).pipe(map((u) => this.mapUser(u)));
