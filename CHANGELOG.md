@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.5.10`)
+# ✨ Changelog (`v4.5.11`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.5.10
-Previous version ---- v4.5.7
+This version -------- v4.5.11
+Previous version ---- v4.5.10
 Initial version ----- v4.5.7
-Total commits ------- 3
+Total commits ------- 1
 ```
+
+## [v4.5.11] - 2025-12-11
+
+### 🔄 Changed
+
+- update voting lib dependency
 
 ## [v4.5.10] - 2025-11-20
 

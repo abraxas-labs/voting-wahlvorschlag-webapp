@@ -21,7 +21,7 @@
   "private": true,
   "dependencies": {
     "@abraxas/base-components": "20.19.1",
-    "@abraxas/voting-lib": "0.0.1-dev.664",
+    "@abraxas/voting-lib": "5.11.5",
     "@angular/animations": "20.3.6",
     "@angular/cdk": "20.2.9",
     "@angular/cdk-experimental": "20.2.9",
