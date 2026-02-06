@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.5.11`)
+# ✨ Changelog (`v4.6.2`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.5.11
+This version -------- v4.6.2
 Previous version ---- v4.5.10
 Initial version ----- v4.5.7
-Total commits ------- 1
+Total commits ------- 5
 ```
+
+## [v4.6.2] - 2026-02-06
+
+### 🔄 Changed
+
+- extend CD pipeline with enhanced bug bounty publication workflow
+
+## [v4.6.1] - 2026-01-20
+
+### 🔄 Changed
+
+- correctly unset the clone index of candidates
+
+## [v4.6.0] - 2026-01-19
+
+### 🆕 Added
+
+- view archived elections
 
 ## [v4.5.11] - 2025-12-11
 

@@ -5,6 +5,7 @@
     <bc-button
       id="majorz"
       [variant]="this.majorzButton"
+      [disabled]="election.isArchived"
       (buttonClick)="setTyoeOfElection(electionTypes.Majorz)"
       label="{{ 'MAJORZWAHL' | translate }}"
     >
@@ -12,6 +13,7 @@
     <bc-button
       id="proporz"
       [variant]="this.proporzButton"
+      [disabled]="election.isArchived"
       (buttonClick)="setTyoeOfElection(electionTypes.Proporz)"
       label="{{ 'PROPORZWAHL' | translate }}"
     >
@@ -27,6 +29,7 @@
     [rows]="2"
     (ngModelChange)="checkValidation()"
     [required]="true"
+    [disabled]="election.isArchived"
     class="form-group block"
     subscriptSizing="dynamic"
   >
@@ -38,6 +41,7 @@
     [(ngModel)]="election.description"
     [maxlength]="2000"
     [rows]="3"
+    [disabled]="election.isArchived"
     class="form-group block"
     subscriptSizing="dynamic"
   >
@@ -50,6 +54,7 @@
     (valueChange)="checkValidation()"
     [label]="'START_SUBMISSION_DEADLINE' | translate"
     [required]="true"
+    [disabled]="election.isArchived"
   >
   </app-date-picker>
   <app-date-picker
@@ -58,6 +63,7 @@
     (valueChange)="checkValidation()"
     [label]="'END_SUBMISSION_DEADLINE' | translate"
     [required]="true"
+    [disabled]="election.isArchived"
   >
   </app-date-picker>
   <app-date-picker
@@ -66,12 +72,14 @@
     (valueChange)="checkValidation()"
     [label]="'CONTEST' | translate"
     [required]="true"
+    [disabled]="election.isArchived"
   >
   </app-date-picker>
   <app-date-picker
     class="date-picker"
     [(value)]="election.availableFrom"
     [label]="'AVAILABLE_FROM' | translate"
+    [disabled]="election.isArchived"
   >
   </app-date-picker>
 </div>
@@ -87,6 +95,7 @@
     (deleted)="deleteDomainOfInfluence($event)"
     (added)="addDomainOfInfluence($event)"
     [title]="'ELECTORAL_DISTRICT' | translate"
+    [disabled]="election.isArchived"
   >
   </app-multi-select>
 </div>

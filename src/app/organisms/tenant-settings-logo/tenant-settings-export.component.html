@@ -2,6 +2,7 @@
   <bc-label label="{{ 'ELECTION_EXTRAS.LABEL_TENANT_EXPORT_TYPE' | translate }}"></bc-label>
   <bc-radio-button-group
     [(ngModel)]="tenantIdentifierType"
+    [disabled]="readonly"
     [items]="[
       { value: 'logo', displayText: ('ELECTION_EXTRAS.LABEL_TENANT_LOGO' | translate) },
       { value: 'text', displayText: ('ELECTION_EXTRAS.LABEL_TENANT_TITLE' | translate) },
@@ -14,15 +15,18 @@
       (ngModelChange)="updateInfotexts()"
       [label]="'ELECTION_EXTRAS.LABEL_INFOTEXT_TENANT_TITLE' | translate"
       [maxlength]="10000"
+      [disabled]="readonly"
       subscriptSizing="dynamic"
     ></bc-text>
   } @else {
-    <app-filepicker
-      (filePicked)="setTenantLogo($event)"
-      [multiple]="false"
-      addTitle="ELECTION_EXTRAS.LABEL_TENANT_LOGO_CHOOSE"
-      accept="image/jpeg,image/png"
-    ></app-filepicker>
+    @if (!readonly) {
+      <app-filepicker
+        (filePicked)="setTenantLogo($event)"
+        [multiple]="false"
+        addTitle="ELECTION_EXTRAS.LABEL_TENANT_LOGO_CHOOSE"
+        accept="image/jpeg,image/png"
+      ></app-filepicker>
+    }
     @if (tenantLogo) {
       <img [src]="'data:image/png;base64,' + tenantLogo" class="tenant-logo" alt="logo" />
     }
@@ -33,6 +37,7 @@
       (ngModelChange)="wabstiExportTenantTitleChange.emit($event)"
       [label]="'ELECTION_EXTRAS.LABEL_WABSTI_TENANT_TITLE' | translate"
       [maxlength]="1000"
+      [disabled]="readonly"
       subscriptSizing="dynamic"
     ></bc-text>
   }

@@ -5,6 +5,7 @@
     [infotextTenantTitle]="infotextTenantTitle"
     (infotextTenantTitleChange)="infotextTenantTitle = $event; updateInfoTexts()"
     [hideWabstiExportTenantTitle]="true"
+    [readonly]="readonly"
   ></app-tenant-settings-export>
   <div>
     <bc-textarea
@@ -14,6 +15,7 @@
       [rows]="5"
       [(ngModel)]="infotextCandidacies"
       (ngModelChange)="updateInfoTexts()"
+      [disabled]="readonly"
       subscriptSizing="dynamic"
     >
     </bc-textarea>
@@ -26,6 +28,7 @@
       [rows]="5"
       [(ngModel)]="infotextSignatories"
       (ngModelChange)="updateInfoTexts()"
+      [disabled]="readonly"
       subscriptSizing="dynamic"
     >
     </bc-textarea>
@@ -35,6 +38,7 @@
     (ngModelChange)="
       quorumSignaturesCount = parseInt($event); quorumSignaturesCountChange.emit(quorumSignaturesCount)
     "
+    [disabled]="readonly"
     label="{{ 'ELECTION_EXTRAS.LABEL_NUMBER_SIGNATURES' | translate }}"
     subscriptSizing="dynamic"
   >
@@ -48,6 +52,7 @@
         [rows]="5"
         [(ngModel)]="infotextListUnion"
         (ngModelChange)="updateInfoTexts()"
+        [disabled]="readonly"
         subscriptSizing="dynamic"
       >
       </bc-textarea>

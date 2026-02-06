@@ -47,7 +47,7 @@
         @if (!isNew) {
           <app-spinner-inline [visible]="savingElection">
             <bc-button
-              [disabled]="!isActiveStepValid || savingElection"
+              [disabled]="!isActiveStepValid || savingElection || election.isArchived"
               (buttonClick)="save()"
               [variant]="'primary'"
               label="{{ 'SAVE' | translate }}"
@@ -58,7 +58,7 @@
 
         @if (activeStep !== maxStep) {
           <bc-button
-            [disabled]="!isActiveStepValid"
+            [disabled]="!isActiveStepValid && !election.isArchived"
             [variant]="'primary'"
             class="next-button"
             (buttonClick)="nextStep()"

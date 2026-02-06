@@ -64,6 +64,7 @@ export class MultiSelectComponent {
   @Input() public gridTitle: string | undefined;
   @Input() public displayExpr: string = '';
   @Input() public maxItems: number | undefined = undefined;
+  @Input() public disabled: boolean = false;
   @Output() public added: EventEmitter<any> = new EventEmitter();
   @Output() public deleted: EventEmitter<any> = new EventEmitter<any>();
   @Output() public selectedItemsChange: EventEmitter<any[]> = new EventEmitter<any[]>();

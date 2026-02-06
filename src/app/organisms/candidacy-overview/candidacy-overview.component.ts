@@ -286,7 +286,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
     this.candidates.splice(index, 1);
     this.candidates.forEach((c) => {
       if (!c.cloned) {
-        c.cloneOrderIndex = 0;
+        delete c.cloneOrderIndex;
       }
     });
     this.refreshExpandedCandidates();

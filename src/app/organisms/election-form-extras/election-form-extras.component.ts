@@ -21,6 +21,7 @@ export class ElectionFormExtrasComponent implements OnInit {
   @Output() public infoTextsChange: EventEmitter<InfoTextModel[]> = new EventEmitter<InfoTextModel[]>();
   @Input() public tenantLogo: string = '';
   @Input() public electionType: ElectionType;
+  @Input() public readonly: boolean = false;
   @Output() public tenantLogoChange: EventEmitter<string> = new EventEmitter<string>();
 
   public infotextCandidacies: string | null = null;

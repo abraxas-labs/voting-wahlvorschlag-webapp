@@ -5,17 +5,18 @@
     [displayExpr]="displayExpr"
     [(ngModel)]="selectedItem"
     [multiple]="false"
+    [disabled]="disabled"
   ></bc-dropdown>
 </div>
 <div class="form-group">
   <bc-button
     [variant]="'primary'"
-    [disabled]="maxItems && selectedItems.length >= maxItems"
+    [disabled]="(maxItems && selectedItems.length >= maxItems) || disabled"
     (buttonClick)="addSelection(selectedItem)"
     label="{{ 'ADD' | translate }}"
   >
   </bc-button>
-  <bc-button (click)="resetSelection()" label="{{ 'RESET' | translate }}"></bc-button>
+  <bc-button [disabled]="disabled" (click)="resetSelection()" label="{{ 'RESET' | translate }}"></bc-button>
 </div>
 <div class="district">
   <table>
@@ -26,9 +27,11 @@
       <tr>
         <td>{{ item[displayExpr] || item }}</td>
         <td class="delete">
-          <span (click)="deleteSelection(item)" class=".cursor-pointer"
+          @if (!disabled) {
+            <span (click)="deleteSelection(item)" class=".cursor-pointer"
             ><bc-icon size="s" [icon]="'trash'"></bc-icon
-          ></span>
+            ></span>
+          }
         </td>
       </tr>
     }

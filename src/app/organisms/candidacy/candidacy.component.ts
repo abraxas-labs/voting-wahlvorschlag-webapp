@@ -42,6 +42,7 @@ export class CandidacyComponent implements OnInit {
   @Input() public basedata: boolean = true;
   @Input() public infoTexts?: InfoTextModel[];
   @Input() public electionType?: ElectionType;
+  @Input() public readonly: boolean = false;
   @Output() public infoTextsChange: EventEmitter<Partial<InfoTextModel>[]> = new EventEmitter<
     Partial<InfoTextModel>[]
   >();

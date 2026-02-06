@@ -24,6 +24,9 @@ export class DatePickerComponent {
   @Input()
   public required: boolean = false;
 
+  @Input()
+  public disabled: boolean = false;
+
   @Output()
   public valueChange: EventEmitter<Date> = new EventEmitter<Date>();
 

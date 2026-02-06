@@ -69,13 +69,5 @@
     "stylelint-scss": "6.12.1",
     "typescript": "5.9.3"
   },
-  "publishConfig": {
-    "registry": "https://nexus.abraxas-tools.ch/repository/npm-gitlab/",
-    "tag": "latest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.abraxas-tools.ch/voting/apps/voting-wahlvorschlag/webapp.git"
-  },
   "author": "Abraxas Informatik AG"
 }

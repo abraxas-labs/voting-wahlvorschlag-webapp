@@ -18,6 +18,7 @@
             [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
             [type]="'text'"
             (blur)="updateInfoTexts()"
+            [disabled]="readonly"
             subscriptSizing="dynamic"
           >
           </bc-text>
@@ -25,6 +26,7 @@
             class="checkbox"
             [(checked)]="item.visible"
             (checkedChange)="updateInfoTexts()"
+            [disabled]="readonly"
             label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
             subscriptSizing="dynamic"
           >
@@ -40,6 +42,7 @@
           <bc-checkbox
             class="checkbox"
             [(checked)]="settings.showBallotPaperInfos"
+            [disabled]="readonly"
             label="{{ 'CANDIDACY.SHOW_BALLOT_PAPER_INFOS' | translate }}"
             subscriptSizing="dynamic"
           >
@@ -54,6 +57,7 @@
               [label]="item.translationToken | translate"
               [placeholder]="'CANDIDACY.INFO_TEXT_PLACEHOLDER' | translate"
               [type]="'text'"
+              [disabled]="readonly"
               subscriptSizing="dynamic"
             >
             </bc-text>
@@ -62,6 +66,7 @@
               [(checked)]="item.visible"
               (checkedChange)="updateInfoTexts()"
               label="{{ (basedata ? 'CANDIDACY.DEFAULT' : 'SHOW_INFO_TEXT') | translate }}"
+              [disabled]="readonly"
               subscriptSizing="dynamic"
             >
             </bc-checkbox>
@@ -78,6 +83,7 @@
             class="checkbox"
             [(checked)]="settings.showPartyOnProporzElection"
             label="{{ 'CANDIDACY.SHOW_PARTY_ON_PROPORZ_ELECTION_CHECKBOX_TEXT' | translate }}"
+            [disabled]="readonly"
             subscriptSizing="dynamic"
           >
           </bc-checkbox>
@@ -89,7 +95,7 @@
       <app-spinner-inline class="button" [visible]="saving"
         ><bc-button
           [variant]="'primary'"
-          [disabled]="saving"
+          [disabled]="saving || readonly"
           (buttonClick)="saveChanges()"
           label="{{ 'SAVE' | translate }}"
         ></bc-button

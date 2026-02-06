@@ -1,12 +1,16 @@
 <div class="form-group extra-space">
   <h2>{{ 'ATTACHMENTS' | translate }}</h2>
   <div class="container">
-    <app-filepicker (filePicked)="addFile($event)" accept="application/pdf"></app-filepicker>
+    @if (!election.isArchived) {
+      <app-filepicker (filePicked)="addFile($event)" accept="application/pdf"></app-filepicker>
+    }
     @for (document of election.documents; track document; let i = $index) {
       <div class="file-list">
         <div class="file-name">{{ document.name }}</div>
         <div class="remove-file">
-          <bc-icon size="xl" (click)="removeFileAtIndex(i)">x</bc-icon>
+          @if (!election.isArchived) {
+            <bc-icon size="xl" (click)="removeFileAtIndex(i)">x</bc-icon>
+          }
         </div>
       </div>
     }
@@ -21,6 +25,7 @@
     (infoTextsChange)="infoTextsChanged($event)"
     [(quorumSignaturesCount)]="quorumSignaturesCount"
     [(tenantLogo)]="election.tenantLogo"
+    [readonly]="election.isArchived"
   >
   </app-election-form-extras>
 </div>

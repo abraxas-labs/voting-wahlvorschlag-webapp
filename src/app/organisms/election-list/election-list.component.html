@@ -72,6 +72,9 @@
           @if (allowUpdating) {
             <bc-icon icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
           }
+          @if (isArchive) {
+            <bc-icon icon="info-circle-o" (click)="onOpenEditPage(element.id)"></bc-icon>
+          }
           @if (allowDeleting) {
             <bc-icon icon="trash" iconColor="error" (click)="onDelete(element.id)"></bc-icon>
           }
