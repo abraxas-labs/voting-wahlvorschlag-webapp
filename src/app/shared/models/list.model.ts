@@ -6,6 +6,7 @@
 
 import { BaseEntityModel } from './base-entity.model';
 import { ListUnionModel } from './list-union-model';
+import { CandidateModel } from './candidate.model';
 
 export interface ListModel extends BaseEntityModel {
   responsiblePartyTenantId: string;
@@ -25,6 +26,7 @@ export interface ListModel extends BaseEntityModel {
   listSubUnion?: ListUnionModel;
   createdByName?: string;
   modifiedByName?: string;
+  candidates?: CandidateModel[];
 }
 
 export enum ListState {

@@ -15,12 +15,11 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { Sex } from 'src/app/shared/models/candidate.model';
+import { CandidateModel, newCandidateModel, Sex } from 'src/app/shared/models/candidate.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { InfoTextService } from 'src/app/shared/services/info-text.service';
-import { ListCandidateModel, newListCandidateModel } from 'src/app/shared/models/ListCandidate.model';
 import { GuardService } from 'src/app/shared/guard.service';
 import { RxJsUtilsService } from '../../shared/services/rx-js-utils.service';
 import { SettingsModel } from '../../shared/models/settings.model';
@@ -47,8 +46,10 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
   private ref = inject(ChangeDetectorRef);
   private readonly dialogRef = inject<MatDialogRef<CandidacyModifyComponent>>(MatDialogRef);
 
+  protected readonly ElectionType = ElectionType;
+
   @Output() public formSubmit: EventEmitter<{
-    candidacy: ListCandidateModel;
+    candidacy: CandidateModel;
     nextRequested: boolean;
   }> = new EventEmitter();
 
@@ -59,19 +60,17 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
   private formStatusSubscription: Subscription | undefined;
   public isWahlverwalter: boolean = false;
   public sex: typeof Sex = Sex;
-  public moreVisible: boolean = false;
+  public moreVisible: boolean = true;
   public isValid: boolean = false;
   public infoTexts: Map<string, string> = new Map();
   public sexDropdownItems: SexDropdownItem[] = [];
-  private _candidacy: ListCandidateModel = newListCandidateModel();
-  public candidacy: ListCandidateModel;
+  public candidacy: CandidateModel;
   public candidateCount: number;
   public maxCandidateCount: number;
   public isNewCandidate: boolean;
 
   constructor() {
     this.candidacy = this.data.data.candidacy;
-    this.Candidacy = this.data.data.candidacy;
     this.election = this.data.data.election;
     this.settings = this.data.data.settings;
     this.candidateCount = this.data.data.candidateCount;
@@ -79,20 +78,6 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
     this.isNewCandidate = !this.candidacy.id;
     if (this.isNewCandidate) {
       this.candidateCount++;
-    }
-  }
-
-  public get Candidacy(): ListCandidateModel {
-    return this._candidacy;
-  }
-
-  public set Candidacy(value: ListCandidateModel) {
-    this.moreVisible = true;
-    this._candidacy = {
-      ...value,
-    };
-    if (!this.form) {
-      return;
     }
   }
 
@@ -145,12 +130,12 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
-  public hasAnyInputLeadingOrTrallingWhiteSpaces(input: string): boolean {
+  public hasAnyInputLeadingOrTrailingWhiteSpaces(input: string): boolean {
     return !!input && input.trim() !== input;
   }
 
   public showErrorMessageForLeadingOrTrailingWhitespaces(input: string): string {
-    return this.hasAnyInputLeadingOrTrallingWhiteSpaces(input)
+    return this.hasAnyInputLeadingOrTrailingWhiteSpaces(input)
       ? this.translateService.instant('CANDIDACY.NO_TRAILING_SPACES_ALLOWED')
       : '';
   }
@@ -170,11 +155,11 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   public isTagged(field: string): boolean {
-    return this.Candidacy.markings.findIndex((f) => f.field === field) !== -1;
+    return this.candidacy.markings.findIndex((f) => f.field === field) !== -1;
   }
 
   public setTag(field: string, tagged: boolean): void {
-    const index = this.Candidacy.markings.findIndex((f) => f.field === field);
+    const index = this.candidacy.markings.findIndex((f) => f.field === field);
     if (!tagged && index !== -1) {
       this.candidacy.markings.splice(index, 1);
     } else if (tagged && index === -1) {
@@ -187,11 +172,11 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
       candidacy: this.candidacy,
       nextRequested: requestNext,
     });
-    this.candidateCount++;
     if (!requestNext) {
       this.close();
     } else {
-      this.candidacy = newListCandidateModel();
+      this.candidateCount++;
+      this.candidacy = newCandidateModel(this.candidateCount + 1);
       this.isNewCandidate = true;
       //This triggers the initial required state for the dateOfBirth field.
       //it does not appear red initially because of a base-components problem.

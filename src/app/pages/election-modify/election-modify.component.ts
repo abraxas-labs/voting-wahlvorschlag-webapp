@@ -180,7 +180,8 @@ export class ElectionModifyComponent implements OnInit {
 
   public previousStep(): void {
     if (this.activeStep === 1) {
-      this.router.navigate(['-', 'elections', 'overview']);
+      const route = this.election.isArchived ? 'archive' : 'overview';
+      this.router.navigate(['-', 'elections', route]);
       return;
     }
     this.activeStep--;

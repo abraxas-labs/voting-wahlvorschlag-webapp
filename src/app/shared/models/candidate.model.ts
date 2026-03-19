@@ -33,16 +33,15 @@ export interface CandidateModel extends BaseEntityModel {
   incumbent: boolean;
   countryId?: string;
   listId?: string;
-  cloned?: boolean;
-  index?: number;
-  orderIndex?: number;
-  cloneOrderIndex?: number;
+  cloned: boolean;
+  index: number; // 1-based candidate number
+  orderIndex: number; // 1-based position in the list
+  cloneOrderIndex?: number; // 1-based position of the clone in the list
   party?: string;
   markings?: MarkingModel[];
-  isOriginal?: boolean;
 }
 
-export function newCandidateModel(): CandidateModel {
+export function newCandidateModel(orderIndex: number): CandidateModel {
   return {
     id: '',
     createdBy: '',
@@ -64,6 +63,7 @@ export function newCandidateModel(): CandidateModel {
     ballotLocality: '',
     incumbent: false,
     markings: [],
-    isOriginal: true,
+    index: orderIndex,
+    orderIndex: orderIndex,
   };
 }

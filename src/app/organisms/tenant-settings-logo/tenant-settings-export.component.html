@@ -15,7 +15,7 @@
       (ngModelChange)="updateInfotexts()"
       [label]="'ELECTION_EXTRAS.LABEL_INFOTEXT_TENANT_TITLE' | translate"
       [maxlength]="10000"
-      [disabled]="readonly"
+      [readonly]="readonly"
       subscriptSizing="dynamic"
     ></bc-text>
   } @else {
@@ -37,7 +37,7 @@
       (ngModelChange)="wabstiExportTenantTitleChange.emit($event)"
       [label]="'ELECTION_EXTRAS.LABEL_WABSTI_TENANT_TITLE' | translate"
       [maxlength]="1000"
-      [disabled]="readonly"
+      [readonly]="readonly"
       subscriptSizing="dynamic"
     ></bc-text>
   }

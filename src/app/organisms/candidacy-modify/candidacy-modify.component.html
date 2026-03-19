@@ -18,11 +18,11 @@
           [(ngModel)]="candidacy.firstName"
           [required]="true"
           [maxlength]="100"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.firstName)"
+          [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.firstName)"
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('firstName')"
           subscriptSizing="dynamic"
         >
-          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.firstName)) {
+          @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.firstName)) {
             <bc-error>
               {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.firstName) }}
             </bc-error>
@@ -44,11 +44,11 @@
           [(ngModel)]="candidacy.familyName"
           [required]="true"
           [maxlength]="100"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.familyName)"
+          [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.familyName)"
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('familyName')"
           subscriptSizing="dynamic"
         >
-          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.familyName)) {
+          @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.familyName)) {
             <bc-error>
               {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.familyName) }}
             </bc-error>
@@ -70,11 +70,11 @@
           name="ballotFirstName"
           [(ngModel)]="candidacy.ballotFirstName"
           [maxlength]="100"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFirstName)"
+          [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotFirstName)"
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotFirstName')"
           subscriptSizing="dynamic"
         >
-          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFirstName)) {
+          @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotFirstName)) {
             <bc-error>
               {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFirstName) }}
             </bc-error>
@@ -96,11 +96,11 @@
           name="ballotFamilyName"
           [(ngModel)]="candidacy.ballotFamilyName"
           [maxlength]="100"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFamilyName)"
+          [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotFamilyName)"
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotFamilyName')"
           subscriptSizing="dynamic"
         >
-          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotFamilyName)) {
+          @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotFamilyName)) {
             <bc-error>
               {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotFamilyName) }}
             </bc-error>
@@ -165,11 +165,11 @@
             [(ngModel)]="candidacy.title"
             [required]="false"
             [maxlength]="100"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.title)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.title)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('title')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.title)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.title)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.title) }}
               </bc-error>
@@ -191,11 +191,11 @@
             [(ngModel)]="candidacy.occupationalTitle"
             [required]="true"
             [maxlength]="250"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.occupationalTitle)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.occupationalTitle)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('occupationalTitle')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.occupationalTitle)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.occupationalTitle)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.occupationalTitle) }}
               </bc-error>
@@ -221,11 +221,11 @@
           [(ngModel)]="candidacy.origin"
           [required]="true"
           [maxlength]="80"
-          [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.origin)"
+          [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.origin)"
           (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('origin')"
           subscriptSizing="dynamic"
         >
-          @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.origin)) {
+          @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.origin)) {
             <bc-error>
               {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.origin) }}
             </bc-error>
@@ -248,11 +248,11 @@
             [(ngModel)]="candidacy.street"
             [required]="true"
             [maxlength]="150"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.street)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.street)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('street')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.street)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.street)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.street) }}
               </bc-error>
@@ -273,11 +273,11 @@
             name="houseNumber"
             [(ngModel)]="candidacy.houseNumber"
             [maxlength]="30"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.houseNumber)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.houseNumber)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('houseNumber')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.houseNumber)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.houseNumber)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.houseNumber) }}
               </bc-error>
@@ -302,11 +302,11 @@
             [(ngModel)]="candidacy.zipCode"
             [maxlength]="20"
             [required]="true"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.zipCode)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.zipCode)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('zipCode')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.zipCode)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.zipCode)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.zipCode) }}
               </bc-error>
@@ -328,11 +328,11 @@
             [(ngModel)]="candidacy.locality"
             [required]="true"
             [maxlength]="200"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.locality)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.locality)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('locality')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.locality)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.locality)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.locality) }}
               </bc-error>
@@ -356,11 +356,11 @@
             [(ngModel)]="candidacy.party"
             [maxlength]="12"
             [required]="true"
-            [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.party)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('party')"
             subscriptSizing="dynamic"
           >
-            @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.party)) {
+            @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.party)) {
               <bc-error>
                 {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.party) }}
               </bc-error>
@@ -411,11 +411,11 @@
                 name="ballotOccupationalTitle"
                 [maxlength]="100"
                 [(ngModel)]="candidacy.ballotOccupationalTitle"
-                [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)"
+                [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotOccupationalTitle)"
                 (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotOccupationalTitle')"
                 subscriptSizing="dynamic"
               >
-                @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotOccupationalTitle)) {
+                @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotOccupationalTitle)) {
                   <bc-error>
                     {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotOccupationalTitle) }}
                   </bc-error>
@@ -440,11 +440,11 @@
                 name="ballotLocality"
                 [maxlength]="200"
                 [(ngModel)]="candidacy.ballotLocality"
-                [error]="hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)"
+                [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotLocality)"
                 (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('ballotLocality')"
                 subscriptSizing="dynamic"
               >
-                @if (hasAnyInputLeadingOrTrallingWhiteSpaces(candidacy.ballotLocality)) {
+                @if (hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.ballotLocality)) {
                   <bc-error>
                     {{ showErrorMessageForLeadingOrTrailingWhitespaces(candidacy.ballotLocality) }}
                   </bc-error>
@@ -467,13 +467,15 @@
         (buttonClick)="apply()"
       >
       </bc-button>
-      <bc-button
-        label="{{ 'CANDIDACY.APPLY_AND_NEXT' | translate }}"
-        [variant]="'primary'"
-        [disabled]="!candidacy.dateOfBirth || !this.isValid || this.candidateCount >= this.maxCandidateCount"
-        (buttonClick)="apply(true)"
-      >
-      </bc-button>
+      @if (election.electionType === ElectionType.Proporz || maxCandidateCount > 1) {
+        <bc-button
+          label="{{ 'CANDIDACY.APPLY_AND_NEXT' | translate }}"
+          [variant]="'primary'"
+          [disabled]="!candidacy.dateOfBirth || !this.isValid || this.candidateCount >= this.maxCandidateCount"
+          (buttonClick)="apply(true)"
+        >
+        </bc-button>
+      }
       <bc-button (buttonClick)="close()" label="{{ 'CANCEL' | translate }}"> </bc-button>
     </div>
   </form>

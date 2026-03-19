@@ -29,7 +29,7 @@
     [rows]="2"
     (ngModelChange)="checkValidation()"
     [required]="true"
-    [disabled]="election.isArchived"
+    [readonly]="election.isArchived"
     class="form-group block"
     subscriptSizing="dynamic"
   >
@@ -41,7 +41,7 @@
     [(ngModel)]="election.description"
     [maxlength]="2000"
     [rows]="3"
-    [disabled]="election.isArchived"
+    [readonly]="election.isArchived"
     class="form-group block"
     subscriptSizing="dynamic"
   >

@@ -12,7 +12,7 @@
             name="numberOfSeats"
             [(ngModel)]="district.numberOfMandates"
             (ngModelChange)="modelChanged(district)"
-            [disabled]="election.isArchived"
+            [readonly]="election.isArchived"
             subscriptSizing="dynamic"
           >
           </bc-number>

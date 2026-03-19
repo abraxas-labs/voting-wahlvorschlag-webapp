@@ -11,20 +11,18 @@ import {
   SortDirective,
   TableDataSource,
 } from '@abraxas/base-components';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ExportDialogComponent } from 'src/app/shared/components/dialogs/export-dialog/export-dialog.component';
 import { ModalDialogComponent } from 'src/app/shared/components/dialogs/modal-dialog/modal-dialog.component';
-import { SnackbarService } from 'src/app/shared/services/snackbar.service';
 import { GuardService } from '../../shared/guard.service';
 import { ElectionModel, ElectionType } from '../../shared/models/election.model';
 import { ListModel, ListState } from '../../shared/models/list.model';
 import { BallotDocumentService } from '../../shared/services/ballot-document.service';
 import { CachedUserService } from '../../shared/services/cached-user.service';
-import { CandidateService } from '../../shared/services/candidate.service';
 import { ElectionService } from '../../shared/services/election.service';
 import { ListUnionService } from '../../shared/services/list-union.service';
 import { ListService } from '../../shared/services/list.service';
@@ -322,7 +320,7 @@ export class ListOverviewComponent implements OnInit, AfterViewInit {
       return false;
     }
 
-    return lists.filter((l) => l.state === ListState.Draft).length === 0;
+    return lists.every((l) => l.state !== ListState.Draft && l.candidates.length > 0);
   }
 
   public canValidateLists(lists: ListModel[]): boolean {
@@ -385,7 +383,7 @@ export class ListOverviewComponent implements OnInit, AfterViewInit {
       return false;
     }
 
-    return lists.filter((l) => l.state !== ListState.Draft).length === 0;
+    return lists.every((l) => l.state === ListState.Draft && l.candidates.length > 0);
   }
 
   public addList(): void {
