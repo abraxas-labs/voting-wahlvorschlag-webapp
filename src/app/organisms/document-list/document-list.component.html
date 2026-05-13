@@ -8,31 +8,31 @@
   [dataSource]="dataSource"
 >
   <ng-container columnDef="selection">
-    <bc-header-cell *headerCellDef>
+    <th bc-header-cell *headerCellDef>
       <bc-checkbox
         selectAll
         [checked]="selection.isAllSelected()"
         [indeterminate]="selection.isPartialSelected()"
       ></bc-checkbox>
-    </bc-header-cell>
-    <bc-data-cell *dataCellDef="let row">
+    </th>
+    <td bc-data-cell *dataCellDef="let row">
       <bc-checkbox
         [checked]="selection.isSelected(row)"
         selectionToggle
         [selectionToggleValue]="row"
       ></bc-checkbox>
-    </bc-data-cell>
+    </td>
   </ng-container>
 
   <ng-container [columnDef]="columns.name">
-    <bc-header-cell sort *headerCellDef>{{ 'DOCUMENT.NAME' | translate }}</bc-header-cell>
-    <bc-data-cell *dataCellDef="let row">
+    <th bc-header-cell sort *headerCellDef>{{ 'DOCUMENT.NAME' | translate }}</th>
+    <td bc-data-cell *dataCellDef="let row">
       {{ row.name }}
-    </bc-data-cell>
+    </td>
   </ng-container>
 
-  <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-  <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
+  <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+  <tr bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"></tr>
 </bc-table>
 <div class="documents">
   @if (this.download) {

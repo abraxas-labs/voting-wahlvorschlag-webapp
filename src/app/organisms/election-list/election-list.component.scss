@@ -4,33 +4,27 @@
   color: red;
 }
 
-::ng-deep .bc-column-name {
+::ng-deep [class*='bc-column-'] {
   @include table.truncate-long-sortable-table-header();
+}
 
+.bc-column-name {
   width: 50%;
 }
 
-::ng-deep .bc-column-submission-deadline-begin {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-submission-deadline-begin {
   width: 12%;
 }
 
-::ng-deep .bc-column-submission-deadline-end {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-submission-deadline-end {
   width: 16%;
 }
 
-::ng-deep .bc-column-available-from {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-available-from {
   width: 16%;
 }
 
-::ng-deep .bc-column-submission-deadline-diff {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-submission-deadline-diff {
   width: 12%;
 }
 

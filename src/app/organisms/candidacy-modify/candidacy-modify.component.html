@@ -471,7 +471,9 @@
         <bc-button
           label="{{ 'CANDIDACY.APPLY_AND_NEXT' | translate }}"
           [variant]="'primary'"
-          [disabled]="!candidacy.dateOfBirth || !this.isValid || this.candidateCount >= this.maxCandidateCount"
+          [disabled]="
+            !candidacy.dateOfBirth || !this.isValid || this.candidateCount >= this.maxCandidateCount
+          "
           (buttonClick)="apply(true)"
         >
         </bc-button>

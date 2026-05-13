@@ -5,7 +5,8 @@
 $basic-color-20: rgba(map.get($default-palette, core, basic), 20%);
 
 .wrapper {
-  overflow: hidden;
+  max-height: 100%;
+  overflow: auto;
   border-left: 1px solid $basic-color-20;
 }
 
@@ -34,8 +35,6 @@ $basic-color-20: rgba(map.get($default-palette, core, basic), 20%);
 
 .comments {
   padding: 1rem;
-  flex-grow: 1;
-  flex-shrink: 1;
   overflow: auto;
 
   .comment {
@@ -45,6 +44,8 @@ $basic-color-20: rgba(map.get($default-palette, core, basic), 20%);
 
     p {
       margin: 0;
+      word-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .content-wrapper {

@@ -11,23 +11,23 @@
       <app-spinner-centered [visible]="loadingTenants">
         <bc-table #tenantSort="sort" sort #tenantFilter="filter" filter [dataSource]="dataSource">
           <ng-container [columnDef]="columns.name">
-            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
-              'USER_ADMINISTRATION.PARTY.NAME' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let row">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.PARTY.NAME' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let row">
               {{ row.name }}
-            </bc-data-cell>
+            </td>
           </ng-container>
           <ng-container columnDef="actions">
-            <bc-header-cell *headerCellDef></bc-header-cell>
-            <bc-data-cell *dataCellDef="let element; let i = index">
+            <th bc-header-cell *headerCellDef></th>
+            <td bc-data-cell *dataCellDef="let element; let i = index">
               <div class="row-editing">
                 <bc-icon icon="trash" iconColor="error" (click)="removeParty(element.id)"></bc-icon>
               </div>
-            </bc-data-cell>
+            </td>
           </ng-container>
-          <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-          <bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"> </bc-data-row>
+          <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+          <tr bc-data-row *dataRowDef="let row; columns: columnsToDisplay; let i = index"></tr>
         </bc-table>
         <bc-paginator
           #tenantPaginator
@@ -48,48 +48,48 @@
       <app-spinner-centered [visible]="loadingUsers">
         <bc-table #userSort="sort" sort #userFilter="filter" filter [dataSource]="dataSourceUsers">
           <ng-container [columnDef]="userColumns.firstname">
-            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
-              'USER_ADMINISTRATION.USER.FIRSTNAME' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let el">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.USER.FIRSTNAME' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let el">
               {{ el.firstname }}
-            </bc-data-cell>
+            </td>
           </ng-container>
           <ng-container [columnDef]="userColumns.lastname">
-            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
-              'USER_ADMINISTRATION.USER.LASTNAME' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let row">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.USER.LASTNAME' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let row">
               {{ row.lastname }}
-            </bc-data-cell>
+            </td>
           </ng-container>
           <ng-container [columnDef]="userColumns.username">
-            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
-              'USER_ADMINISTRATION.USER.USERNAME' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let row">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.USER.USERNAME' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let row">
               {{ row.username }}
-            </bc-data-cell>
+            </td>
           </ng-container>
           <ng-container [columnDef]="userColumns.tenantDescription">
-            <bc-header-cell sort filter filterType="text" *headerCellDef>{{
-              'USER_ADMINISTRATION.USER.TENANT' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let row">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.USER.TENANT' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let row">
               {{ row.tenantDescription }}
-            </bc-data-cell>
+            </td>
           </ng-container>
           <ng-container columnDef="userActions">
-            <bc-header-cell *headerCellDef></bc-header-cell>
-            <bc-data-cell *dataCellDef="let element; let i = index">
+            <th bc-header-cell *headerCellDef></th>
+            <td bc-data-cell *dataCellDef="let element; let i = index">
               <div class="row-editing">
                 <bc-icon icon="edit" (click)="editUser(element)"></bc-icon>
                 <bc-icon icon="trash" iconColor="error" (click)="removeUser(element)"></bc-icon>
               </div>
-            </bc-data-cell>
+            </td>
           </ng-container>
-          <bc-header-row *headerRowDef="let row; columns: userColumnsToDisplay"></bc-header-row>
-          <bc-data-row *dataRowDef="let row; columns: userColumnsToDisplay; let i = index"> </bc-data-row>
+          <tr bc-header-row *headerRowDef="let row; columns: userColumnsToDisplay"></tr>
+          <tr bc-data-row *dataRowDef="let row; columns: userColumnsToDisplay; let i = index"></tr>
         </bc-table>
         <bc-paginator
           #userPaginator

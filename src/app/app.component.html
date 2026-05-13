@@ -8,6 +8,7 @@
       [signOutLabel]="'Logout'"
       [title]="appTitle"
       [customLogoPath]="customLogo ?? ''"
+      [showThemes]="false"
     >
       <vo-lib-environment-chip></vo-lib-environment-chip>
     </bc-app-header-bar-iam>
@@ -28,7 +29,7 @@
     </bc-snackbar>
     <div>
       <bc-nav-layout #drawer>
-        <bc-nav-drawer [mode]="'side'" [opened]="true">
+        <bc-nav-drawer [mode]="'side'" [opened]="true" [autoFocus]="false">
           <bc-nav-group label="{{ 'ELECTION' | translate }}">
             <bc-nav-item
               label="{{ 'OVERVIEW' | translate }}"

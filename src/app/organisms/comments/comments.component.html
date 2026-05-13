@@ -32,9 +32,7 @@
         <div class="comment">
           <div class="content-wrapper">
             <div class="content">
-              @for (line of comment.content.split('\n'); track line) {
-                <p>{{ line }}</p>
-              }
+              <p>{{ comment.content }}</p>
             </div>
           </div>
           <div class="footer">
@@ -53,7 +51,7 @@
           ) {
             <div class="buttons">
               <bc-button
-                [color]="'primary'"
+                [color]="'default'"
                 [variant]="'secondary'"
                 [icon]="'edit'"
                 [type]="'button'"

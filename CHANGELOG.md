@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.8.1`)
+# ✨ Changelog (`v4.9.2`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.8.1
-Previous version ---- v4.6.2
+This version -------- v4.9.2
+Previous version ---- v4.8.1
 Initial version ----- v4.5.7
-Total commits ------- 6
+Total commits ------- 3
 ```
+
+## [v4.9.2] - 2026-04-15
+
+### 🔄 Changed
+
+- correctly display comments again
+
+## [v4.9.1] - 2026-04-15
+
+### 🔄 Changed
+
+- update dependencies
+
+## [v4.9.0] - 2026-03-27
+
+### 🔄 Changed
+
+- update angular 21 and base-components
+
+Updated to angular 21
+Updated base-components (table changes and color changes)
+Improved some components (icon color for trash icons, and some paddings)
 
 ## [v4.8.1] - 2026-03-04
 

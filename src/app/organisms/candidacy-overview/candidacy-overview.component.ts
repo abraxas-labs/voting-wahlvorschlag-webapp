@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { DialogService, SelectionChange, SortDirective, TableDataSource, } from '@abraxas/base-components';
+import { DialogService, SelectionChange, SortDirective, TableDataSource } from '@abraxas/base-components';
 import {
   AfterViewInit,
   Component,
@@ -183,16 +183,19 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
 
   public addCandidacy() {
     const newCandidate = newCandidateModel(this.expandedCandidates.length + 1);
-    let dialogRef = this.dialogService.open(CandidacyModifyComponent, {
-      data: {
-        election: this.election,
-        settings: this.settings,
-        candidacy: newCandidate,
-        maxCandidateCount: this.nrOfMandates,
-        candidateCount: this.expandedCandidates.length,
+    let dialogRef = this.dialogService.open(
+      CandidacyModifyComponent,
+      {
+        data: {
+          election: this.election,
+          settings: this.settings,
+          candidacy: newCandidate,
+          maxCandidateCount: this.nrOfMandates,
+          candidateCount: this.expandedCandidates.length,
+        },
       },
-    },
-      this.candidacyDialogWidth);
+      this.candidacyDialogWidth
+    );
 
     dialogRef.componentInstance.formSubmit.subscribe((data) => {
       this.handleCandidateCreated(data.candidacy);
@@ -227,7 +230,9 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
 
   private handleCandidateCreated(candidate: CandidateModel): void {
     if (this.hasNrOfMandatesReached) {
-      this.snackbarService.warning(this.translateService.instant('CANDIDACY.REACHED_MAXIMUM_CANDIDATES_WARNING'));
+      this.snackbarService.warning(
+        this.translateService.instant('CANDIDACY.REACHED_MAXIMUM_CANDIDATES_WARNING')
+      );
       return;
     }
 

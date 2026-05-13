@@ -13,3 +13,9 @@
 .form-group {
   margin-top: 0.5rem;
 }
+
+.button-group {
+  bc-button + bc-button {
+    margin-left: 1rem;
+  }
+}

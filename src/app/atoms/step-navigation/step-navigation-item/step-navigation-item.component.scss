@@ -7,7 +7,7 @@
 }
 
 .step-content {
-  color: $color-primary;
+  color: $color-text-brand;
   text-align: center;
   justify-content: center;
   display: flex;
@@ -21,7 +21,7 @@
 }
 
 .step-toggle {
-  background: $color-primary;
+  background: $color-surface-bg-primary-inverse;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -29,7 +29,7 @@
 
 .step-line {
   flex: 1;
-  border-color: $color-primary;
+  border-color: $color-surface-bg-primary-inverse;
   display: inline;
 }
 
@@ -72,7 +72,7 @@
   }
 
   .step-down {
-    border-color: $color-primary-50;
+    border-color: $color-primary-70;
   }
 }
 
@@ -84,14 +84,14 @@
 
 :host-context(.step-navigation-item.step-item-active) ~ :host {
   .step-content {
-    color: $color-primary-50;
+    color: $color-primary-70;
   }
 
   .step-toggle {
-    background: $color-primary-50;
+    background: $color-primary-70;
   }
 
   .step-line {
-    border-color: $color-primary-50;
+    border-color: $color-primary-70;
   }
 }

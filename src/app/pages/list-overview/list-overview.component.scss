@@ -1,6 +1,8 @@
 @use '@abraxas/voting-lib/style/table' as table;
 
 .buttons {
+  display: flex;
+  gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -41,68 +43,52 @@ p {
   left: 0.2rem;
 }
 
-::ng-deep .bc-column-selection {
+::ng-deep [class*='bc-column-'] {
   @include table.truncate-long-sortable-table-header();
+}
 
+.bc-column-selection {
   width: 3%;
 }
 
-::ng-deep .bc-column-nr {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-nr {
   width: 5%;
 }
 
-::ng-deep .bc-column-version {
-  width: 5%;
+.bc-column-version {
+  width: 6rem;
 }
 
-::ng-deep .bc-column-ui-modified-date {
-  @include table.truncate-long-sortable-table-header();
-
-  width: 12%;
+.bc-column-ui-modified-date {
+  width: 9rem;
 }
 
-::ng-deep .bc-column-ui-modified-by-name {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-ui-modified-by-name {
   width: 10%;
 }
 
-::ng-deep .bc-column-state {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-state {
   width: 8%;
 }
 
-::ng-deep .bc-column-validated {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-validated {
   width: 7%;
 }
 
-::ng-deep .bc-column-locked {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-locked {
   width: 7%;
 }
 
-::ng-deep .bc-column-list-union {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-list-union {
   width: 10%;
 }
 
-::ng-deep .bc-column-list-sub-union {
-  @include table.truncate-long-sortable-table-header();
-
+.bc-column-list-sub-union {
   width: 10%;
 }
 
-::ng-deep .bc-column-actions {
-  @include table.truncate-long-sortable-table-header();
-
-  width: 5%;
+.bc-column-actions {
+  width: 4rem;
 }
 
 .row-editing {

@@ -11,63 +11,64 @@
     [dataSource]="dataSource"
   >
     <ng-container columnDef="name">
-      <bc-header-cell sort filter *headerCellDef>{{ 'ELECTION_TITLE' | translate }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+      <th bc-header-cell sort filter *headerCellDef>{{ 'ELECTION_TITLE' | translate }}</th>
+      <td bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
         {{ row.name }}
-      </bc-data-cell>
+      </td>
     </ng-container>
 
     <ng-container columnDef="submissionDeadlineBegin">
-      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+      <th bc-header-cell sort filter filterType="date-extended" *headerCellDef>
         <span truncateWithTooltip tooltip>
           {{ 'START_SUBMISSION_DEADLINE' | translate }}
         </span>
-      </bc-header-cell>
-      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+      </th>
+      <td bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
         {{ row.submissionDeadlineBegin | date: 'dd.MM.yyyy' }}
-      </bc-data-cell>
+      </td>
     </ng-container>
 
     <ng-container columnDef="submissionDeadlineEnd">
-      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+      <th bc-header-cell sort filter filterType="date-extended" *headerCellDef>
         <span truncateWithTooltip tooltip>
           {{ 'END_SUBMISSION_DEADLINE' | translate }}
         </span>
-      </bc-header-cell>
-      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+      </th>
+      <td bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
         {{ row.submissionDeadlineEnd | date: 'dd.MM.yyyy' }}
-      </bc-data-cell>
+      </td>
     </ng-container>
 
     <ng-container columnDef="availableFrom">
-      <bc-header-cell sort filter filterType="date-extended" *headerCellDef>
+      <th bc-header-cell sort filter filterType="date-extended" *headerCellDef>
         <span truncateWithTooltip tooltip>
           {{ 'AVAILABLE_FROM' | translate }}
         </span>
-      </bc-header-cell>
-      <bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
+      </th>
+      <td bc-data-cell *dataCellDef="let row" (click)="onOpenDetail(row.id)">
         {{ row.availableFrom | date: 'dd.MM.yyyy' }}
-      </bc-data-cell>
+      </td>
     </ng-container>
 
     <ng-container columnDef="submissionDeadlineDiff">
-      <bc-header-cell sort *headerCellDef>
+      <th bc-header-cell sort *headerCellDef>
         <span truncateWithTooltip tooltip>
           {{ 'DAYS_REMAINING' | translate }}
         </span>
-      </bc-header-cell>
-      <bc-data-cell
+      </th>
+      <td
+        bc-data-cell
         *dataCellDef="let row"
         (click)="onOpenDetail(row.id)"
         [ngClass]="{ highlight: row.value <= 14 }"
       >
         {{ row.submissionDeadlineDiff }} {{ 'DAYS' | translate }}
-      </bc-data-cell>
+      </td>
     </ng-container>
 
     <ng-container columnDef="actions">
-      <bc-header-cell *headerCellDef></bc-header-cell>
-      <bc-data-cell *dataCellDef="let element; let i = index">
+      <th bc-header-cell *headerCellDef></th>
+      <td bc-data-cell *dataCellDef="let element; let i = index">
         <div class="row-editing">
           @if (allowUpdating) {
             <bc-icon icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
@@ -79,11 +80,12 @@
             <bc-icon icon="trash" iconColor="error" (click)="onDelete(element.id)"></bc-icon>
           }
         </div>
-      </bc-data-cell>
+      </td>
     </ng-container>
 
-    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-    <bc-data-row
+    <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+    <tr
+      bc-data-row
       #rowSelection="selectionToggle"
       *dataRowDef="let row; columns: columnsToDisplay; let i = index"
       selectionToggle
@@ -91,8 +93,7 @@
       selectionRow
       [selectionRowValue]="row"
       (click)="rowSelection.toggle()"
-    >
-    </bc-data-row>
+    ></tr>
   </bc-table>
   @if (showPaginator) {
     <bc-paginator showFirstLastButtons [pageSize]="20" [pageSizeOptions]="[5, 10, 20]"></bc-paginator>

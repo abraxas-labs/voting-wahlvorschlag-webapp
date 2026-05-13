@@ -9,7 +9,7 @@
         <div class="file-name">{{ document.name }}</div>
         <div class="remove-file">
           @if (!election.isArchived) {
-            <bc-icon size="xl" (click)="removeFileAtIndex(i)">x</bc-icon>
+            <bc-icon (click)="removeFileAtIndex(i)" [icon]="'trash'" [iconColor]="'error'"></bc-icon>
           }
         </div>
       </div>

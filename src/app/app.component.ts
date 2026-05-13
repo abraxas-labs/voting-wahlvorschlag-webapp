@@ -7,7 +7,9 @@
 import {
   AuthenticationService,
   AuthorizationService,
+  CornerRadiusTokensThemes,
   SnackbarComponent,
+  StylingService,
   Tenant,
 } from '@abraxas/base-components';
 import { firstValueFrom, Subscription } from 'rxjs';
@@ -58,6 +60,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor() {
     const themeService = inject(ThemeService);
+    const stylingService = inject(StylingService);
+
+    stylingService.setRadius(CornerRadiusTokensThemes.Default);
 
     this.authorization.getActiveTenant();
     moment.locale(this.languageService.currentLanguage);
@@ -97,9 +102,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.guardService.isWahlverwalter().subscribe((isW) => {
       this.isWahlverwalter = isW;
     });
-    if (this.router.url.includes('/-/elections/overview')) {
+    if (this.router.url.includes('elections/overview')) {
       this.activateOverview();
-    } else if (this.router.url.includes('/-/elections/archive')) {
+    } else if (this.router.url.includes('elections/archive')) {
       this.activateArchive();
     } else if (this.router.url.includes('administration/base-data')) {
       this.activateBaseData();

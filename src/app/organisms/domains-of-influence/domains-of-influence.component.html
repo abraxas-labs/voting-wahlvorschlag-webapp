@@ -10,69 +10,70 @@
       [dataSource]="dataSource"
     >
       <ng-container columnDef="selection">
-        <bc-header-cell *headerCellDef>
+        <th bc-header-cell *headerCellDef>
           <bc-checkbox
             selectAll
             [checked]="selection.isAllSelected()"
             [indeterminate]="selection.isPartialSelected()"
           ></bc-checkbox>
-        </bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        </th>
+        <td bc-data-cell *dataCellDef="let row">
           <bc-checkbox
             [checked]="selection.isSelected(row)"
             selectionToggle
             [selectionToggleValue]="row"
           ></bc-checkbox>
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.officialId">
-        <bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.ID' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.ID' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row.officialId }}
-        </bc-data-cell>
+        </td>
       </ng-container>
 
       <ng-container [columnDef]="columns.name">
-        <bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.NAME' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.NAME' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row.name }}
-        </bc-data-cell>
+        </td>
       </ng-container>
 
       <ng-container [columnDef]="columns.shortName">
-        <bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.SHORTNAME' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.SHORTNAME' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row.shortName }}
-        </bc-data-cell>
+        </td>
       </ng-container>
 
       <ng-container [columnDef]="columns.domainOfInfluenceType">
-        <bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.TYPE' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell sort *headerCellDef>{{ 'DOMAIN_OF_INFLUENCE.TYPE' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row.domainOfInfluenceType }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container columnDef="actions">
-        <bc-header-cell *headerCellDef></bc-header-cell>
-        <bc-data-cell *dataCellDef="let element; let i = index">
+        <th bc-header-cell *headerCellDef></th>
+        <td bc-data-cell *dataCellDef="let element; let i = index">
           <div class="row-editing">
             @if (allowUpdating) {
               <bc-icon icon="edit" (click)="onOpenEditPage(element.id)"></bc-icon>
             }
             @if (allowDeleting) {
-              <bc-icon icon="trash" (click)="onDelete(element.id)"></bc-icon>
+              <bc-icon icon="trash" [iconColor]="'error'" (click)="onDelete(element.id)"></bc-icon>
             }
           </div>
-        </bc-data-cell>
+        </td>
       </ng-container>
-      <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-      <bc-data-row
+      <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+      <tr
+        bc-data-row
         *dataRowDef="let row; columns: columnsToDisplay; let i = index"
         selectionRow
         [selectionRowValue]="row"
         selectionToggle
         [selectionToggleValue]="row"
-      ></bc-data-row>
+      ></tr>
     </bc-table>
     <bc-paginator showFirstLastButtons [pageSize]="20" [pageSizeOptions]="[5, 10, 20]"></bc-paginator>
     <bc-button

@@ -37,7 +37,7 @@ export class TenantSettingsExportComponent {
   public hideWabstiExportTenantTitle: boolean;
 
   @Input()
-  public readonly : boolean = false;
+  public readonly: boolean = false;
 
   public setTenantLogo(doc: DocumentModel): void {
     this.tenantLogoChange.emit(doc.document);
