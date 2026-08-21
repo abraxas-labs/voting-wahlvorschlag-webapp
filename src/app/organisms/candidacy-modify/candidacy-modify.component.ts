@@ -23,6 +23,7 @@ import { InfoTextService } from 'src/app/shared/services/info-text.service';
 import { GuardService } from 'src/app/shared/guard.service';
 import { RxJsUtilsService } from '../../shared/services/rx-js-utils.service';
 import { SettingsModel } from '../../shared/models/settings.model';
+import { CountryModel } from '../../shared/models/country.model';
 import { ElectionModel, ElectionType } from '../../shared/models/election.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -68,11 +69,13 @@ export class CandidacyModifyComponent implements OnInit, OnDestroy, AfterViewIni
   public candidateCount: number;
   public maxCandidateCount: number;
   public isNewCandidate: boolean;
+  public countries: CountryModel[];
 
   constructor() {
     this.candidacy = this.data.data.candidacy;
     this.election = this.data.data.election;
     this.settings = this.data.data.settings;
+    this.countries = this.data.data.countries;
     this.candidateCount = this.data.data.candidateCount;
     this.maxCandidateCount = this.data.data.maxCandidateCount;
     this.isNewCandidate = !this.candidacy.id;

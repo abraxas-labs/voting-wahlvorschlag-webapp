@@ -207,6 +207,7 @@
     "OCCUPATION": "Beruf(e)",
     "ORIGIN": "Heimatort(e) inkl. Kantonszugehörigkeit",
     "ORIGIN_SHORT": "Heimatort(e)",
+    "COUNTRY": "Land",
     "ADDRESS": "Adresse",
     "STREET": "Strasse",
     "HOUSE_NUMBER": "Hausnummer",

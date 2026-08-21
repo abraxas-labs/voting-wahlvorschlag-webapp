@@ -31,6 +31,8 @@ import { SettingsService } from '../../shared/services/settings.service';
 import { CandidacyDetailsComponent } from '../candidacy-details/candidacy-details.component';
 import { CandidacyModifyComponent } from '../candidacy-modify/candidacy-modify.component';
 import { ListCandidateModel } from '../../shared/models/list-candidate.model';
+import { CountryModel } from '../../shared/models/country.model';
+import { CountryService } from '../../shared/services/country.service';
 
 @Component({
   selector: 'app-candidacy-overview',
@@ -44,6 +46,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
   private snackbarService = inject(SnackbarService);
   private rxUtils = inject(RxJsUtilsService);
   private settingsService = inject(SettingsService);
+  private countryService = inject(CountryService);
   private dialogService = inject(DialogService);
   private translateService = inject(TranslateService);
   private readonly candidacyDialogWidth = '45rem';
@@ -59,6 +62,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
   public loading: boolean = false;
   public saving: boolean = false;
   public settings: SettingsModel = null;
+  public countries: CountryModel[] = [];
   public isWahlverwalter: boolean = false;
 
   @Input() public election: ElectionModel;
@@ -100,14 +104,16 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
     this.loading = true;
     const candidates$ = this.candidateService.getAll(this.election.id, this.list.id);
     const settings$ = this.settingsService.get();
+    const countries$ = this.countryService.getAll();
 
-    forkJoin(candidates$, settings$)
+    forkJoin(candidates$, settings$, countries$)
       .pipe(
         this.rxUtils.toastDefault(),
         finalize(() => (this.loading = false))
       )
-      .subscribe(([candidates, settings]) => {
+      .subscribe(([candidates, settings, countries]) => {
         this.settings = settings;
+        this.countries = countries;
         this.processCandidates(candidates);
         this.refreshExpandedCandidates();
       });
@@ -192,6 +198,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
           candidacy: newCandidate,
           maxCandidateCount: this.nrOfMandates,
           candidateCount: this.expandedCandidates.length,
+          countries: this.countries,
         },
       },
       this.candidacyDialogWidth
@@ -212,6 +219,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
           candidacy: { ...candidate.candidate, markings: [...candidate.candidate.markings] },
           maxCandidateCount: this.nrOfMandates,
           candidateCount: this.expandedCandidates.length,
+          countries: this.countries,
         },
       },
       this.candidacyDialogWidth
@@ -246,6 +254,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
         settings: this.settings,
         candidacy: candidate.candidate,
         listId: this.list.id,
+        countries: this.countries,
       },
     });
   }

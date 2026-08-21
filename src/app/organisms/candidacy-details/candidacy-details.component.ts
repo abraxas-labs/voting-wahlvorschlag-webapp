@@ -7,6 +7,7 @@
 import { Component, inject } from '@angular/core';
 import { CandidateModel } from 'src/app/shared/models/candidate.model';
 import { SettingsModel } from '../../shared/models/settings.model';
+import { CountryModel } from '../../shared/models/country.model';
 import { ElectionModel, ElectionType } from '../../shared/models/election.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -23,12 +24,14 @@ export class CandidacyDetailsComponent {
   public election: ElectionModel;
   public listId: string;
   public settings: SettingsModel;
+  public countries: CountryModel[];
 
   constructor() {
     this.election = this.data.data.election;
     this.settings = this.data.data.settings;
     this.candidacy = this.data.data.candidacy;
     this.listId = this.data.data.listId;
+    this.countries = this.data.data.countries;
   }
 
   public get isMajorz(): boolean {

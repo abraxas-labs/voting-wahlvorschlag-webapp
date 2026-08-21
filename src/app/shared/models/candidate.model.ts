@@ -25,6 +25,7 @@ export interface CandidateModel extends BaseEntityModel {
   houseNumber: string;
   zipCode: string;
   locality: string;
+  country: string;
   sex: Sex;
   ballotFamilyName: string;
   ballotFirstName: string;
@@ -57,6 +58,7 @@ export function newCandidateModel(orderIndex: number): CandidateModel {
     houseNumber: '',
     zipCode: '',
     locality: '',
+    country: 'CH',
     ballotFamilyName: '',
     ballotFirstName: '',
     ballotOccupationalTitle: '',

@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.9.2`)
+# ✨ Changelog (`v4.11.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.9.2
-Previous version ---- v4.8.1
+This version -------- v4.11.0
+Previous version ---- v4.9.2
 Initial version ----- v4.5.7
 Total commits ------- 3
 ```
+
+## [v4.11.0] - 2026-06-17
+
+### 🆕 Added
+
+- add country to candidates
+
+## [v4.10.0] - 2026-06-10
+
+### 🆕 Added
+
+- show email column in admin page
+
+## [v4.9.3] - 2026-05-06
+
+### 🔄 Changed
+
+- change sg theme to schalter-e
 
 ## [v4.9.2] - 2026-04-15
 

@@ -128,6 +128,12 @@ export class CandidacyComponent implements OnInit {
       visible: true,
     },
     {
+      key: 'country',
+      translationToken: 'CANDIDACY.COUNTRY',
+      text: '',
+      visible: true,
+    },
+    {
       key: 'party',
       translationToken: 'CANDIDACY.PARTY',
       text: '',

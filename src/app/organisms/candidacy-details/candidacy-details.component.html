@@ -54,6 +54,12 @@
       >
     </div>
 
+    <div class="entry" [class.tagged]="isTagged('country')">
+      <bc-readonly label="{{ 'CANDIDACY.COUNTRY' | translate }}">{{
+        candidacy.country | countryIsoToDescription:countries
+      }}</bc-readonly>
+    </div>
+
     <div class="entry" [class.tagged]="isTagged('sex')">
       <bc-readonly label="{{ 'CANDIDACY.SEX' | translate }}">{{
         'SEX.' + candidacy.sex | translate

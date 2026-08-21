@@ -302,7 +302,7 @@
             [(ngModel)]="candidacy.zipCode"
             [maxlength]="20"
             [required]="true"
-            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.zipCode)"
+            [error]="hasAnyInputLeadingOrTrailingWhiteSpaces(candidacy.zipCode) || (candidacy.country === 'CH' && candidacy.zipCode.length !== 4)"
             (valueChange)="disableButtonWhenFieldsHaveTrailingOrLeadingSpaces('zipCode')"
             subscriptSizing="dynamic"
           >
@@ -342,6 +342,26 @@
         </div>
       </app-tag-formfield>
     </div>
+    <app-tag-formfield
+      [visible]="isWahlverwalter"
+      [tagged]="isTagged('country')"
+      (taggedChange)="setTag('country', $event)"
+    >
+      <div class="row">
+        <bc-dropdown
+          [label]="'CANDIDACY.COUNTRY' | translate"
+          [items]="countries"
+          name="country"
+          displayExpr="description"
+          valueExpr="isoId"
+          [(ngModel)]="candidacy.country"
+          [required]="true"
+          subscriptSizing="dynamic"
+        >
+        </bc-dropdown>
+        <app-info-tooltip class="info-tooltip" [text]="infoTexts.get('country')"></app-info-tooltip>
+      </div>
+    </app-tag-formfield>
     @if (isMajorz || settings.showPartyOnProporzElection) {
       <app-tag-formfield
         [visible]="isWahlverwalter"

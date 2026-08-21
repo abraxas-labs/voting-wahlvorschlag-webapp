@@ -71,6 +71,14 @@
               {{ row.username }}
             </td>
           </ng-container>
+          <ng-container [columnDef]="userColumns.email">
+            <th bc-header-cell sort filter filterType="text" *headerCellDef>
+              {{ 'USER_ADMINISTRATION.USER.EMAIL' | translate }}
+            </th>
+            <td bc-data-cell *dataCellDef="let row">
+              {{ row.email }}
+            </td>
+          </ng-container>
           <ng-container [columnDef]="userColumns.tenantDescription">
             <th bc-header-cell sort filter filterType="text" *headerCellDef>
               {{ 'USER_ADMINISTRATION.USER.TENANT' | translate }}

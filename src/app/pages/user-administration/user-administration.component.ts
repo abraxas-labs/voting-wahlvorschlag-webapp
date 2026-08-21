@@ -62,6 +62,7 @@ export class UserAdministrationComponent implements OnInit, AfterViewInit {
     UserTableColumn.firstname,
     UserTableColumn.lastname,
     UserTableColumn.username,
+    UserTableColumn.email,
     UserTableColumn.tenantDescription,
     'userActions',
   ];
@@ -175,5 +176,6 @@ export enum UserTableColumn {
   firstname = 'firstname',
   lastname = 'lastname',
   username = 'username',
+  email = 'email',
   tenantDescription = 'tenantDescription',
 }

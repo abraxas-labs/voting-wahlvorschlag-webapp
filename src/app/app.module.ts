@@ -91,6 +91,7 @@ import { ModalDialogComponent } from './shared/components/dialogs/modal-dialog/m
 import { ExportDialogComponent } from './shared/components/dialogs/export-dialog/export-dialog.component';
 import { ENV_INJECTION_TOKEN, VotingLibModule } from '@abraxas/voting-lib';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CountryIsoToDescriptionPipe } from './shared/pipes/country-iso-to-description-pipe';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ModalDialogComponent,
     ModifyDomainsOfInfluenceComponent,
     ExportDialogComponent,
+    CountryIsoToDescriptionPipe,
   ],
   imports: [
     BrowserModule,
