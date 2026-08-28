@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocationStrategy } from '@angular/common';
 import moment from 'moment';
 import 'moment/locale/de';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public isWahlverwalter: boolean = false;
   public hasTenant = false;
   public loading = false;
+  public customHeaderColor?: string;
 
   private readonly subscriptions: Subscription[] = [];
 
@@ -63,6 +65,8 @@ export class AppComponent implements OnInit, OnDestroy {
     const stylingService = inject(StylingService);
 
     stylingService.setRadius(CornerRadiusTokensThemes.Default);
+
+    this.customHeaderColor = environment.customHeaderColor;
 
     this.authorization.getActiveTenant();
     moment.locale(this.languageService.currentLanguage);

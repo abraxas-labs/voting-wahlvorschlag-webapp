@@ -6,4 +6,5 @@
   window['config'].ISSUER = '${ISSUER}';
   window['config'].SEC_APIS = '${SEC_APIS}';
   window['config'].OAUTH_SCOPES = '${OAUTH_SCOPES}';
+  window['config'].CUSTOM_HEADER_COLOR = '${CUSTOM_HEADER_COLOR}';
 })(this);

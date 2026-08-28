@@ -15,4 +15,5 @@ export interface Environment {
   authorizationConfig: AuthorizationConfig;
   userConfig: UserConfig;
   eawv: string;
+  customHeaderColor?: string;
 }

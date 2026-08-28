@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.11.0`)
+# ✨ Changelog (`v4.12.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.11.0
-Previous version ---- v4.9.2
+This version -------- v4.12.0
+Previous version ---- v4.11.0
 Initial version ----- v4.5.7
-Total commits ------- 3
+Total commits ------- 2
 ```
+
+## [v4.12.0] - 2026-07-22
+
+### 🆕 Added
+
+- support custom header color
+
+## [v4.11.1] - 2026-07-10
+
+### 🔄 Changed
+
+- update voting lib
 
 ## [v4.11.0] - 2026-06-17
 
