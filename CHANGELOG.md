@@ -1,4 +1,4 @@
-# ✨ Changelog (`v4.12.0`)
+# ✨ Changelog (`v4.12.1`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v4.12.0
-Previous version ---- v4.11.0
+This version -------- v4.12.1
+Previous version ---- v4.12.0
 Initial version ----- v4.5.7
-Total commits ------- 2
+Total commits ------- 1
 ```
+
+## [v4.12.1] - 2026-09-04
+
+### :arrows_counterclockwise: Changed
+
+- Fixed modifyCandidacy to locate candidates by ID instead of index, preventing data corruption when editing candidates (wrong candidate was being overwritten) (VE-1975)
+- Fixed preCumulate positioning for Proporz elections: cloned candidate now appears immediately after the original instead of at the list end
+- Candidate numbering now skips the duplicate row of cumulated candidates (only unique candidates receive sequential numbers)
 
 ## [v4.12.0] - 2026-07-22
 

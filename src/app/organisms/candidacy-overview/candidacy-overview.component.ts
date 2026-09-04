@@ -226,7 +226,9 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
     );
     dialogRef.componentInstance.formSubmit.subscribe(({ candidacy }) => {
       if (candidacy.index === candidate.candidate.index) {
-        this.candidates[candidacy.index - 1] = candidacy;
+        // Locate the candidate by identity, since its index may not match its position in this.candidates (e.g. cloned/cumulated candidates).
+        const arrayIndex = this.candidates.findIndex((c) => c.id === candidacy.id);
+        this.candidates[arrayIndex] = candidacy;
         this.refreshExpandedCandidates();
         this.updateHasChanges();
       } else {
@@ -283,8 +285,10 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
     }
 
     this.selected.candidate.cloned = true;
-    this.selected.candidate.cloneOrderIndex = this.expandedCandidates.length + 1;
+    // Fractional value so the clone sorts directly below the original, before renumbering normalizes it to an integer.
+    this.selected.candidate.cloneOrderIndex = this.selected.candidate.orderIndex + 0.5;
     this.refreshExpandedCandidates();
+    this.updateCandidatePositions();
     this.updateHasChanges();
   }
 
@@ -302,6 +306,7 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
 
   private updateCandidatePositions(): void {
     const processedCandidates = new Set<CandidateModel>();
+    let candidateNumber = 0;
 
     for (let i = 1; i <= this.expandedCandidates.length; i++) {
       const currentCandidate = this.expandedCandidates[i - 1].candidate;
@@ -312,8 +317,10 @@ export class CandidacyOverviewComponent implements OnInit, OnDestroy, AfterViewI
         currentCandidate.cloneOrderIndex = i;
       } else {
         processedCandidates.add(currentCandidate);
+        candidateNumber++;
         currentCandidate.cloned = false;
-        currentCandidate.index = i;
+        // The candidate number does not increase for cumulated duplicate rows, only the position (i) does.
+        currentCandidate.index = candidateNumber;
         currentCandidate.orderIndex = i;
       }
     }
